@@ -1,4 +1,18 @@
-SRCS	=			srcs/main.c srcs/engine/draw/rect.c
+# SRCS folder
+SRCS	+=			srcs/main.c \
+					srcs/init.c \
+					srcs/update.c \
+					srcs/close.c
+# KEY folder
+SRCS	+=			srcs/key/keys_init.c \
+					srcs/key/on_keypressed.c \
+					srcs/key/on_keyreleased.c
+# draw folder
+SRCS	+=			srcs/draw/draw_rect.c \
+					srcs/draw/draw_background.c
+
+# utils folder
+SRCS	+=			srcs/utils/time_utils.c
 
 OBJS	=			$(SRCS:%.c=%.o)
 
@@ -13,18 +27,18 @@ NAME	=			cube3d
 all: 				$(NAME)
 
 %.o: 				%.c
-					${CC} ${CFLAGS} -Ilibft -I./minilibx -c $? -o $@
+					${CC} ${CFLAGS} -Iincls -Ilibft -I./minilibx -c $? -o $@
 
 ${NAME}:			${OBJS}
 					@make -C libft
 					@make -C minilibx
 					${CC} ${CFLAGS} $^ -Llibft -lft -L./minilibx -lmlx -framework OpenGL -framework AppKit -o ${NAME}
 
-libft/libft.a:
-					@make -C libft
+# libft/libft.a:
+# 					@make -C libft
 
-minilibx/libmlx.a:
-					@make -C minilibx
+# minilibx/libmlx.a:
+# 					@make -C minilibx
 
 clean:
 					${RM} $(OBJS)
@@ -32,7 +46,7 @@ clean:
 					@make -C minilibx clean
 
 fclean:				clean
-					${RM} $(NAME) libft/libft.a
+					${RM} $(NAME)
 					@make -C libft fclean
 					@make -C minilibx fclean
 

@@ -1,15 +1,14 @@
 #include <stdio.h>
-#include "libft.h"
+
 #include "mlx.h"
+#include "data.h"
+
+void	init(t_data data);
 
 int	main()
 {
-	printf("Hello World!\n");
-	void *mlx = mlx_init();
-	printf("Hello World!\n");
-    void *win = mlx_new_window(mlx, 640, 360, "Tutorial Window");
-	printf("Hello World!\n");
-    mlx_loop(mlx);
+	t_data	data;
 
+	init(data);
 	return (0);
 }
