@@ -2,6 +2,7 @@
 #include "vector2.h"
 #include "data.h"
 #include "events.h"
+#include "draw.h"
 
 int		on_update(t_data *data);
 int		on_close(t_data *data);
@@ -23,6 +24,7 @@ void	init(t_data data) // TODO how to name it?
 	mlx_hook(data.win, KeyPress, KeyPressMask, on_keypressed, &data.key_pressed);
 	mlx_hook(data.win, KeyRelease, KeyReleaseMask, on_keyreleased, &data.key_pressed);
 	data.mouse_pos = (t_vector2){0, 0};
+	draw_background(&data.img, COLOR_BLUE2);
 	mlx_hook(data.win, DestroyNotify, NoEventMask, on_close, &data); // add a struct to pass the engine and the user callback?
 	mlx_loop_hook(data.mlx, on_update, &data);
 	mlx_loop(data.mlx);

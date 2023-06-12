@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgrasset <fgrasset@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 14:10:40 by fgrasset          #+#    #+#             */
-/*   Updated: 2023/03/10 14:35:34 by fgrasset         ###   ########.fr       */
+/*   Updated: 2023/06/12 13:31:41 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	stash_make(t_Node **head);
+void	ft_changed_bzero(void *s, int n);
+char	*return_error(t_Node **head, int flag, char *line);
+
+int		list_add(t_Node **head, int fd);
+int		list_len(t_Node **head);
+void	list_get(t_Node **head, char *line);
+char	*list_free(t_Node **head, int flag);
+int		enter(t_Node **head);
 
 /*
 Reads a line from a file descriptor.

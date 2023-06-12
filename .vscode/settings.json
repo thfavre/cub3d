@@ -17,6 +17,9 @@
 		"image.h": "c",
 		"vector2.h": "c",
 		"events.h": "c",
-		"line.h": "c"
+		"line.h": "c",
+		"color.h": "c",
+		"mlx.h": "c",
+		"stdio.h": "c"
 	}
 }

@@ -1,35 +1,42 @@
 #include "data.h"
 #include "keycodes.h"
 #include "draw.h"
+#include "time_utils.h"
 #include <stdio.h>
 
-int	on_close(t_data *data); // TODO put this in a header file??
-void tmp(t_data *data);
-int	get_avrage_fps(float dt); // TODO putin header file
-double get_elapsed_time(); // TODO putin header file
+void on_update_utils(t_data *data); // Put that in update.c?
+
+float RECT_SIZE = 100;
+RECT_DIRECTION = -1;
+LINES_SPACING = 60;
+MOVING = 0;
 
 int on_update(t_data *data)
 {
-	tmp(data);
-	if (data->key_pressed[K_ESC])
-		on_close(data);
-	if (data->key_pressed[K_R]) // erase the screen
-		draw_background(&data->img, COLOR_BLACK);
+	draw_background(&data->img, COLOR_WHEAT2);
 
-	if (data->key_pressed[K_SPACE])
-		draw_rect(&data->img, (t_rect){data->mouse_pos.x, data->mouse_pos.y, 32, 32}, COLOR_BLUEVIOLET);
+
+
+	for (int x=0; x < data->img.size.x; x+=RECT_SIZE)
+		for (int y=0; y < data->img.size.y; y+=RECT_SIZE)
+			draw_rect(&data->img, (t_rect){(t_vector2){x, y}, (t_vector2){RECT_SIZE, RECT_SIZE}}, add_color(COLOR_BLACK, rgb(x/2, y/1, x/12-y/4)+MOVING));
+	MOVING++;
+	RECT_SIZE += RECT_DIRECTION* 0.1;
+	if (RECT_SIZE > 200 || RECT_SIZE < 5)
+		RECT_DIRECTION *= -1;
+	for (int y=0; y<=data->img.size.y; y+=LINES_SPACING)
+	{
+		draw_line(&data->img, (t_vector2){0, (MOVING/2+y)%data->img.size.y}, (t_vector2){data->mouse_pos.x, data->mouse_pos.y}, COLOR_BLACK,1);
+		draw_line(&data->img, (t_vector2){data->img.size.x, data->img.size.y-(MOVING/2+y)%data->img.size.y}, (t_vector2){data->mouse_pos.x, data->mouse_pos.y}, COLOR_BLACK,1);
+	}
+	for (int x=0; x<=data->img.size.x; x+=LINES_SPACING)
+	{
+		draw_line(&data->img, (t_vector2){data->img.size.x-(MOVING/2+x)%data->img.size.x, 0}, (t_vector2){data->mouse_pos.x, data->mouse_pos.y}, COLOR_BLACK,1);
+		draw_line(&data->img, (t_vector2){(MOVING/2+x)%data->img.size.x, data->img.size.y}, (t_vector2){data->mouse_pos.x, data->mouse_pos.y}, COLOR_BLACK,1);
+	}
+
 	printf("FPS : %d\n", get_avrage_fps(data->dt));
+
+	on_update_utils(data);
 }
 
-void tmp(t_data *data) // TODO rename this function
-{
-	data->dt = get_elapsed_time();
-	// #if __APPLE__
-		mlx_mouse_get_pos(data->win, &data->mouse_pos.x, &data->mouse_pos.y);
-	// # else
-		// mlx_mouse_get_pos(engine->mlx, engine->win, &engine->mouse_pos.x, &engine->mouse_pos.y);
-	// #endif
-	mlx_put_image_to_window(data->mlx, data->win, \
-		data->img.img, 0, 0);
-
-}
