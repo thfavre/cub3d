@@ -4,7 +4,7 @@
 #include "color.h"
 
 static void	adjust_rect_in_image(t_rect *rect, t_img *img);
-void	draw_block(unsigned int *pixel_ptr, int chunk_size, int color);
+void		draw_block(unsigned int *pixel_ptr, int chunk_size, int color);
 
 /*
  * Draws a rectangle on an image at the specified (x, y) position, given by

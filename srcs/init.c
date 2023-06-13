@@ -13,7 +13,7 @@ int		on_keyreleased(int keycode, bool *key_pressed);
 
 void	init(t_data data) // TODO how to name it?
 {
-	data.mlx = mlx_init(); // test is null
+	data.mlx = mlx_init(); // TODO test is null
 	data.img.size = (t_vector2){1920, 1080};
 	data.win = mlx_new_window(data.mlx, data.img.size.x, data.img.size.y,
 		"Hello World!");
