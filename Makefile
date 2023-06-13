@@ -37,7 +37,7 @@ ifeq ($(UNAME_S),Linux)
 	LIBS	=	-Llibft -lft -L./minilibx/linux -lmlx -lXext -lX11 -lm -lbsd
 	MLX_DIR = minilibx/linux
 else
-	LIBS = -lmlx -framework OpenGL -framework AppKit
+	LIBS = -Llibft -lft -L./minilibx/mac -lmlx -framework OpenGL -framework AppKit
 	MLX_DIR = minilibx/mac
 endif
 

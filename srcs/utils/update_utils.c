@@ -1,10 +1,10 @@
 #include "data.h"
 
 int	on_close(t_data *data); // TODO put this in a header file??
-double get_elapsed_time(get_elapsed_time); // TODO putin header file
+double get_elapsed_time(void); // TODO putin header file
 
 
-void on_update_utils(t_data *data) // TODO rename this function
+void on_update_utils(t_data *data) // TODO rename this function and put in update.c file?
 {
 	if (data->key_pressed[K_ESC])
 		on_close(data);
