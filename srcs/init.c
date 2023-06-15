@@ -11,7 +11,7 @@ int		on_keypressed(int keycode, bool *key_pressed);
 int		on_keyreleased(int keycode, bool *key_pressed);
 
 
-void	init(t_data data) // TODO how to name it?
+bool	init(t_data data) // TODO how to name it?
 {
 	data.mlx = mlx_init(); // TODO test is null
 	data.img.size = (t_vector2){1920, 1080};

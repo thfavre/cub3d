@@ -19,9 +19,13 @@ SRCS	+=			srcs/draw/color.c \
 SRCS	+=			srcs/utils/time_utils.c \
 					srcs/utils/update_utils.c
 
+# parser folder
+SRCS	+=			srcs/parsing/parser.c \
+					srcs/parsing/create_map.c
+
 # ---------------  --------------- #
 
-NAME	=			cube3d
+NAME	=			cub3d
 
 OBJS	=			$(SRCS:%.c=%.o)
 
