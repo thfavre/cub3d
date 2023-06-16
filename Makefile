@@ -21,7 +21,7 @@ SRCS	+=			srcs/utils/time_utils.c \
 
 # ---------------  --------------- #
 
-NAME	=			cube3d
+NAME	=			cub3d
 
 OBJS	=			$(SRCS:%.c=%.o)
 
