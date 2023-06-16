@@ -31,12 +31,10 @@ int	main(int argc, char **argv)
 	}
 	else if (!init(&data))
 	{
-		write(2, "Error, init\n", 6);
 		return (1);
 	}
 	else if (!parser(argv[1], &data))
 	{
-		write(2, "Error, parser\n", 6);
 		return (1);
 	}
 

@@ -6,21 +6,16 @@
 # include "image.h"
 # include "vector2.h"
 # include "keycodes.h"
+# include "sprite.h"
 
-typedef struct s_sprite
-{
-	t_vector2	size;
-	void		*img;
-}				t_sprite;
-
-typedef struct s_textures
+typedef struct s_textures // TODO put in textures.h ?
 {
 	t_sprite	NO;
 	t_sprite	SO;
 	t_sprite	WE;
 	t_sprite	EA;
-	t_sprite	F;
-	int		C;
+	int			F;
+	int			C;
 }				t_textures;
 
 typedef struct s_data
@@ -34,7 +29,7 @@ typedef struct s_data
 
 	char		**map;
 	t_vector2	map_size;
-	t_vector2	*walls_positions;
+	// t_vector2	*walls_positions;
 	t_textures	textures;
 
 } t_data;
