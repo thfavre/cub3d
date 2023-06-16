@@ -5,119 +5,110 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 14:10:40 by fgrasset          #+#    #+#             */
-/*   Updated: 2023/06/12 13:31:41 by thomas           ###   ########.fr       */
+/*   Created: 2023/06/16 02:46:13 by thomas            #+#    #+#             */
+/*   Updated: 2023/06/16 02:46:27 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	stash_make(t_Node **head);
-void	ft_changed_bzero(void *s, int n);
-char	*return_error(t_Node **head, int flag, char *line);
+char	*read_file(int fd, char *stash);
+char	*create_line(char *stash);
+char	*clean_stash(char *stash);
 
-int		list_add(t_Node **head, int fd);
-int		list_len(t_Node **head);
-void	list_get(t_Node **head, char *line);
-char	*list_free(t_Node **head, int flag);
-int		enter(t_Node **head);
-
-/*
-Reads a line from a file descriptor.
-@param fd The file descriptor to read from.
-@return On success, the function returns a
-pointer to the line read. On
-error, the function returns NULL.
-The function reads the file descriptor and
-returns a line of text, delimited by
-'\n'. It uses a static linked list to store
-the data read from the file descriptor
-between successive calls. The function returns
-NULL if an error occurs or if the
-end of file is reached.
-*/
 char	*get_next_line(int fd)
 {
-	static t_Node	*head;
-	char			*line;
-	int				reading;
+	static char	*stash[4096];
+	char		*line;
 
-	line = NULL;
-	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, &line, 0) < 0)
-		return (return_error(&head, 1, line));
-	reading = 1;
-	while (!enter(&head) && reading != 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		reading = list_add(&head, fd);
-		if (reading == -1)
-			return (list_free(&head, 1));
-	}
-	line = malloc(sizeof(char) * (list_len(&head) + 1));
-	if (!line)
+		free(stash[fd]);
+		stash[fd] = NULL;
 		return (NULL);
-	ft_changed_bzero(line, list_len(&head) + 1);
-	list_get(&head, line);
-	stash_make(&head);
-	if (line[0] == '\0')
-		return (return_error(&head, 2, line));
+	}
+	stash[fd] = read_file(fd, stash[fd]);
+	if (!stash[fd])
+		return (NULL);
+	line = create_line(stash[fd]);
+	stash[fd] = clean_stash(stash[fd]);
 	return (line);
 }
 
-/* makes a new node of what is after the \n
- and deletes the previous nodes */
-void	stash_make(t_Node **head)
+char	*read_file(int fd, char *stash)
 {
-	t_Node	*current;
-	t_Node	*stash;
+	char	*buffer;
+	int		read_nbr;
+	char	*temp;
+
+	if (!stash)
+		stash = ft_calloc(1, 1);
+	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	read_nbr = 1;
+	while (!ft_strchr(stash, '\n') && read_nbr > 0)
+	{
+		read_nbr = read(fd, buffer, BUFFER_SIZE);
+		if (read_nbr == -1)
+		{
+			free(stash);
+			free(buffer);
+			return (NULL);
+		}
+		buffer[read_nbr] = '\0';
+		temp = ft_strjoin(stash, buffer);
+		free(stash);
+		stash = temp;
+	}
+	free(buffer);
+	return (stash);
+}
+
+char	*create_line(char *stash)
+{
+	char	*line;
+	int		i;
+
+	if (!stash[0])
+		return (NULL);
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
+		i++;
+	line = ft_calloc(i + 2, sizeof(*line));
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
+	{
+		line[i] = stash[i];
+		i++;
+	}
+	if (stash[i] && stash[i] == '\n')
+		line[i] = '\n';
+	return (line);
+}
+
+char	*clean_stash(char *stash)
+{
 	int		i;
 	int		j;
-
-	current = *head;
-	stash = malloc(sizeof(t_Node));
-	i = 0;
-	j = 0;
-	while (current->next != NULL)
-		current = current->next;
-	while (current->buffer[i] && current->buffer[i] != '\n')
-		i++;
-	if (current->buffer[i] && current->buffer[i] == '\n')
-		i++;
-	stash->buffer = malloc(sizeof(char) * (BUFFER_SIZE - i) + 1);
-	if (!stash || !stash->buffer || current == NULL)
-		return (free(stash));
-	while (current->buffer[i])
-		stash->buffer[j++] = current->buffer[i++];
-	stash->buffer[j] = '\0';
-	stash->next = NULL;
-	list_free(head, 0);
-	*head = stash;
-}
-
-/* basically bzero but made by hand */
-void	ft_changed_bzero(void *s, int n)
-{
-	int	i;
+	char	*new_stash;
+	int		stash_len;
 
 	i = 0;
-	while (i < n)
-	{
-		*(char *)(s + i) = '\0';
+	while (stash[i] && stash[i] != '\n')
 		i++;
-	}
-}
-
-char	*return_error(t_Node **head, int flag, char *line)
-{
-	if (flag == 1)
+	if (!stash[i])
 	{
-		line = list_free(head, 1);
-		head = NULL;
+		free(stash);
 		return (NULL);
 	}
-	else if (flag == 2)
-	{
-		free(line);
-		return (list_free(head, 1));
-	}
-	return (NULL);
+	stash_len = 0;
+	while (stash[stash_len])
+		stash_len++;
+	new_stash = malloc((stash_len - i + 1) * sizeof(char));
+	i++;
+	j = 0;
+	while (stash[i])
+		new_stash[j++] = stash[i++];
+	new_stash[j] = '\0';
+	free(stash);
+	return (new_stash);
 }

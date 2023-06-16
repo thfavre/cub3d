@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 14:14:17 by fgrasset          #+#    #+#             */
-/*   Updated: 2023/06/12 13:31:28 by thomas           ###   ########.fr       */
+/*   Created: 2022/11/23 01:01:39 by thfavre           #+#    #+#             */
+/*   Updated: 2023/06/16 02:46:45 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,15 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 5
 # endif
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-
-typedef struct t_Node{
-	char			*buffer;
-	struct t_Node	*next;
-}	t_Node;
 
 char	*get_next_line(int fd);
-
+char	*ft_strchr(const char *s, int c);
+char	*ft_strncpy(char *dest, char *src, unsigned int n);
+char	*ft_strjoin(char const *s1, char const *s2);
+void	*ft_calloc(size_t nmemb, size_t size);
 #endif

@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include "mlx.h"
 #include "libft.h"
 #include "data.h"
 
@@ -13,7 +14,7 @@
 // }
 // -> liste de wall
 
-bool	init(t_data data);
+bool	init(t_data *data);
 bool	parser(char *filename, t_data *data);
 
 
@@ -28,15 +29,22 @@ int	main(int argc, char **argv)
 		write(2, "Please include a [map].cub file\n", 33);
 		return (1);
 	}
+	else if (!init(&data))
+	{
+		write(2, "Error, init\n", 6);
+		return (1);
+	}
 	else if (!parser(argv[1], &data))
 	{
+		write(2, "Error, parser\n", 6);
 		return (1);
 	}
-	else if (!init(data))
-	{
-		write(2, "Error\n", 6);
-		return (1);
-	}
+
+	// START!!!
+	mlx_loop(data.mlx);
+
+
+
 
 
 	return (0);
