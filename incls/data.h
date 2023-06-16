@@ -7,6 +7,22 @@
 # include "vector2.h"
 # include "keycodes.h"
 
+typedef struct s_sprite
+{
+	t_vector2	size;
+	void		*img;
+}				t_sprite;
+
+typedef struct s_textures
+{
+	t_sprite	NO;
+	t_sprite	SO;
+	t_sprite	WE;
+	t_sprite	EA;
+	t_sprite	F;
+	int		C;
+}				t_textures;
+
 typedef struct s_data
 {
 	void		*mlx;
@@ -19,12 +35,8 @@ typedef struct s_data
 	char		**map;
 	t_vector2	map_size;
 	t_vector2	*walls_positions;
-	int			NORTH_COLOR;// put all the colors in a struct?
-	int			SOUTH_COLOR;
-	int			WEST_COLOR;
-	int			EAST_COLOR;
-	int			CEILING_COLOR;
-	int			FLOOR_COLOR;
+	t_textures	textures;
+
 } t_data;
 
 #endif

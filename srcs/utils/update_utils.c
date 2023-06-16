@@ -1,4 +1,5 @@
 #include "data.h"
+#include "mlx.h"
 
 int	on_close(t_data *data); // TODO put this in a header file??
 double get_elapsed_time(void); // TODO putin header file
