@@ -25,6 +25,7 @@
 		"get_next_line.h": "c",
 		"libft.h": "c",
 		"string.h": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"sprite.h": "c"
 	}
 }

@@ -2,8 +2,11 @@ NO ./test.xpm
 SO ./test.xpm
 WE ./test.xpm
 
-
 EA ./test.xpm
+
+
+F 222,112,51
+C 44,44,55
 
 1111
 10001
