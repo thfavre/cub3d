@@ -6,10 +6,10 @@
 # include "image.h"
 # include "rect.h"
 # include "line.h"
+# include "data.h"
 // # include "circle.h"
 void	draw_pixel(t_img *img, t_vector2 pos, int color);
 // void	draw_polygon(t_img *img, t_vector2 *vertices, int num_vertices, int color);
 void	draw_background(t_img *img, int color);
-
 
 #endif

@@ -33,6 +33,8 @@ SRCS	+=			srcs/parsing/parser.c \
 					# srcs/parsing/get_map_size.c \
 					# srcs/parsing/parse_textures_and_colors.c
 
+# minimap folder
+SRCS	+=			srcs/minimap/minimap.c \
 
 # ---------------  --------------- #
 

@@ -37,6 +37,8 @@ int	main(int argc, char **argv)
 	{
 		return (1);
 	}
+	// init game
+	// init_2dgame(&data);
 
 	// START!!!
 	mlx_loop(data.mlx);

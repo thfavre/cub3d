@@ -14,7 +14,7 @@ int		on_keyreleased(int keycode, bool *key_pressed);
 bool	init(t_data *data) // TODO how to name it?
 {
 	data->mlx = mlx_init(); // TODO test is null
-	data->img.size = (t_vector2){1920, 1080};
+	data->img.size = (t_vector2){SCREEN_WIDTH, SCREEN_HEIGHT};
 	data->win = mlx_new_window(data->mlx, data->img.size.x, data->img.size.y,
 		"Hello World!");
 	data->img.img = mlx_new_image(data->mlx, data->img.size.x, data->img.size.y);
@@ -24,7 +24,7 @@ bool	init(t_data *data) // TODO how to name it?
 	mlx_hook(data->win, KeyPress, KeyPressMask, on_keypressed, &data->key_pressed);
 	mlx_hook(data->win, KeyRelease, KeyReleaseMask, on_keyreleased, &data->key_pressed);
 	data->mouse_pos = (t_vector2){0, 0};
-	draw_background(&data->img, COLOR_BLUE2);
+	draw_background(&data->img, C_BLUE2);
 	mlx_hook(data->win, DestroyNotify, NoEventMask, on_close, &data); // add a struct to pass the engine and the user callback?
 	mlx_loop_hook(data->mlx, on_update, data);
 	return (true);

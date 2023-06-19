@@ -8,6 +8,8 @@
 # include "keycodes.h"
 # include "sprite.h"
 
+# define SCREEN_WIDTH 1920
+# define SCREEN_HEIGHT 1080
 typedef struct s_textures // TODO put in textures.h ?
 {
 	t_sprite	NO;
@@ -31,6 +33,7 @@ typedef struct s_data
 	t_vector2	map_size;
 	// t_vector2	*walls_positions;
 	t_textures	textures;
+
 
 } t_data;
 
