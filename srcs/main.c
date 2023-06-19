@@ -18,6 +18,7 @@ bool	init(t_data *data);
 bool	parser(char *filename, t_data *data);
 
 
+int	on_close(t_data *data);
 
 
 int	main(int argc, char **argv)
@@ -35,6 +36,10 @@ int	main(int argc, char **argv)
 	}
 	else if (!parser(argv[1], &data))
 	{
+		mlx_destroy_image(data.mlx, data.img.img);
+		mlx_destroy_window(data.mlx, data.win);
+		free(data.mlx);
+
 		return (1);
 	}
 

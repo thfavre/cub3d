@@ -16,7 +16,7 @@ bool	init(t_data *data) // TODO how to name it?
 	data->mlx = mlx_init(); // TODO test is null
 	data->img.size = (t_vector2){1920, 1080};
 	data->win = mlx_new_window(data->mlx, data->img.size.x, data->img.size.y,
-		"Hello World!");
+		"A fucking beautiful cub3D!");
 	data->img.img = mlx_new_image(data->mlx, data->img.size.x, data->img.size.y);
 	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bpp,
 		&data->img.line_len, &data->img.endian);
