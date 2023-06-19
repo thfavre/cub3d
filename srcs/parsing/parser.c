@@ -12,6 +12,12 @@
 
 int	open_file(char *filename);
 
+
+// TODO :
+// check if only one player is present
+// check if map is valid (only 0, 1, 2, NSEW, spaces)
+// check if all (0 + player) are surrounded by 1
+// free all mallocs if error
 bool	parser(char *filename, t_data *data)
 {
 	int		fd;
@@ -35,7 +41,7 @@ bool	parser(char *filename, t_data *data)
 		|| !parse_texture(data->mlx, get_next_unempty_line(fd), &data->textures.EA, "EA")
 		|| !parse_color(get_next_unempty_line(fd), &data->textures.F, "F")
 		|| !parse_color(get_next_unempty_line(fd), &data->textures.C, "C"))
-		return (false); // TODO: free textures (if not NULL, mlx_destroy_image)
+		return (false); // TODO: free textures (set toNULL and if not NULL, mlx_destroy_image)
 	data->map = parse_map(fd, filename, &data->map_size);
 	if (data->map == NULL)
 		return (false);
