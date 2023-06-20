@@ -3,16 +3,7 @@
 #include "mlx.h"
 #include "libft.h"
 #include "data.h"
-
-// map
-// BLOCKSIZE = 40;
-// map = {
-// 	{1, 1, 0, 1, 1},
-// 	{1, 0, 0, 1, 1},
-// 	{1, 0, 0, 1, 1},
-// 	{1, 1, 0, 5, 1}
-// }
-// -> liste de wall
+#include "2DGame.h"
 
 bool	init(t_data *data);
 bool	parser(char *filename, t_data *data);
@@ -42,8 +33,28 @@ int	main(int argc, char **argv)
 
 		return (1);
 	}
-	// init game
-	// init_2dgame(&data);
+	init_player(&data.game.player, data.map);
+	// put the init obstacles in a function (and better ;) )
+	data.game.obstacles.number = 0;
+	data.game.obstacles.rects = ft_calloc(sizeof(t_rect), 9999);
+	int		i;
+	int		j;
+	i = 0;
+
+	while (data.map[i])
+	{
+		j = 0;
+		while (data.map[i][j])
+		{
+			if (data.map[i][j] == '1')
+			{
+				data.game.obstacles.rects[data.game.obstacles.number] = (t_rect){j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE};
+				data.game.obstacles.number++;
+			}
+			j++;
+		}
+		i++;
+	}
 
 	// START!!!
 	mlx_loop(data.mlx);

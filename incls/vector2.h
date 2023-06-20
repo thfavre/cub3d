@@ -13,4 +13,8 @@ typedef struct s_fvector2
 	float	y;
 }	t_fvector2;
 
+t_vector2	fvector2_to_vector2(t_fvector2 fvector2);
+t_fvector2	vector2_to_fvector2(t_vector2 vector2);
+
+
 #endif

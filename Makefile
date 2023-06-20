@@ -22,7 +22,8 @@ SRCS	+=			srcs/draw/color.c \
 
 # utils folder
 SRCS	+=			srcs/utils/time_utils.c \
-					srcs/utils/update_utils.c
+					srcs/utils/update_utils.c \
+					srcs/utils/vector2.c \
 
 # parser folder
 SRCS	+=			srcs/parsing/parser.c \
@@ -33,8 +34,8 @@ SRCS	+=			srcs/parsing/parser.c \
 					# srcs/parsing/get_map_size.c \
 					# srcs/parsing/parse_textures_and_colors.c
 
-# minimap folder
-SRCS	+=			srcs/minimap/minimap.c \
+# 2DGame folder
+SRCS	+=			srcs/2DGame/player.c \
 
 # ---------------  --------------- #
 
