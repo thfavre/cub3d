@@ -86,7 +86,7 @@ t_vector2	get_player_starting_cell(char **map)
 		}
 		cell_pos.y++;
 	}
-	printf("The player has no starting position...\n");
+	printf("The player has no starting position, this code should never be executed...\n");
 	return (cell_pos);
 }
 
