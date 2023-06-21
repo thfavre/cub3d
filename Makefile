@@ -1,13 +1,14 @@
 # --------------- source files --------------- #
-# SRCS folder
+# srcs folder
 SRCS	+=			srcs/main.c \
 					srcs/init.c \
 					srcs/update.c \
 					srcs/close.c
-# KEY folder
+# key folder
 SRCS	+=			srcs/key/keys_init.c \
 					srcs/key/on_keypressed.c \
 					srcs/key/on_keyreleased.c
+
 # draw folder
 SRCS	+=			srcs/draw/color.c \
 					srcs/draw/draw_pixel.c \
