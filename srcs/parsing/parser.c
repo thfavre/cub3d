@@ -34,7 +34,7 @@ bool	parser(char *filename, t_data *data)
 	data->textures.NO.img = NULL;
 	// free(data->textures.NO.img);
 	// mlx_destroy_image(data->mlx, data->textures.NO.img);
-	free(data->textures.SO.img);
+	// free(data->textures.SO.img); // TODO - CAN NOT LAUNCH WITH THIS LINE
 	if (!parse_texture(data->mlx, get_next_unempty_line(fd), &data->textures.NO, "NO")
 		|| !parse_texture(data->mlx, get_next_unempty_line(fd), &data->textures.SO, "SO")
 		|| !parse_texture(data->mlx, get_next_unempty_line(fd), &data->textures.WE, "WE")

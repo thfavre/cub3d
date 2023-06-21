@@ -26,6 +26,13 @@
 		"libft.h": "c",
 		"string.h": "c",
 		"stdlib.h": "c",
-		"sprite.h": "c"
+		"sprite.h": "c",
+		"__hash_table": "c",
+		"__split_buffer": "c",
+		"bitset": "c",
+		"initializer_list": "c",
+		"unordered_map": "c",
+		"utility": "c",
+		"game2d.h": "c"
 	}
 }
