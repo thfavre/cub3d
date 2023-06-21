@@ -3,6 +3,7 @@
 #include "mlx.h"
 #include "libft.h"
 #include "data.h"
+#include "game2d.h"
 
 // map
 // BLOCKSIZE = 40;
@@ -16,7 +17,6 @@
 
 bool	init(t_data *data);
 bool	parser(char *filename, t_data *data);
-
 
 int	on_close(t_data *data);
 
@@ -43,9 +43,7 @@ int	main(int argc, char **argv)
 
 		return (1);
 	}
-	// // init game
-	// // init_2dgame(&data);
-
+	init_settings(&data);
 	// START!!!
 	mlx_loop(data.mlx);
 

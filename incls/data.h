@@ -7,6 +7,7 @@
 # include "vector2.h"
 # include "keycodes.h"
 # include "sprite.h"
+# include "game2d.h"
 
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
@@ -33,6 +34,7 @@ typedef struct s_data
 	t_vector2	map_size;
 	// t_vector2	*walls_positions;
 	t_textures	textures;
+	t_game		game;
 
 
 } t_data;
