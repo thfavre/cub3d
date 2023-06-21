@@ -20,6 +20,12 @@
 		"line.h": "c",
 		"color.h": "c",
 		"mlx.h": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"fcntl.h": "c",
+		"get_next_line.h": "c",
+		"libft.h": "c",
+		"string.h": "c",
+		"stdlib.h": "c",
+		"sprite.h": "c"
 	}
 }

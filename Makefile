@@ -3,7 +3,12 @@
 SRCS	+=			srcs/main.c \
 					srcs/init.c \
 					srcs/update.c \
-					srcs/close.c
+
+# close folder
+SRCS	+=			srcs/close/close.c \
+					srcs/close/free_map.c \
+					srcs/close/free_split.c # where to put that ?
+
 # key folder
 SRCS	+=			srcs/key/keys_init.c \
 					srcs/key/on_keypressed.c \
@@ -20,9 +25,21 @@ SRCS	+=			srcs/draw/color.c \
 SRCS	+=			srcs/utils/time_utils.c \
 					srcs/utils/update_utils.c
 
+# parser folder
+SRCS	+=			srcs/parsing/parser.c \
+					srcs/parsing/parse_map.c \
+					srcs/parsing/parse_color.c \
+					srcs/parsing/parse_texture.c \
+					srcs/parsing/get_next_unempty_line.c \
+					# srcs/parsing/get_map_size.c \
+					# srcs/parsing/parse_textures_and_colors.c
+
+# minimap folder
+SRCS	+=			srcs/minimap/minimap.c \
+
 # ---------------  --------------- #
 
-NAME	=			cube3d
+NAME	=			cub3d
 
 OBJS	=			$(SRCS:%.c=%.o)
 
@@ -30,7 +47,7 @@ CC		=			gcc
 
 RM		=			rm -f
 
-CFLAGS	=			-Wall -Wextra -Werror -g -w
+CFLAGS	=			-Wall -Wextra -Werror -g -w #-fsanitize=address
 
 # Platform detection
 UNAME_S := $(shell uname -s)

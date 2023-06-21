@@ -25,6 +25,7 @@ int	get_avrage_fps(float dt)
 		avrage_fps = frames;
 		frames = 0;
 		elapsed_time = 0;
+		printf("FPS: %d\n", avrage_fps); // TODO remove
 	}
 	return (avrage_fps);
 }

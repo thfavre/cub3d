@@ -3,136 +3,92 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fabien <fabien@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thomas <thomas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 20:09:02 by fabien            #+#    #+#             */
-/*   Updated: 2022/12/10 18:43:01 by fabien           ###   ########.fr       */
+/*   Created: 2022/11/23 01:01:25 by thfavre           #+#    #+#             */
+/*   Updated: 2023/06/16 02:47:10 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/* reads BUFFER_SIZE elements and adds them to a buffer
-returns the value of read() or -1 if issue */
-int	list_add(t_Node **head, int fd)
+char	*ft_strchr(const char *s, int c)
 {
-	t_Node	*new_node;
-	t_Node	*current;
-	int		reading;
-
-	new_node = malloc(sizeof(t_Node));
-	new_node->buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
-	if (!new_node || !new_node->buffer)
-		return (-1);
-	current = *head;
-	new_node->next = NULL;
-	reading = read(fd, new_node->buffer, BUFFER_SIZE);
-	if ((*head == NULL && reading == 0) || reading == -1)
-	{
-		free(new_node->buffer);
-		free(new_node);
-		return (-1);
-	}
-	new_node->buffer[reading] = '\0';
-	while (current && current->next)
-		current = current->next;
-	if (*head == NULL)
-		*head = new_node;
-	else
-		current->next = new_node;
-	return (reading);
-}
-
-/* returns the length of all the buffers in the linked list */
-int	list_len(t_Node **head)
-{
-	t_Node	*current;
-	int		len;
-	int		i;
-
-	len = 0;
-	current = *head;
-	while (current)
-	{
-		i = 0;
-		while (current->buffer[i])
-		{
-			if (current->buffer[i] == '\n')
-			{
-				len++;
-				break ;
-			}
-			len++;
-			i++;
-		}
-		current = current->next;
-	}
-	return (len);
-}
-
-/* fills res with contents of buffer in the linked lists until the \n */
-void	list_get(t_Node **head, char *line)
-{
-	t_Node	*current;
-	int		i;
-	int		j;
-
-	if (*head == NULL)
-		return ;
-	j = 0;
-	current = *head;
-	while (current != NULL)
-	{
-		i = 0;
-		while (current->buffer[i] != '\0')
-		{
-			line[j] = current->buffer[i];
-			if (current->buffer[i] == '\n')
-				return ;
-			i++;
-			j++;
-		}
-		current = current->next;
-	}
-}
-
-/* frees the linked list entirely */
-char	*list_free(t_Node **head, int flag)
-{
-	t_Node	*current;
-	t_Node	*stock;
-
-	stock = *head;
-	while (stock != NULL)
-	{
-		current = stock;
-		stock = stock->next;
-		free(current->buffer);
-		free(current);
-	}
-	*head = NULL;
-	if (flag == 1)
+	if (!s)
 		return (NULL);
+	while (*s != '\0' && *s != (char)c)
+		s++;
+	if (*s == (char)c)
+		return ((char *)s);
 	return (NULL);
 }
 
-/* returns 1 if \n in buffer, 0 otherwise */
-int	enter(t_Node **head)
+char	*ft_strncpy(char *dest, char *src, unsigned int n)
 {
-	t_Node	*current;
-	int		i;
+	unsigned int	i;
 
-	i = 0;
-	current = *head;
-	if (current == NULL)
+	i = -1;
+	while (++i < n && src[i])
+		dest[i] = src[i];
+	while (i < n)
+		dest[i++] = '\0';
+	return (dest);
+}
+
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	size_t	i;
+
+	if (!dst && !src)
 		return (0);
-	while (current->next)
-		current = current->next;
-	while (current->buffer[i])
+	i = 0;
+	while (i < n)
 	{
-		if (current->buffer[i] == '\n')
-			return (1);
+		((unsigned char *)dst)[i] = ((const unsigned char *)src)[i];
 		i++;
 	}
-	return (0);
+	return (dst);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*s;
+	size_t	s1_len;
+	size_t	s2_len;
+
+	s1_len = 0;
+	while (s1[s1_len])
+		s1_len++;
+	s2_len = 0;
+	while (s2[s2_len])
+		s2_len++;
+	s = malloc(sizeof(*s) * (s1_len + s2_len + 1));
+	if (s != NULL)
+	{
+		ft_memcpy(s, s1, s1_len);
+		ft_memcpy(s + s1_len, s2, s2_len);
+		s[s1_len + s2_len] = '\0';
+	}
+	return (s);
+}
+
+// calloc with ft_bzero added
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*array;
+	char	*str;
+	size_t	i;
+
+	array = malloc(nmemb * size);
+	if (array != NULL)
+	{
+		str = (char *)array;
+		i = 0;
+		while (i < nmemb * size)
+		{
+			str[i] = '\0';
+			i++;
+		}
+	}
+	return (array);
 }

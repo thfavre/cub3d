@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include "mlx.h"
+#include "libft.h"
 #include "data.h"
 
 // map
@@ -12,20 +14,43 @@
 // }
 // -> liste de wall
 
-void	init(t_data data);
+bool	init(t_data *data);
+bool	parser(char *filename, t_data *data);
 
-int	main()
+
+int	on_close(t_data *data);
+
+
+int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	// data->player = (t_player) {
-	// 	.rect = (t_rect) {
-	// 		.pos = (t_vector2) {10, 10},
-	// 		.size = (t_vector2) {40, 40}
-	// 	},
-	// 	.speed = 5,
-	// 	.color = COLOR_RED
-	// };
-	init(data);
+	if (argc != 2)
+	{
+		write(2, "Please include a [map].cub file\n", 33);
+		return (1);
+	}
+	else if (!init(&data))
+	{
+		return (1);
+	}
+	else if (!parser(argv[1], &data))
+	{
+		mlx_destroy_image(data.mlx, data.img.img);
+		mlx_destroy_window(data.mlx, data.win);
+		free(data.mlx);
+
+		return (1);
+	}
+	// init game
+	// init_2dgame(&data);
+
+	// START!!!
+	mlx_loop(data.mlx);
+
+
+
+
+
 	return (0);
 }
