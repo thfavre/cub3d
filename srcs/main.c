@@ -25,6 +25,7 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
+	ft_memset(&data, 0, sizeof(t_data));
 	if (argc != 2)
 	{
 		write(2, "Please include a [map].cub file\n", 33);
@@ -42,8 +43,8 @@ int	main(int argc, char **argv)
 
 		return (1);
 	}
-	// init game
-	// init_2dgame(&data);
+	// // init game
+	// // init_2dgame(&data);
 
 	// START!!!
 	mlx_loop(data.mlx);

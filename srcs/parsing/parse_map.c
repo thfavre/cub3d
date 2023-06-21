@@ -5,9 +5,11 @@
 
 #include "vector2.h"
 #include "libft.h"
+#include "data.h" // only for t_textures
 #include "parsing.h"
 
-// void	*free_map(char **map);
+void	*free_map(char **map);
+
 int		get_file_line_number(char *filename);
 
 char		**parse_map(int fd, char *filename, t_vector2 *map_size)
@@ -64,3 +66,48 @@ int	get_file_line_number(char *filename)
 	return (line_number);
 }
 
+void *free_map(char **map)
+{
+	int	i;
+
+	if (map == NULL)
+		return (NULL);
+	i = 0;
+	while (map[i] != NULL)
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
+	return (NULL);
+}
+
+bool	check_map_validity(char **map)
+{
+	t_vector2			pos;
+	char				cell;
+	static int			player_count = 0; // for norminette....
+
+	pos.y = -1;
+	while (map[++pos.y] != NULL)
+	{
+		pos.x = -1;
+		while (map[pos.y][++pos.x] != '\0')
+		{
+			cell = map[pos.y][pos.x];
+			if (cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W')
+			{
+				if (++player_count == 1)
+					continue ;
+				printf("Error, there must be exactly one player in the map\n");
+				return (false);
+			}
+			if (cell == '0' || cell == '1' || cell == ' ')
+				continue ;
+			printf("Error, invalid character '%c' \
+at (%d, %d)\n", cell, pos.x + 1, pos.y + 1);
+			return (false);
+		}
+	}
+	return (true);
+}

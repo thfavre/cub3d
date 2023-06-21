@@ -1,10 +1,12 @@
+#include <stdio.h>
+
 #include "data.h"
 #include "keycodes.h"
 #include "draw.h"
 #include "time_utils.h"
-#include <stdio.h>
 
 void on_update_utils(t_data *data); // Put the function in update.c?
+void	draw_minimap(t_data *data);
 
 int on_update(t_data *data)
 {

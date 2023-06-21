@@ -10,7 +10,8 @@
 #include "color.h"
 #include "parsing.h"
 
-int	open_file(char *filename);
+int	open_cub_file(char *filename);
+bool	parse_textures(void *mlx, int fd, t_textures *textures);
 
 
 // TODO :
@@ -23,31 +24,27 @@ bool	parser(char *filename, t_data *data)
 	int		fd;
 	char	*line;
 
-	if (ft_strlen(filename) <= 4 || ft_strcmp(filename + ft_strlen(filename) - 4, ".cub") != 0)
-	{
-		printf("Error, '%s' should have a '.cub extension\n", filename);
-		return (false);
-	}
-	fd = open_file(filename);
+	fd = open_cub_file(filename);
 	if (fd == -1)
 		return (false);
-	data->textures.NO.img = NULL;
-	// free(data->textures.NO.img);
-	// mlx_destroy_image(data->mlx, data->textures.NO.img);
-	free(data->textures.SO.img);
-	if (!parse_texture(data->mlx, get_next_unempty_line(fd), &data->textures.NO, "NO")
-		|| !parse_texture(data->mlx, get_next_unempty_line(fd), &data->textures.SO, "SO")
-		|| !parse_texture(data->mlx, get_next_unempty_line(fd), &data->textures.WE, "WE")
-		|| !parse_texture(data->mlx, get_next_unempty_line(fd), &data->textures.EA, "EA")
-		|| !parse_color(get_next_unempty_line(fd), &data->textures.F, "F")
-		|| !parse_color(get_next_unempty_line(fd), &data->textures.C, "C"))
-		return (false); // TODO: free textures (set toNULL and if not NULL, mlx_destroy_image)
-	data->map = parse_map(fd, filename, &data->map_size);
-	if (data->map == NULL)
+	if (!parse_textures(data->mlx, fd, &data->textures)) // also parse colors
+	{
+		close(fd);
 		return (false);
+	}
+	data->map = parse_map(fd, filename, &data->map_size);
 	close(fd);
-	return (true);
-
+	if (data->map == NULL)
+	{
+		free_textures(data->mlx, &data->textures);
+		return (false);
+	}
+	if (!check_map_validity(data->map)) // put in parse_map?
+	{
+		free_textures(data->mlx, &data->textures);
+		free_map(data->map);
+		return (false);
+	}
 	// DEBUG
 	// int i = 0;
 	// printf("map:\n");
@@ -57,9 +54,10 @@ bool	parser(char *filename, t_data *data)
 	// 	i++;
 	// }
 	// printf("map_size: %d %d\n", data->map_size.x, data->map_size.y);
+	return (true);
 }
 
-int	open_file(char *filename)
+int	open_cub_file(char *filename)
 {
 	int	fd;
 

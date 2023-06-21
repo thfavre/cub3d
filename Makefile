@@ -6,7 +6,6 @@ SRCS	+=			srcs/main.c \
 
 # close folder
 SRCS	+=			srcs/close/close.c \
-					srcs/close/free_map.c \
 					srcs/close/free_split.c # where to put that ?
 
 # key folder
@@ -29,7 +28,7 @@ SRCS	+=			srcs/utils/time_utils.c \
 SRCS	+=			srcs/parsing/parser.c \
 					srcs/parsing/parse_map.c \
 					srcs/parsing/parse_color.c \
-					srcs/parsing/parse_texture.c \
+					srcs/parsing/parse_textures.c \
 					srcs/parsing/get_next_unempty_line.c \
 					# srcs/parsing/get_map_size.c \
 					# srcs/parsing/parse_textures_and_colors.c
@@ -47,7 +46,7 @@ CC		=			gcc
 
 RM		=			rm -f
 
-CFLAGS	=			-Wall -Wextra -Werror -g -w #-fsanitize=address
+CFLAGS	=			-Wall -Wextra -Werror -g -w -fsanitize=address
 
 # Platform detection
 UNAME_S := $(shell uname -s)

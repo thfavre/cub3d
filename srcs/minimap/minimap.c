@@ -69,13 +69,12 @@ void	draw_minimap(t_data *data)
 	y = 0;
 	t_rect current_rect;
 	// free(map);
-	while (data->map[y][x])
+	while (data->map[y])
 	{
 
 		while (data->map[y][x])
 		{
 			current_rect = (t_rect){(x + 1) * 20, (y + 1) * 20, 20, 20};
-			printf("This is a test\n");
 			if (data->map[y][x] == '1')
 				draw_rect(&data->img, current_rect, C_BLACK);
 			else if (data->map[y][x] == '0')
