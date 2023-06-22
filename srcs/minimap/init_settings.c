@@ -5,8 +5,7 @@ void	register_player(t_data *data);
 void	init_settings(t_data *data)
 {
 	data->game.minimap.offset = (t_vector2){MINIMAP_OFFSET, MINIMAP_OFFSET};
-	data->game.minimap.size = (t_vector2){SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
-	data->game.minimap.zoom = 1;
+	data->game.minimap.size = (t_vector2){SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4};
 	if (data->game.minimap.size.x / data->map_size.x
 		> data->game.minimap.size.y / data->map_size.y)
 		data->game.minimap.block = data->game.minimap.size.y

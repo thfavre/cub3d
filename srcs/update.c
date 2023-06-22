@@ -27,7 +27,7 @@ int on_update(t_data *data)
 	// 	}
 	// 	y++;
 	// }
-	draw_minimap(data, data->game);
+	draw_minimap(data, data->map, data->game.minimap);
 	update_player(data, &data->game);
 
 	get_avrage_fps(data->dt);

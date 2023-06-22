@@ -11,7 +11,6 @@ typedef struct s_minimap
 {
 	t_vector2	offset;
 	t_vector2	size;
-	int			zoom;
 	int			block;
 } t_minimap;
 
@@ -31,7 +30,7 @@ typedef struct s_game
 typedef struct s_data t_data;
 
 void	init_settings(t_data *data);
-void	draw_minimap(t_data *data, t_game game);
+void	draw_minimap(t_data *data, char **map, t_minimap minimap);
 void	update_player(t_data *data, t_game *game);
 
 #endif
