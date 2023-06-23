@@ -19,12 +19,14 @@ char		**parse_map(int fd, char *filename, t_vector2 *map_size)
 	int		file_line_number;
 
 	file_line_number = get_file_line_number(filename);
-	if (file_line_number == -1) // is it necessary to have an error here ?
+	if (file_line_number == -1)
 		return (NULL);
 	line = get_next_unempty_line(fd);
 	if (line == NULL)
 		return (NULL);
 	map = ft_calloc(file_line_number + 1, sizeof(char *));
+	if (map == NULL)
+		free(line);
 	*map_size = (t_vector2){0, 0};
 	while (map && line != NULL)
 	{
@@ -33,9 +35,8 @@ char		**parse_map(int fd, char *filename, t_vector2 *map_size)
 		map[map_size->y] = line;
 		if (ft_strlen(line) > map_size->x)
 			map_size->x = ft_strlen(line);
-		line = get_next_line(fd); // TODO: free line when error, but how to know if it is an error or end of file ?
-		// if (line == NULL)
-		// 	return (free_map(map));
+
+		line = get_next_line(fd);
 		map_size->y++;
 	}
 	return (map);
