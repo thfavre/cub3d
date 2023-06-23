@@ -134,6 +134,8 @@
 #  define K_D 2
 #  define K_SPACE 49
 #  define K_R 15
+#  define K_Z 6
+#  define K_X 7
 // TODO complete this apple list
 
 
