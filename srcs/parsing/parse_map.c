@@ -9,8 +9,8 @@
 #include "parsing.h"
 
 void	*free_map(char **map);
-
 int		get_file_line_number(char *filename);
+bool	is_map_closed(char **map);
 
 char		**parse_map(int fd, char *filename, t_vector2 *map_size)
 {
@@ -108,6 +108,34 @@ bool	check_map_validity(char **map)
 			printf("Error, invalid character '%c' \
 at (%d, %d)\n", cell, pos.x + 1, pos.y + 1);
 			return (false);
+		}
+	}
+	return (is_map_closed(map));
+}
+
+bool	is_map_closed(char **map)
+{
+	t_vector2	pos;
+	char		cell;
+
+	pos.y = -1;
+	while(map[++pos.y] != NULL)
+	{
+		pos.x = -1;
+		while(map[pos.y][++pos.x] != '\0')
+		{
+			cell = map[pos.y][pos.x];
+			if (cell == '0' || cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W')
+			{
+				if (pos.y == 0 || pos.x == 0 || map[pos.y][pos.x + 1] == '\0' ||
+					map[pos.y + 1] == NULL || map[pos.y][pos.x + 1] == ' ' ||
+					map[pos.y + 1][pos.x] == ' ' || map[pos.y][pos.x - 1] == ' ' ||
+					map[pos.y - 1][pos.x] == ' ')
+				{
+					printf("Error, map is not closed (at %d, %d)\n", pos.x + 1, pos.y + 1);
+					return (false);
+				}
+			}
 		}
 	}
 	return (true);
