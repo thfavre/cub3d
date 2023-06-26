@@ -5,13 +5,14 @@
 
 void	draw_player(t_data *data, t_game *game);
 void	move_player(t_data *data, t_game *game);
-void	check_collisions(t_data *data, t_game *game);
+void	check_collisions_x(t_data *data, t_minimap *minimap, t_player *player);
+void	check_collisions_y(t_data *data, t_minimap *minimap, t_player *player);
+bool	collide_rect(t_rect rect1, t_rect rect2);
 
 void	update_player(t_data *data, t_game *game)
 {
 	draw_player(data, game);
 	move_player(data, game);
-	check_collisions(data, game);
 }
 
 void	draw_player(t_data *data, t_game *game)
@@ -30,29 +31,58 @@ void	move_player(t_data *data, t_game *game)
 		game->player.pos.y -= game->player.speed * data->dt;
 	if (data->key_pressed[K_S])
 		game->player.pos.y += game->player.speed * data->dt;
+	check_collisions_y(data, &game->minimap, &game->player);
 	if (data->key_pressed[K_A])
 		game->player.pos.x -= game->player.speed * data->dt;
 	if (data->key_pressed[K_D])
 		game->player.pos.x += game->player.speed * data->dt;
+	check_collisions_x(data, &game->minimap, &game->player);
 }
 
-void	check_collisions(t_data *data, t_game *game)
+void	check_collisions_x(t_data *data, t_minimap *minimap, t_player *player)
 {
-	t_vector2	player_pos;
+	int			i;
 
-	player_pos = (t_vector2){(int)game->player.pos.x / game->minimap.block,
-		(int)game->player.pos.y / game->minimap.block};
-	if (data->map[player_pos.y][player_pos.x - 1] == '1')
-		if (game->player.pos.x < player_pos.x)
-			game->player.pos.x = player_pos.x * game->minimap.block;
-	if (data->map[player_pos.y][player_pos.x + 1] == '1')
-		if (game->player.pos.x > player_pos.x)
-			game->player.pos.x = player_pos.x * game->minimap.block;
-	if (data->map[player_pos.y - 1][player_pos.x] == '1')
-		if (game->player.pos.y > player_pos.y)
-			game->player.pos.y = player_pos.y * game->minimap.block;
-	if (data->map[player_pos.y + 1][player_pos.x] == '1')
-		if (game->player.pos.y < player_pos.y)
-			game->player.pos.y = player_pos.y * game->minimap.block;
+	i = -1;
+	while (++i < minimap->walls_count)
+	{
+		if (collide_rect((t_rect){(int)player->pos.x, (int)player->pos.y,
+				(int)player->size, (int)player->size}, minimap->walls[i].rect))
+		{
+			if (player->pos.x < minimap->walls[i].rect.pos.x)
+				player->pos.x = minimap->walls[i].rect.pos.x - player->size;
+			else
+				player->pos.x = minimap->walls[i].rect.pos.x
+					+ minimap->walls[i].rect.size.x;
+		}
+	}
 }
 
+void	check_collisions_y(t_data *data, t_minimap *minimap, t_player *player)
+{
+	int			i;
+
+	i = -1;
+	while (++i < minimap->walls_count)
+	{
+		if (collide_rect((t_rect){(int)player->pos.x, (int)player->pos.y,
+				(int)player->size, (int)player->size}, minimap->walls[i].rect))
+		{
+			if (player->pos.y < minimap->walls[i].rect.pos.y)
+				player->pos.y = minimap->walls[i].rect.pos.y - player->size;
+			else
+				player->pos.y = minimap->walls[i].rect.pos.y
+					+ minimap->walls[i].rect.size.y;
+		}
+	}
+}
+
+bool	collide_rect(t_rect rect1, t_rect rect2)
+{
+	if (rect1.pos.x < rect2.pos.x + rect2.size.x
+		&& rect1.pos.x + rect1.size.x > rect2.pos.x
+		&& rect1.pos.y < rect2.pos.y + rect2.size.y
+		&& rect1.pos.y + rect1.size.y > rect2.pos.y)
+		return (true);
+	return (false);
+}

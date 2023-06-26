@@ -27,6 +27,7 @@
 		"string.h": "c",
 		"stdlib.h": "c",
 		"sprite.h": "c",
-		"parsing.h": "c"
+		"parsing.h": "c",
+		"game2d.h": "c"
 	}
 }

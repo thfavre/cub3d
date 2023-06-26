@@ -8,6 +8,7 @@
 # include "keycodes.h"
 # include "sprite.h"
 # include "game2d.h"
+# include "libft.h"
 
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
