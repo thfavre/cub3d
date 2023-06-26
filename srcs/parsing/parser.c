@@ -45,15 +45,6 @@ bool	parser(char *filename, t_data *data)
 		free_map(data->map);
 		return (false);
 	}
-	// DEBUG
-	// int i = 0;
-	// printf("map:\n");
-	// while (data->map[i])
-	// {
-	// 		printf("%s\n", data->map[i]);
-	// 	i++;
-	// }
-	// printf("map_size: %d %d\n", data->map_size.x, data->map_size.y);
 	return (true);
 }
 

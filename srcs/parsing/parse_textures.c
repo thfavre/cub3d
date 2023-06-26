@@ -9,6 +9,7 @@
 
 void	free_split(char **split);
 bool	parse_texture(void *mlx, char *line, t_sprite *sprite, char *name);
+bool	set_texture(void *mlx, t_sprite *sprite, char *path, char *name);
 
 bool	parse_textures(void *mlx, int fd, t_textures *textures)
 {
@@ -41,22 +42,33 @@ bool	parse_texture(void *mlx, char *line, t_sprite *sprite, char *name)
 		printf("Error, expected '%s' but got '%s'\n", name, splited_line[0]);
 		return (false);
 	}
-	if (splited_line[1] == NULL)
+	if (!set_texture(mlx, sprite, splited_line[1], name))
 	{
-		printf("Error, expected a path after '%s'\n", name);
+		free_split(splited_line);
 		return (false);
-	}
-	if (splited_line[1][ft_strlen(splited_line[1]) - 1] == '\n')
-		splited_line[1][ft_strlen(splited_line[1]) - 1] = '\0';
-	sprite->img = mlx_xpm_file_to_image(mlx, splited_line[1], &sprite->size.x, &sprite->size.y);
-	if (sprite->img == NULL)
-	{
-		printf("Error, invalid path '%s'\n", splited_line[1]);
-		return (false); // TODO: free malocs
 	}
 	free_split(splited_line);
 	return (true);
 }
+
+bool	set_texture(void *mlx, t_sprite *sprite, char *path, char *name)
+{
+	if (path == NULL)
+	{
+		printf("Error, expected a path after '%s'\n", name);
+		return (false);
+	}
+	if (path[ft_strlen(path) - 1] == '\n')
+		path[ft_strlen(path) - 1] = '\0';
+	sprite->img = mlx_xpm_file_to_image(mlx, path, &sprite->size.x, &sprite->size.y);
+	if (sprite->img == NULL)
+	{
+		printf("Error, invalid path '%s'\n", path);
+		return (false);
+	}
+	return (true);
+}
+
 
 void	free_textures(void *mlx, t_textures *textures)
 {

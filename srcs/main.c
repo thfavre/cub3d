@@ -33,18 +33,21 @@ int	main(int argc, char **argv)
 	}
 	else if (!init(&data))
 	{
+		mlx_destroy_image(data.mlx, data.img.img);
+		mlx_destroy_window(data.mlx, data.win);
+		// free(data.mlx);
 		return (1);
 	}
+
 	else if (!parser(argv[1], &data))
 	{
 		mlx_destroy_image(data.mlx, data.img.img);
 		mlx_destroy_window(data.mlx, data.win);
-		free(data.mlx);
-
+		// free(data.mlx);
 		return (1);
 	}
 	init_settings(&data);
-	// START!!!
+	// // START!!!
 	mlx_loop(data.mlx);
 
 

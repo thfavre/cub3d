@@ -48,7 +48,7 @@ CC		=			gcc
 
 RM		=			rm -f
 
-CFLAGS	=			-Wall -Wextra -Werror -g -w -fsanitize=address
+CFLAGS	=			-Wall -Wextra -Werror -g -w# -fsanitize=address
 
 # Platform detection
 UNAME_S := $(shell uname -s)

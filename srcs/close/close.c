@@ -1,11 +1,13 @@
 #include "data.h"
 
-void *free_map(char **map);
+void	*free_map(char **map);
+void	free_textures(void *mlx, t_textures *textures);
 
 int	on_close(t_data *data)
 {
+	free_map(data->map);
+	free_textures(data->mlx, &data->textures);
 	free(data->mlx);
-	// free_map(data->map);
 	exit(0);
 	return (0);
 }
