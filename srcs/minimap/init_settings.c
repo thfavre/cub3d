@@ -1,6 +1,8 @@
 #include "data.h"
 
 void	register_player(t_data *data);
+bool	register_walls(t_data *data);
+int		count_walls(t_data *data);
 
 void	init_settings(t_data *data)
 {
@@ -13,9 +15,10 @@ void	init_settings(t_data *data)
 	else
 		data->game.minimap.block = data->game.minimap.size.x
 			/ data->map_size.x;
-	data->game.player.speed = 100;
+	data->game.player.speed = 500;
 	data->game.player.size = data->game.minimap.block * 0.75;
 	register_player(data);
+	register_walls(data);
 }
 
 void	register_player(t_data *data)
@@ -39,4 +42,51 @@ void	register_player(t_data *data)
 			}
 		}
 	}
+}
+
+bool	register_walls(t_data *data)
+{
+	int	x;
+	int	y;
+	int	i;
+
+	y = -1;
+	data->game.minimap.walls_count = count_walls(data);
+	data->game.minimap.walls = ft_calloc(data->game.minimap.walls_count + 1,
+			sizeof(t_wall)); // TODO free
+	if (!data->game.minimap.walls)
+		return (false);
+	y = -1;
+	i = -1;
+	while (data->map[++y])
+	{
+		x = -1;
+		while (data->map[y][++x])
+		{
+			if (data->map[y][x] == '1')
+			{
+				data->game.minimap.walls[++i].rect = (t_rect){x
+					* data->game.minimap.block, y * data->game.minimap.block,
+					data->game.minimap.block, data->game.minimap.block};
+			}
+		}
+	}
+}
+
+int	count_walls(t_data *data)
+{
+	int	x;
+	int	y;
+	int	i;
+
+	i = 0;
+	y = -1;
+	while (data->map[++y])
+	{
+		x = -1;
+		while (data->map[y][++x])
+			if (data->map[y][x] == '1')
+				i++;
+	}
+	return (i);
 }
