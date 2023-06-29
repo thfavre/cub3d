@@ -31,8 +31,8 @@ int on_update(t_data *data)
 		if (in_menu)
 			printf("In menu\n");
 	}
-	draw_minimap(data, data->map, data->game.minimap);
-	update_player(data, &data->game);
+	update_player(data, &data->game2d.player);
+	draw_minimap(data, data->map, data->game2d.minimap);
 
 	get_avrage_fps(data->dt);
 

@@ -36,7 +36,8 @@ typedef struct s_data
 	t_vector2	map_size;
 	// t_vector2	*walls_positions;
 	t_textures	textures;
-	t_game		game;
+	// t_game		game;
+	t_game2d	game2d;
 
 
 } t_data;
