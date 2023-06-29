@@ -15,15 +15,18 @@ void	update_player(t_data *data, t_player *player)
 
 void	move_player(t_data *data, t_player *player)
 {
+	double	distance;
+
+	distance = player->speed * data->dt;
 	if (data->key_pressed[K_W])
-		player->pos.y -= player->speed * data->dt;
+		player->pos.y -= distance;
 	if (data->key_pressed[K_S])
-		player->pos.y += player->speed * data->dt;
+		player->pos.y += distance;
 	check_collisions_y(&data->game2d, player);
 	if (data->key_pressed[K_A])
-		player->pos.x -= player->speed * data->dt;
+		player->pos.x -= distance;
 	if (data->key_pressed[K_D])
-		player->pos.x += player->speed * data->dt;
+		player->pos.x += distance;
 	check_collisions_x(&data->game2d, player);
 }
 

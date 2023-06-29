@@ -109,7 +109,7 @@ at (%d, %d)\n", cell, pos.x + 1, pos.y + 1);
 			return (false);
 		}
 	}
-	return (is_map_closed(map));
+	return (player_count == 1 && is_map_closed(map)); // TODO message when no player
 }
 
 bool	is_map_closed(char **map)

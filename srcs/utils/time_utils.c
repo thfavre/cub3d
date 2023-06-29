@@ -2,13 +2,13 @@
 
 double	get_elapsed_time(void)
 {
-	static clock_t	start_time = 0;
-	double			elapsed_time;
-	clock_t			current_time;
+	double	currentTime;
+	double	elapsed_time;
+	static	double previousTime = 0;
 
-	current_time = clock();
-	elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
-	start_time = clock();
+	currentTime = (double)clock() / CLOCKS_PER_SEC;
+	elapsed_time = currentTime - previousTime;
+	previousTime = currentTime;
 	return (elapsed_time);
 }
 

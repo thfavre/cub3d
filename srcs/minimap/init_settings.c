@@ -8,8 +8,8 @@ void	init_settings(t_data *data)
 {
 	data->game2d.size_block = (t_vector2){50, 50};
 	data->game2d.minimap.offset = (t_vector2){MINIMAP_OFFSET, MINIMAP_OFFSET};
-	data->game2d.minimap.size = (t_vector2){SCREEN_WIDTH / 4,
-		SCREEN_HEIGHT / 4};
+	data->game2d.minimap.size = (t_vector2){SCREEN_WIDTH / 2,
+		SCREEN_HEIGHT / 2};
 	if (data->game2d.minimap.size.x / data->map_size.x
 		> data->game2d.minimap.size.y / data->map_size.y)
 		data->game2d.minimap.scale = (data->game2d.minimap.size.y

@@ -5,7 +5,7 @@
 #include "draw.h"
 #include "rect.h"
 
-# define MINIMAP_OFFSET 20
+# define MINIMAP_OFFSET 50
 
 typedef struct s_wall
 {
@@ -42,11 +42,3 @@ void	draw_minimap(t_data *data, char **map, t_minimap minimap);
 void	update_player(t_data *data, t_player *player);
 
 #endif
-
-
-typedef struct s_tile
-{
-	t_rect	rect;
-	char	""";
-
-} t_tile;
