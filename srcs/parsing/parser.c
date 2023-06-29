@@ -10,15 +10,9 @@
 #include "color.h"
 #include "parsing.h"
 
-int	open_cub_file(char *filename);
+int		open_cub_file(char *filename);
 bool	parse_textures(void *mlx, int fd, t_textures *textures);
 
-
-// TODO :
-// check if only one player is present
-// check if map is valid (only 0, 1, 2, NSEW, spaces)
-// check if all (0 + player) are surrounded by 1
-// free all mallocs if error
 bool	parser(char *filename, t_data *data)
 {
 	int		fd;
@@ -27,7 +21,7 @@ bool	parser(char *filename, t_data *data)
 	fd = open_cub_file(filename);
 	if (fd == -1)
 		return (false);
-	if (!parse_textures(data->mlx, fd, &data->textures)) // also parse colors
+	if (!parse_textures(data->mlx, fd, &data->textures))
 	{
 		close(fd);
 		return (false);
@@ -39,7 +33,7 @@ bool	parser(char *filename, t_data *data)
 		free_textures(data->mlx, &data->textures);
 		return (false);
 	}
-	if (!check_map_validity(data->map)) // put in parse_map?
+	if (!check_map_validity(data->map))
 	{
 		free_textures(data->mlx, &data->textures);
 		free_map(data->map);
@@ -52,7 +46,8 @@ int	open_cub_file(char *filename)
 {
 	int	fd;
 
-	if (ft_strlen(filename) <= 4 || ft_strcmp(filename + ft_strlen(filename) - 4, ".cub") != 0)
+	if (ft_strlen(filename) <= 4 || ft_strcmp(filename + \
+										ft_strlen(filename) - 4, ".cub") != 0)
 	{
 		printf("Error, '%s' should have a '.cub extension\n", filename);
 		return (-1);

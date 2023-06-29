@@ -12,7 +12,7 @@ void	*free_map(char **map);
 int		get_file_line_number(char *filename);
 bool	is_map_closed(char **map);
 
-char		**parse_map(int fd, char *filename, t_vector2 *map_size)
+char	**parse_map(int fd, char *filename, t_vector2 *map_size)
 {
 	char	*line;
 	char	**map;
@@ -30,12 +30,11 @@ char		**parse_map(int fd, char *filename, t_vector2 *map_size)
 	*map_size = (t_vector2){0, 0};
 	while (map && line != NULL)
 	{
-		if (line[ft_strlen(line)-1] == '\n')
-			line[ft_strlen(line)-1] = '\0';
+		if (line[ft_strlen(line) - 1] == '\n')
+			line[ft_strlen(line) - 1] = '\0';
 		map[map_size->y] = line;
 		if (ft_strlen(line) > map_size->x)
 			map_size->x = ft_strlen(line);
-
 		line = get_next_line(fd);
 		map_size->y++;
 	}
@@ -67,7 +66,7 @@ int	get_file_line_number(char *filename)
 	return (line_number);
 }
 
-void *free_map(char **map)
+void	*free_map(char **map)
 {
 	int	i;
 
@@ -87,7 +86,7 @@ bool	check_map_validity(char **map)
 {
 	t_vector2			pos;
 	char				cell;
-	static int			player_count = 0; // for norminette....
+	static int			player_count = 0;
 
 	pos.y = -1;
 	while (map[++pos.y] != NULL)
@@ -115,24 +114,26 @@ at (%d, %d)\n", cell, pos.x + 1, pos.y + 1);
 
 bool	is_map_closed(char **map)
 {
-	t_vector2	pos;
+	t_vector2	p;
 	char		cell;
 
-	pos.y = -1;
-	while(map[++pos.y] != NULL)
+	p.y = -1;
+	while (map[++p.y] != NULL)
 	{
-		pos.x = -1;
-		while(map[pos.y][++pos.x] != '\0')
+		p.x = -1;
+		while (map[p.y][++p.x] != '\0')
 		{
-			cell = map[pos.y][pos.x];
-			if (cell == '0' || cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W')
+			cell = map[p.y][p.x];
+			if (cell == '0' || cell == 'N' || cell == 'S' || cell == 'E'
+				|| cell == 'W')
 			{
-				if (pos.y == 0 || pos.x == 0 || map[pos.y][pos.x + 1] == '\0' ||
-					map[pos.y + 1] == NULL || map[pos.y][pos.x + 1] == ' ' ||
-					map[pos.y + 1][pos.x] == ' ' || map[pos.y][pos.x - 1] == ' ' ||
-					map[pos.y - 1][pos.x] == ' ')
+				if (p.y == 0 || p.x == 0 || map[p.y][p.x + 1] == '\0' ||
+					map[p.y + 1] == NULL || map[p.y][p.x + 1] == ' ' ||
+					map[p.y + 1][p.x] == ' ' || map[p.y][p.x - 1] == ' ' ||
+					map[p.y - 1][p.x] == ' ')
 				{
-					printf("Error, map is not closed (at %d, %d)\n", pos.x + 1, pos.y + 1);
+					printf("Error, map is not closed \
+(at %d, %d)\n", p.x + 1, p.y + 1);
 					return (false);
 				}
 			}

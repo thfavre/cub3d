@@ -6,7 +6,7 @@ double	get_elapsed_time(void)
 	double			elapsed_time;
 	clock_t			current_time;
 
-	current_time = clock(); // TODO is it autorized to use clock()?
+	current_time = clock();
 	elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
 	start_time = clock();
 	return (elapsed_time);

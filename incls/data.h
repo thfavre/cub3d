@@ -28,6 +28,7 @@ typedef struct s_data
 	void		*win;
 	t_img		img;
 	bool		key_pressed[MAX_KEYS];
+	bool		key_just_pressed[MAX_KEYS];
 	t_vector2	mouse_pos;
 	float		dt;
 

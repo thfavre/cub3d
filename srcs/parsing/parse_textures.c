@@ -26,20 +26,20 @@ bool	parse_textures(void *mlx, int fd, t_textures *textures)
 	return (true);
 }
 
-
 bool	parse_texture(void *mlx, char *line, t_sprite *sprite, char *name)
 {
 	char	**splited_line;
 
 	if (line == NULL)
 		return (false);
-	splited_line = ft_split(line, ' '); // free this when needed
+	splited_line = ft_split(line, ' ');
 	free(line);
 	if (splited_line == NULL)
 		return (false);
 	if (ft_strcmp(splited_line[0], name) != 0)
 	{
 		printf("Error, expected '%s' but got '%s'\n", name, splited_line[0]);
+		free_split(splited_line);
 		return (false);
 	}
 	if (!set_texture(mlx, sprite, splited_line[1], name))
@@ -60,7 +60,8 @@ bool	set_texture(void *mlx, t_sprite *sprite, char *path, char *name)
 	}
 	if (path[ft_strlen(path) - 1] == '\n')
 		path[ft_strlen(path) - 1] = '\0';
-	sprite->img = mlx_xpm_file_to_image(mlx, path, &sprite->size.x, &sprite->size.y);
+	sprite->img = mlx_xpm_file_to_image(mlx, path, &sprite->size.x,
+			&sprite->size.y);
 	if (sprite->img == NULL)
 	{
 		printf("Error, invalid path '%s'\n", path);
@@ -68,7 +69,6 @@ bool	set_texture(void *mlx, t_sprite *sprite, char *path, char *name)
 	}
 	return (true);
 }
-
 
 void	free_textures(void *mlx, t_textures *textures)
 {
