@@ -28,6 +28,12 @@
 		"stdlib.h": "c",
 		"sprite.h": "c",
 		"parsing.h": "c",
-		"game2d.h": "c"
+		"game2d.h": "c",
+		"__hash_table": "c",
+		"__split_buffer": "c",
+		"bitset": "c",
+		"initializer_list": "c",
+		"unordered_map": "c",
+		"utility": "c"
 	}
 }

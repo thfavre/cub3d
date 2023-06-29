@@ -1,27 +1,31 @@
 #include "data.h"
 
-void	register_player(t_data *data);
+void	register_player(t_data *data, t_game2d *game2d);
 bool	register_walls(t_data *data);
 int		count_walls(t_data *data);
 
 void	init_settings(t_data *data)
 {
-	data->game.minimap.offset = (t_vector2){MINIMAP_OFFSET, MINIMAP_OFFSET};
-	data->game.minimap.size = (t_vector2){SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4};
-	if (data->game.minimap.size.x / data->map_size.x
-		> data->game.minimap.size.y / data->map_size.y)
-		data->game.minimap.block = data->game.minimap.size.y
-			/ data->map_size.y;
+	data->game2d.size_block = (t_vector2){50, 50};
+	data->game2d.minimap.offset = (t_vector2){MINIMAP_OFFSET, MINIMAP_OFFSET};
+	data->game2d.minimap.size = (t_vector2){SCREEN_WIDTH / 4,
+		SCREEN_HEIGHT / 4};
+	if (data->game2d.minimap.size.x / data->map_size.x
+		> data->game2d.minimap.size.y / data->map_size.y)
+		data->game2d.minimap.scale = (data->game2d.minimap.size.y
+				/ data->map_size.y) / (float)data->game2d.size_block.y;
 	else
-		data->game.minimap.block = data->game.minimap.size.x
-			/ data->map_size.x;
-	data->game.player.speed = 500;
-	data->game.player.size = data->game.minimap.block * 0.75;
-	register_player(data);
+		data->game2d.minimap.scale = (data->game2d.minimap.size.x
+				/ data->map_size.x) / (float)data->game2d.size_block.x;
+	printf("Value of scale: %f\n", data->game2d.minimap.scale);
+	data->game2d.player.speed = 500;
+	data->game2d.player.size = (t_fvector2){data->game2d.size_block.x * 0.75,
+		data->game2d.size_block.y * 0.75};
+	register_player(data, &data->game2d);
 	register_walls(data);
 }
 
-void	register_player(t_data *data)
+void	register_player(t_data *data, t_game2d *game2d)
 {
 	int	x;
 	int	y;
@@ -35,9 +39,8 @@ void	register_player(t_data *data)
 			if (data->map[y][x] == 'N' || data->map[y][x] == 'S'
 				|| data->map[y][x] == 'E' || data->map[y][x] == 'O')
 			{
-				data->game.player.pos = (t_fvector2){(x
-						* data->game.minimap.block),
-					(y * data->game.minimap.block)};
+				game2d->player.pos = (t_fvector2){(x * game2d->size_block.x),
+					(y * game2d->size_block.y)};
 				break ;
 			}
 		}
@@ -51,10 +54,10 @@ bool	register_walls(t_data *data)
 	int	i;
 
 	y = -1;
-	data->game.minimap.walls_count = count_walls(data);
-	data->game.minimap.walls = ft_calloc(data->game.minimap.walls_count + 1,
-			sizeof(t_wall)); // TODO free
-	if (!data->game.minimap.walls)
+	data->game2d.walls_count = count_walls(data);
+	data->game2d.walls = ft_calloc(data->game2d.walls_count + 1,
+			sizeof(t_wall));
+	if (!data->game2d.walls)
 		return (false);
 	y = -1;
 	i = -1;
@@ -65,9 +68,9 @@ bool	register_walls(t_data *data)
 		{
 			if (data->map[y][x] == '1')
 			{
-				data->game.minimap.walls[++i].rect = (t_rect){x
-					* data->game.minimap.block, y * data->game.minimap.block,
-					data->game.minimap.block, data->game.minimap.block};
+				data->game2d.walls[++i].rect = (t_rect){x
+					* data->game2d.size_block.x, y * data->game2d.size_block.y,
+					data->game2d.size_block.x, data->game2d.size_block.y};
 			}
 		}
 	}
