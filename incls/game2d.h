@@ -12,32 +12,10 @@ typedef struct s_wall
 	t_rect	rect;
 } t_wall;
 
-// typedef struct s_minimap
-// {
-// 	t_vector2	offset;
-// 	t_vector2	size;
-// 	int			block;
-// 	int			walls_count;
-// 	t_wall		*walls;
-// } t_minimap;
-
-// typedef	struct s_player
-// {
-// 	t_fvector2	pos;
-// 	float		size;
-// 	float		speed;
-// } t_player;
-
-// typedef struct s_game
-// {
-// 	t_minimap	minimap;
-// 	t_player	player;
-// } t_game;
-
 typedef struct s_player
 {
 	t_fvector2	pos;
-	t_fvector2	size;
+	t_vector2	size;
 	float		speed;
 } t_player;
 
@@ -64,3 +42,11 @@ void	draw_minimap(t_data *data, char **map, t_minimap minimap);
 void	update_player(t_data *data, t_player *player);
 
 #endif
+
+
+typedef struct s_tile
+{
+	t_rect	rect;
+	char	""";
+
+} t_tile;

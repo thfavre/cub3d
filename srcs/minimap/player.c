@@ -55,7 +55,7 @@ void	check_collisions_y(t_game2d *game2d, t_player *player)
 	while (++i < game2d->walls_count)
 	{
 		if (collide_rect((t_rect){(int)player->pos.x, (int)player->pos.y,
-				(int)player->size.x, (int)player->size.y},
+				player->size.x, player->size.y},
 			game2d->walls[i].rect))
 		{
 			if (player->pos.y < game2d->walls[i].rect.pos.y)
