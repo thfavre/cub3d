@@ -14,6 +14,19 @@ int on_update(t_data *data)
 	static bool in_menu;
 	draw_background(&data->img, data->textures.F);
 
+	// To make drop the frame rate
+	if (data->key_pressed[K_T])
+	{
+		for (int y = 500; y < SCREEN_HEIGHT; y++)
+			for (int x = 0; x < SCREEN_WIDTH; x++)
+			{
+				for (int i = 0; i < 10; i++)
+					draw_rect(&data->img, (t_rect){x, y, 4, 4}, C_WHEAT1);
+			}
+	}
+
+	draw_background(&data->img, data->textures.F);
+
 	// hide mouse when on window
 	// if (data->mouse_pos.x >= 0 && data->mouse_pos.x < SCREEN_WIDTH && \
 	// 	data->mouse_pos.y >= 0 && data->mouse_pos.y < SCREEN_HEIGHT)
@@ -27,6 +40,8 @@ int on_update(t_data *data)
 
 	if (data->key_just_pressed[K_SPACE])
 		data->game2d.minimap.scale += 0.1;
+
+
 
 	// if (data->key_just_pressed[K_SPACE])
 	// {

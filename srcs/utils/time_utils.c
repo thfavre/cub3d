@@ -1,15 +1,15 @@
 #include <time.h>
 
-double	get_elapsed_time(void)
+double	get_delta_time(void) // TODO fix this function
 {
 	double	currentTime;
-	double	elapsed_time;
+	double	delta_time;
 	static	double previousTime = 0;
 
 	currentTime = (double)clock() / CLOCKS_PER_SEC;
-	elapsed_time = currentTime - previousTime;
+	delta_time = currentTime - previousTime;
 	previousTime = currentTime;
-	return (elapsed_time);
+	return (delta_time);
 }
 
 int	get_avrage_fps(float dt)
