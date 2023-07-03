@@ -8,6 +8,8 @@
 
 void on_update_utils(t_data *data); // Put the function in update.c?
 int	get_avrage_fps(float dt);
+void	game3d(void *img, char **worldMap, bool *key_pressed, void *win, void *mlx);
+
 
 int on_update(t_data *data)
 {
@@ -23,9 +25,10 @@ int on_update(t_data *data)
 				for (int i = 0; i < 10; i++)
 					draw_rect(&data->img, (t_rect){x, y, 4, 4}, C_WHEAT1);
 			}
+	draw_background(&data->img, data->textures.F* 0.7);
 	}
 
-	draw_background(&data->img, data->textures.F);
+
 
 	// hide mouse when on window
 	// if (data->mouse_pos.x >= 0 && data->mouse_pos.x < SCREEN_WIDTH && \
@@ -51,6 +54,8 @@ int on_update(t_data *data)
 	// }
 	update_player(data, &data->game2d.player);
 	draw_minimap(data, data->map, data->game2d.minimap);
+
+	game3d(&data->img, data->map, data->key_pressed, data->win, data->mlx);
 
 	get_avrage_fps(data->dt);
 

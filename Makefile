@@ -38,6 +38,9 @@ SRCS	+=			srcs/minimap/minimap.c \
 					srcs/minimap/init_settings.c \
 					srcs/minimap/player.c \
 
+# game3d folder
+SRCS	+=			srcs/game3d/game3d.c \
+
 # ---------------  --------------- #
 
 NAME	=			cub3d
