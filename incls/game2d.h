@@ -4,6 +4,7 @@
 #include "data.h"
 #include "draw.h"
 #include "rect.h"
+#include <math.h>
 
 # define MINIMAP_OFFSET 50
 
@@ -24,6 +25,7 @@ typedef struct s_minimap
 	t_vector2	offset;
 	t_vector2	size;
 	float		scale;
+	float		angle;
 } t_minimap;
 
 typedef struct s_game2d
