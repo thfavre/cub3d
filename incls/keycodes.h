@@ -136,6 +136,7 @@
 #  define K_R 15
 #  define K_Z 6
 #  define K_X 7
+#  define K_T 17
 // TODO complete this apple list
 
 
