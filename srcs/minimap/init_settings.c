@@ -18,7 +18,7 @@ void	init_settings(t_data *data)
 	else
 		data->game2d.minimap.scale = (data->game2d.minimap.size.x
 				/ data->map_size.x) / (float)data->game2d.size_block.x;
-	data->game2d.player.speed = 100;
+	data->game2d.player.speed = 500;
 	data->game2d.player.size = (t_vector2){data->game2d.size_block.x * 0.8,
 		data->game2d.size_block.y * 0.8};
 	register_player(data, &data->game2d);
@@ -37,7 +37,7 @@ void	register_player(t_data *data, t_game2d *game2d)
 		while (data->map[y][++x])
 		{
 			if (data->map[y][x] == 'N' || data->map[y][x] == 'S'
-				|| data->map[y][x] == 'E' || data->map[y][x] == 'O')
+				|| data->map[y][x] == 'E' || data->map[y][x] == 'W')
 			{
 				game2d->player.pos = (t_fvector2){(x * game2d->size_block.x),
 					(y * game2d->size_block.y)};
@@ -98,11 +98,11 @@ int	count_walls(t_data *data)
 void	register_angle(t_game2d *game2d, char c)
 {
 	if (c == 'N')
-		game2d->minimap.angle = M_PI / 2;
+		game2d->player.angle = M_PI_2;
 	else if (c == 'S')
-		game2d->minimap.angle = 3 * M_PI / 2;
+		game2d->player.angle = (3 * M_PI) * 0.5;
 	else if (c == 'E')
-		game2d->minimap.angle = 0;
-	else if (c == 'O')
-		game2d->minimap.angle = M_PI;
+		game2d->player.angle = 0;
+	else if (c == 'W')
+		game2d->player.angle = M_PI;
 }

@@ -36,7 +36,10 @@ SRCS	+=			srcs/parsing/parser.c \
 # minimap folder
 SRCS	+=			srcs/minimap/minimap.c \
 					srcs/minimap/init_settings.c \
-					srcs/minimap/player.c \
+
+# player folder
+SRCS	+=			srcs/player/player.c \
+					srcs/player/collisions.c \
 
 # ---------------  --------------- #
 
