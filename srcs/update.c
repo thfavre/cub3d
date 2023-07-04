@@ -20,7 +20,7 @@ int on_update(t_data *data)
 		for (int y = 500; y < SCREEN_HEIGHT; y++)
 			for (int x = 0; x < SCREEN_WIDTH; x++)
 			{
-				for (int i = 0; i < 10; i++)
+				for (int i = 0; i < 3; i++)
 					draw_rect(&data->img, (t_rect){x, y, 4, 4}, C_WHEAT1);
 			}
 	}

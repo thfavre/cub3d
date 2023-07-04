@@ -1,34 +1,7 @@
-#include "draw.h"
-#include "color.h"
+#include "data.h"
 #include "game2d.h"
-#include "keycodes.h"
 
-void	move_player(t_data *data, t_player *player);
-void	check_collisions_x(t_game2d *game2d, t_player *player);
-void	check_collisions_y(t_game2d *game2d, t_player *player);
 bool	collide_rect(t_rect rect1, t_rect rect2);
-
-void	update_player(t_data *data, t_player *player)
-{
-	move_player(data, player);
-}
-
-void	move_player(t_data *data, t_player *player)
-{
-	double	distance;
-
-	distance = player->speed * data->dt;
-	if (data->key_pressed[K_W])
-		player->pos.y -= distance;
-	if (data->key_pressed[K_S])
-		player->pos.y += distance;
-	check_collisions_y(&data->game2d, player);
-	if (data->key_pressed[K_A])
-		player->pos.x -= distance;
-	if (data->key_pressed[K_D])
-		player->pos.x += distance;
-	check_collisions_x(&data->game2d, player);
-}
 
 void	check_collisions_x(t_game2d *game2d, t_player *player)
 {
