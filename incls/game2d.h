@@ -7,6 +7,25 @@
 #include <math.h>
 
 # define MINIMAP_OFFSET 30
+# define FOV_ANGLE 60
+
+// typedef struct s_ray UNFINISHED
+// {
+// 	float		angleStep;
+// 	float		rayAngle;
+// 	float		rayDirX;
+// 	float		rayDirY;
+// 	float		deltaDistX;
+// 	float		deltaDistY;
+// 	float		sideDistX;
+// 	float		sideDistY;
+// 	int			rayIndex;
+// 	int			stepX;
+// 	int			stepY;
+// 	int			mapX;
+// 	int			mapY;
+// 	int			hit;
+// } t_ray;
 
 typedef struct s_wall
 {
