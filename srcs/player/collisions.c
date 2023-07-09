@@ -10,14 +10,14 @@ void	check_collisions_x(t_game2d *game2d, t_player *player)
 	i = -1;
 	while (++i < game2d->walls_count)
 	{
-		if (collide_rect((t_rect){(int)player->pos.x, (int)player->pos.y,
+		if (collide_rect((t_rect){(int)player->fpos.x, (int)player->fpos.y,
 				(int)player->size.x, (int)player->size.y},
 			game2d->walls[i].rect))
 		{
-			if (player->pos.x < game2d->walls[i].rect.pos.x)
-				player->pos.x = game2d->walls[i].rect.pos.x - player->size.x;
+			if (player->fpos.x < game2d->walls[i].rect.pos.x)
+				player->fpos.x = game2d->walls[i].rect.pos.x - player->size.x;
 			else
-				player->pos.x = game2d->walls[i].rect.pos.x
+				player->fpos.x = game2d->walls[i].rect.pos.x
 					+ game2d->walls[i].rect.size.x;
 		}
 	}
@@ -30,14 +30,14 @@ void	check_collisions_y(t_game2d *game2d, t_player *player)
 	i = -1;
 	while (++i < game2d->walls_count)
 	{
-		if (collide_rect((t_rect){(int)player->pos.x, (int)player->pos.y,
+		if (collide_rect((t_rect){(int)player->fpos.x, (int)player->fpos.y,
 				player->size.x, player->size.y},
 			game2d->walls[i].rect))
 		{
-			if (player->pos.y < game2d->walls[i].rect.pos.y)
-				player->pos.y = game2d->walls[i].rect.pos.y - player->size.y;
+			if (player->fpos.y < game2d->walls[i].rect.pos.y)
+				player->fpos.y = game2d->walls[i].rect.pos.y - player->size.y;
 			else
-				player->pos.y = game2d->walls[i].rect.pos.y
+				player->fpos.y = game2d->walls[i].rect.pos.y
 					+ game2d->walls[i].rect.size.y;
 		}
 	}

@@ -9,6 +9,70 @@
 void on_update_utils(t_data *data); // Put the function in update.c?
 int	get_avrage_fps(float dt);
 
+
+// t_fvector2	player_pos; // px, py
+// t_fvector2	player_dir; // pdx, pdy
+// float		player_angle; // pa
+// int			tile_size; // ps
+# include <math.h>
+# include "libft.h"
+char	get_tile_type_from_pos(char **map, t_vector2 size_block, t_vector2 pos)
+{
+	int x = (int)pos.x / size_block.x;
+	int y = (int)pos.y / size_block.y;
+	if (x < 0 || y < 0 || y >= 14 || x >= ft_strlen(map[y]))//TODO not hardcode 14, find mapsize
+		return ('1');
+	// printf("x : %d, y : %d ,f y %f\n", x, y, (float)pos.y / (float)size_block.y);
+	return (map[y][x]);
+}
+#include "draw.h"
+void	simulate3d(t_data *data, t_game2d *game2d, t_player *player)
+{
+	t_vector2	ray_pos;
+	float scale = game2d->minimap.scale;
+	t_vector2 player_center = (t_vector2){player->pos.x + player->size.x / 2, player->pos.y + player->size.y / 2};
+
+	int num_rays = 200;
+	int fov = 30; // in degrees
+	float fov_rad = fov * M_PI / 180; // in radians
+	float angle_increment =  fov_rad / num_rays; // Divide the total angle range (60 degrees) by the number of rays
+
+
+	for (int i = 0; i < num_rays; i++)
+	{
+		float ray_angle = player->angle - fov_rad/2 + (i * angle_increment); // Adjust the ray angle based on the current iteration
+		// Horizontal lines
+		if (ray_angle < M_PI && ray_angle >= 0 && ray_angle != M_PI)
+		{
+			ray_pos = player_center;
+
+			// player pos
+			int y = ray_pos.y % game2d->size_block.y; // height to the closest next wall up
+			int x = 1 - (int)(tan(ray_angle - M_PI/2) * y); // width to next wall up
+			ray_pos.x += x;
+			ray_pos.y -= y;
+			float y2 = game2d->size_block.y; // height to next wall up
+			float x2 = 1 - tan(ray_angle- M_PI/2) * y2; // width to next wall up
+
+			int d = 0;
+			while (true)
+			{
+				if (get_tile_type_from_pos(data->map, game2d->size_block, (t_vector2){ray_pos.x + d*x2, ray_pos.y - d*y2 - 1}) == '1')
+					break;
+				d++;
+			}
+			ray_pos.x += d * x2;
+			ray_pos.y -= d * y2;
+			// printf("raypos : %d, %d\n", ray_pos.x, ray_pos.y);
+			// printf("type : %c\n", get_tile_type_from_pos(data->map, game2d->size_block, (t_vector2){ray_pos.x, ray_pos.y-1})); // -1 correct?
+			draw_line(&data->img, (t_vector2){player_center.x * scale +MINIMAP_OFFSET, player_center.y * scale + MINIMAP_OFFSET}, (t_vector2){(ray_pos.x) * scale + MINIMAP_OFFSET, (ray_pos.y) * scale + MINIMAP_OFFSET}, C_RED, 1);
+
+		}
+	}
+
+
+}
+
 int on_update(t_data *data)
 {
 	static bool in_menu;
@@ -53,7 +117,7 @@ int on_update(t_data *data)
 	draw_minimap(data, data->map, data->game2d.minimap);
 
 	get_avrage_fps(data->dt);
-
+	simulate3d(data, &data->game2d, &data->game2d.player);
 	on_update_utils(data);
 }
 

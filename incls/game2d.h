@@ -34,7 +34,8 @@ typedef struct s_wall
 
 typedef struct s_player
 {
-	t_fvector2	pos;
+	t_fvector2	fpos;
+	t_vector2	pos; // TODO put in rect with size?
 	t_vector2	size;
 	float		speed;
 	float		angle;
@@ -50,7 +51,7 @@ typedef struct s_minimap
 typedef struct s_game2d
 {
 	int			walls_count;
-	t_vector2	size_block;
+	t_vector2	size_block; // should it be just an int?
 	t_minimap	minimap;
 	t_player	player;
 	t_wall		*walls;

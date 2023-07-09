@@ -18,9 +18,9 @@ void	init_settings(t_data *data)
 	else
 		data->game2d.minimap.scale = (data->game2d.minimap.size.x
 				/ data->map_size.x) / (float)data->game2d.size_block.x;
-	data->game2d.player.speed = 1000;
-	data->game2d.player.size = (t_vector2){data->game2d.size_block.x * 0.8,
-		data->game2d.size_block.y * 0.8};
+	data->game2d.player.speed = 200;
+	data->game2d.player.size = (t_vector2){data->game2d.size_block.x * 0.2,
+		data->game2d.size_block.y * 0.2};
 	register_player(data, &data->game2d);
 	register_walls(data);
 }
@@ -39,7 +39,9 @@ void	register_player(t_data *data, t_game2d *game2d)
 			if (data->map[y][x] == 'N' || data->map[y][x] == 'S'
 				|| data->map[y][x] == 'E' || data->map[y][x] == 'W')
 			{
-				game2d->player.pos = (t_fvector2){(x * game2d->size_block.x),
+				game2d->player.pos = (t_vector2){(x * game2d->size_block.x),
+					(y * game2d->size_block.y)};
+				game2d->player.fpos = (t_fvector2){(x * game2d->size_block.x),
 					(y * game2d->size_block.y)};
 				register_angle(game2d, data->map[y][x]);
 				break ;
@@ -105,4 +107,5 @@ void	register_angle(t_game2d *game2d, char c)
 		game2d->player.angle = 0;
 	else if (c == 'W')
 		game2d->player.angle = M_PI;
+	game2d->player.angle = 1; // TODO remove
 }

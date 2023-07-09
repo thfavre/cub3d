@@ -22,10 +22,10 @@ void	draw_minimap(t_data *data, char **map, t_minimap minimap)
 		while (map[y][++x])
 		{
 			current_rect = (t_rect){x * (data->game2d.size_block.x
-					* minimap.scale) + minimap.offset.x, y
+					* minimap.scale) + minimap.offset.x - 1, y
 				* (data->game2d.size_block.y * minimap.scale)
-				+ minimap.offset.y, data->game2d.size_block.x
-				* minimap.scale, data->game2d.size_block.x * minimap.scale};
+				+ minimap.offset.y - 1, data->game2d.size_block.x
+				* minimap.scale - 2, data->game2d.size_block.x * minimap.scale - 2};
 			if (map[y][x] == '1')
 				draw_rect(&data->img, current_rect, 0x27374D);
 			else if (map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'S'
