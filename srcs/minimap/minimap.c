@@ -2,9 +2,11 @@
 #include "color.h"
 #include "game2d.h"
 
-// void	zoom_minimap(t_data *data, t_minimap *minimap);
 void	draw_player(t_data *data, t_player *player, t_minimap *minimap);
-// void	raycasting(t_data *data, t_player *player, t_minimap *minimap); UNFINISHED
+void	raycasting(t_data *data, t_player *player, t_minimap *minimap);
+float	raycasting_up(t_data *data, t_ray ray, float scale);
+char	get_tile_type_from_pos(char **map, t_vector2 size_block, t_vector2 pos);
+
 
 void	draw_minimap(t_data *data, char **map, t_minimap minimap)
 {
@@ -50,81 +52,60 @@ void	draw_player(t_data *data, t_player *player, t_minimap *minimap)
 			+ minimap->offset.y};
 	t_vector2	end_pos = (t_vector2){start_pos.x + cos(player->angle) * 50 * minimap->scale, start_pos.y - sin(player->angle) * 50 * minimap->scale};
 	draw_line(&data->img, start_pos, end_pos, 0x00ffff, 5 * minimap->scale);
+	raycasting(data, player, minimap);
 }
 
-// void	draw_player(t_data *data, t_player *player, t_minimap *minimap) // UNFINISHED
-// {
-// 	t_rect	current_rect;
+void	raycasting(t_data *data, t_player *player, t_minimap *minimap)
+{
+	t_ray	ray;
+	float	vertical_ray;
+	int		i;
 
-// 	current_rect = (t_rect){player->pos.x * minimap->scale
-// 		+ minimap->offset.x, player->pos.y * minimap->scale
-// 		+ minimap->offset.y, player->size.x * minimap->scale,
-// 		player->size.y * minimap->scale};
-// 	draw_rect(&data->img, current_rect, 0x526D82);
-// 	raycasting(data, player, minimap);
-// }
+	ray.player_center = (t_vector2){player->pos.x + player->size.x / 2,
+		player->pos.y  + player->size.x / 2};
+	ray.angle_increment = FOV_RAD / (NB_RAYS - 1);
+	printf("angle increment %f\n", ray.angle_increment * 180 / M_PI);
+	i = -1;
+	while (++i < NB_RAYS)
+	{
+		ray.ray_angle = player->angle - FOV_RAD / 2 + (i * ray.angle_increment);
+		// printf("This is ray.ray_angle %f\n", ray.ray_angle);
+		// printf("this is player angle %f\n", player->angle);
+		if (ray.ray_angle < M_PI && ray.ray_angle >= 0 && ray.ray_angle != M_PI)
+			vertical_ray = raycasting_up(data, ray, minimap->scale);
+	}
+}
 
-// void	raycasting(t_data *data, t_player *player, t_minimap *minimap)
-// {
-// 	t_ray	*ray;
+float	raycasting_up(t_data *data, t_ray ray, float scale) // valeur de retour avec pythagore
+{
+	int	i;
 
-// 	ray->rayIndex = 0;
-// 	ray->angleStep = FOV_ANGLE / minimap->size.x;
-// 	ray->rayAngle = player->angle - (FOV_ANGLE / 2);
-// 	ray->mapX = (int)player->pos.x;
-// 	ray->mapY = (int)player->pos.y;
-// 	while (ray->rayIndex < minimap->size.x)
-// 	{
-// 		ray->rayDirX = cos(ray->rayAngle * M_PI / 180);
-// 		ray->rayDirY = sin(ray->rayAngle * M_PI / 180);
-// 		ray->deltaDistX = abs(1 / ray->rayDirX);
-// 		ray->deltaDistY = abs(1 / ray->rayDirY);
-// 		if (ray->rayDirX < 0)
-// 		{
-// 			ray->stepX = -1;
-// 			ray->sideDistX = (player->pos.x - (int)player->pos.x) * ray->deltaDistX;
-// 		}
-// 		else
-// 		{
-// 			ray->stepX = 1;
-// 			ray->sideDistX = ((int)player->pos.x + 1 - player->pos.x) * ray->deltaDistX;
-// 		}
-// 		if (ray->rayDirY < 0)
-// 		{
-// 			ray->stepY = -1;
-// 			ray->sideDistY = (player->pos.y - (int)player->pos.y) * ray->deltaDistY;
-// 		}
-// 		else
-// 		{
-// 			ray->stepY = 1;
-// 			ray->sideDistY = ((int)player->pos.y + 1 - player->pos.y) * ray->deltaDistY;
-// 		}
-// 	ray->hit = 0;
-// 	ray->mapX = (int)player->pos.x;
-// 	ray->mapY = (int)player->pos.y;
-// 	while (!ray->hit)
-// 	{
-// 		if (ray->sideDistX < ray->sideDistY)
-// 		{
-// 			ray->sideDistX += ray->deltaDistX;
-// 			ray->mapX += ray->stepX;
-// 		}
-// 		else
-// 		{
-// 			ray->sideDistY += ray->deltaDistY;
-// 			ray->mapY += ray->stepY;
-// 		}
-// 		if (data->map[ray->mapY][ray->mapX] == '1')
-// 			ray->hit = 1;
-// 	}
-// 	t_vector2	start_pos = (t_vector2){(player->pos.x + player->size.x / 2) * minimap->scale
-// 		+ minimap->offset.x, (player->pos.y  + player->size.x / 2) * minimap->scale
-// 			+ minimap->offset.y};
-// 	t_vector2	end_pos = (t_vector2){ray->mapX * minimap->scale
-// 		+ minimap->offset.x, ray->mapY * minimap->scale
-// 			+ minimap->offset.y};
-// 	ray->rayAngle += ray->angleStep;
-// 	ray->rayIndex++;
-// 	draw_line(&data->img, start_pos, end_pos, 0x00ffff, 5 * minimap->scale);
-// 	}
-// }
+	i = 0;
+	ray.ray_pos = ray.player_center;
+	ray.side.y = ray.ray_pos.y % data->game2d.size_block.y;
+	ray.side.x = 1 - (int)(tan(ray.ray_angle - M_PI / 2) * ray.side.y);
+	ray.ray_pos.x += ray.side.x;
+	ray.ray_pos.y -= ray.side.y;
+	ray.delta.y = data->game2d.size_block.y;
+	ray.delta.x = 1 - tan(ray.ray_angle - M_PI / 2) * ray.delta.y;
+	while(true)
+	{
+		if (get_tile_type_from_pos(data->map, data->game2d.size_block,
+			(t_vector2){ray.ray_pos.x + i * ray.delta.x, ray.ray_pos.y - i * ray.delta.y - 1}) == '1')
+					break;
+		i++;
+	}
+		ray.ray_pos.x += i * ray.delta.x;
+		ray.ray_pos.y -= i * ray.delta.y;
+	draw_line(&data->img, (t_vector2){ray.player_center.x * scale + MINIMAP_OFFSET, ray.player_center.y * scale + MINIMAP_OFFSET}, (t_vector2){(ray.ray_pos.x) * scale + MINIMAP_OFFSET, (ray.ray_pos.y) * scale + MINIMAP_OFFSET}, C_RED, 1);
+}
+
+char	get_tile_type_from_pos(char **map, t_vector2 size_block, t_vector2 pos)
+{
+	int x = (int)pos.x / size_block.x;
+	int y = (int)pos.y / size_block.y;
+	if (x < 0 || y < 0 || y >= 14 || x >= ft_strlen(map[y]))//TODO not hardcode 14, find mapsize
+		return ('1');
+	// printf("x : %d, y : %d ,f y %f\n", x, y, (float)pos.y / (float)size_block.y);
+	return (map[y][x]);
+}

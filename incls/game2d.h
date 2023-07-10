@@ -7,25 +7,19 @@
 #include <math.h>
 
 # define MINIMAP_OFFSET 30
-# define FOV_ANGLE 60
+# define NB_RAYS SCREEN_WIDTH / 4
+# define FOV_DEG 60
+# define FOV_RAD FOV_DEG * M_PI / 180
 
-// typedef struct s_ray UNFINISHED
-// {
-// 	float		angleStep;
-// 	float		rayAngle;
-// 	float		rayDirX;
-// 	float		rayDirY;
-// 	float		deltaDistX;
-// 	float		deltaDistY;
-// 	float		sideDistX;
-// 	float		sideDistY;
-// 	int			rayIndex;
-// 	int			stepX;
-// 	int			stepY;
-// 	int			mapX;
-// 	int			mapY;
-// 	int			hit;
-// } t_ray;
+typedef struct s_ray //UNFINISHED
+{
+	float		ray_angle;
+	float		angle_increment;
+	t_vector2	side;
+	t_fvector2	delta;
+	t_vector2	player_center;
+	t_vector2	ray_pos;
+} t_ray;
 
 typedef struct s_wall
 {
