@@ -107,5 +107,4 @@ void	register_angle(t_game2d *game2d, char c)
 		game2d->player.angle = 0;
 	else if (c == 'W')
 		game2d->player.angle = M_PI;
-	// game2d->player.angle = 1; // TODO remove
 }
