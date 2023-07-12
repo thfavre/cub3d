@@ -18,7 +18,6 @@ void	raycasting(t_data *data, t_player *player, t_minimap *minimap) // TODO chec
 		player->pos.y + player->size.x / 2};
 	ray.angle_increment = FOV_RAD / (NB_RAYS - 1);
 	i = -1;
-	int x = 0;
 	while (++i < NB_RAYS)
 	{
 		ray.ray_angle = player->angle - FOV_RAD / 2 + (i * ray.angle_increment);
@@ -33,7 +32,7 @@ void	raycasting(t_data *data, t_player *player, t_minimap *minimap) // TODO chec
 		else
 			horizontal_ray = raycasting_left(data, ray, minimap->scale);
 		// draw ray on minimap
-		float ray_length = (vertical_ray < horizontal_ray) ? vertical_ray : horizontal_ray; // ciao norminette
+		float	ray_length = (vertical_ray < horizontal_ray) ? vertical_ray : horizontal_ray; // ciao norminette
 		draw_line(&data->img, (t_vector2){ray.player_center.x * minimap->scale
 			+ MINIMAP_OFFSET, ray.player_center.y * minimap->scale + MINIMAP_OFFSET},
 			(t_vector2){(ray.player_center.x + cos(ray.ray_angle) * ray_length)
@@ -44,7 +43,7 @@ void	raycasting(t_data *data, t_player *player, t_minimap *minimap) // TODO chec
 	}
 }
 
-float	raycasting_up(t_data *data, t_ray ray, float scale) // valeur de retour avec l'ami pythagore
+float	raycasting_up(t_data *data, t_ray ray, float scale)
 {
 	int	i;
 
@@ -66,12 +65,8 @@ float	raycasting_up(t_data *data, t_ray ray, float scale) // valeur de retour av
 	}
 		ray.ray_pos.x += i * ray.delta.x;
 		ray.ray_pos.y -= i * ray.delta.y;
-	// draw_line(&data->img, (t_vector2){ray.player_center.x * scale
-	// 	+ MINIMAP_OFFSET, ray.player_center.y * scale + MINIMAP_OFFSET},
-	// 	(t_vector2){(ray.ray_pos.x) * scale + MINIMAP_OFFSET, (ray.ray_pos.y)
-	// 	* scale + MINIMAP_OFFSET}, C_GREEN, 1);
 	return (sqrt(pow(ray.ray_pos.x - ray.player_center.x, 2)
-		+ pow(ray.ray_pos.y - ray.player_center.y, 2)));
+			+ pow(ray.ray_pos.y - ray.player_center.y, 2)));
 }
 
 float	raycasting_down(t_data *data, t_ray ray, float scale)
@@ -80,7 +75,8 @@ float	raycasting_down(t_data *data, t_ray ray, float scale)
 
 	i = 0;
 	ray.ray_pos = ray.player_center;
-	ray.side.y = data->game2d.size_block.y - (ray.ray_pos.y % data->game2d.size_block.y);
+	ray.side.y = data->game2d.size_block.y - (ray.ray_pos.y
+			% data->game2d.size_block.y);
 	ray.side.x = (int)(tan(ray.ray_angle - M_PI / 2) * ray.side.y);
 	ray.ray_pos.x += ray.side.x;
 	ray.ray_pos.y += ray.side.y;
@@ -96,21 +92,18 @@ float	raycasting_down(t_data *data, t_ray ray, float scale)
 	}
 	ray.ray_pos.x += i * ray.delta.x;
 	ray.ray_pos.y += i * ray.delta.y;
-	// draw_line(&data->img, (t_vector2){ray.player_center.x * scale
-	// 	+ MINIMAP_OFFSET, ray.player_center.y * scale + MINIMAP_OFFSET},
-	// 	(t_vector2){ray.ray_pos.x * scale + MINIMAP_OFFSET, ray.ray_pos.y
-	// 	* scale + MINIMAP_OFFSET}, C_GREEN, 1);
-	return (sqrt(pow(ray.ray_pos.x - ray.player_center.x, 2) +
-		pow(ray.ray_pos.y - ray.player_center.y, 2)));
+	return (sqrt(pow(ray.ray_pos.x - ray.player_center.x, 2)
+			+ pow(ray.ray_pos.y - ray.player_center.y, 2)));
 }
 
-float raycasting_right(t_data *data, t_ray ray, float scale)
+float	raycasting_right(t_data *data, t_ray ray, float scale)
 {
 	int	i;
 
 	i = 0;
 	ray.ray_pos = ray.player_center;
-	ray.side.x = data->game2d.size_block.x - (ray.ray_pos.x % data->game2d.size_block.x);
+	ray.side.x = data->game2d.size_block.x - (ray.ray_pos.x
+			% data->game2d.size_block.x);
 	ray.side.y = -(int)(tan(ray.ray_angle) * ray.side.x);
 	ray.ray_pos.x += ray.side.x;
 	ray.ray_pos.y += ray.side.y;
@@ -119,18 +112,15 @@ float raycasting_right(t_data *data, t_ray ray, float scale)
 	while (true)
 	{
 		if (get_tile_type_from_pos(data->map, data->game2d.size_block,
-				(t_vector2){ray.ray_pos.x + i * ray.delta.x, ray.ray_pos.y + i * ray.delta.y}) == '1')
-				break ;
+				(t_vector2){ray.ray_pos.x + i * ray.delta.x,
+				ray.ray_pos.y + i * ray.delta.y}) == '1')
+			break ;
 		i++;
 	}
 	ray.ray_pos.x += i * ray.delta.x;
 	ray.ray_pos.y += i * ray.delta.y;
-	// draw_line(&data->img, (t_vector2){ray.player_center.x * scale
-	// 	+ MINIMAP_OFFSET, ray.player_center.y * scale + MINIMAP_OFFSET},
-	// 	(t_vector2){ray.ray_pos.x * scale + MINIMAP_OFFSET, ray.ray_pos.y
-	// 	* scale + MINIMAP_OFFSET}, C_RED, 1);
-	return (sqrt(pow(ray.ray_pos.y - ray.player_center.y, 2) +
-		pow(ray.ray_pos.x - ray.player_center.x, 2)));
+	return (sqrt(pow(ray.ray_pos.y - ray.player_center.y, 2)
+			+ pow(ray.ray_pos.x - ray.player_center.x, 2)));
 }
 
 float	raycasting_left(t_data *data, t_ray ray, float scale)
@@ -148,18 +138,15 @@ float	raycasting_left(t_data *data, t_ray ray, float scale)
 	while (true)
 	{
 		if (get_tile_type_from_pos(data->map, data->game2d.size_block,
-				(t_vector2){ray.ray_pos.x - i * ray.delta.x - 1, ray.ray_pos.y - i * ray.delta.y}) == '1')
-				break ;
+				(t_vector2){ray.ray_pos.x - i * ray.delta.x - 1,
+				ray.ray_pos.y - i * ray.delta.y}) == '1')
+			break ;
 		i++;
 	}
 	ray.ray_pos.x -= i * ray.delta.x;
 	ray.ray_pos.y -= i * ray.delta.y;
-	// draw_line(&data->img, (t_vector2){ray.player_center.x * scale
-	// 	+ MINIMAP_OFFSET, ray.player_center.y * scale + MINIMAP_OFFSET},
-	// 	(t_vector2){ray.ray_pos.x * scale + MINIMAP_OFFSET, ray.ray_pos.y
-	// 	* scale + MINIMAP_OFFSET}, C_RED, 1);
-	return (sqrt(pow(ray.ray_pos.y - ray.player_center.y, 2) +
-		pow(ray.ray_pos.x - ray.player_center.x, 2)));
+	return (sqrt(pow(ray.ray_pos.y - ray.player_center.y, 2)
+			+ pow(ray.ray_pos.x - ray.player_center.x, 2)));
 }
 
 char	get_tile_type_from_pos(char **map, t_vector2 size_block, t_vector2 pos)
@@ -169,7 +156,7 @@ char	get_tile_type_from_pos(char **map, t_vector2 size_block, t_vector2 pos)
 
 	x = (int)pos.x / size_block.x;
 	y = (int)pos.y / size_block.y;
-	if (x < 0 || y < 0 || y >= 14 || x >= ft_strlen(map[y])) //TODO not hardcode 14, find mapsize
+	if (x < 0 || y < 0 || y > 14 || x > ft_strlen(map[y])) //TODO not hardcode 14, find mapsize
 		return ('1');
 	return (map[y][x]);
 }
