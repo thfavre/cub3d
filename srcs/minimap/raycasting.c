@@ -14,7 +14,7 @@ void	raycasting(t_data *data, t_player *player, t_minimap *minimap) // TODO chec
 	float	horizontal_ray;
 	int		i;
 
-	ray.player_center = (t_vector2){player->pos.x + player->size.x / 2,
+	ray.player_center = (t_fvector2){player->pos.x + player->size.x / 2,
 		player->pos.y + player->size.x / 2};
 	ray.angle_increment = FOV_RAD / (NB_RAYS - 1);
 	i = -1;
@@ -37,8 +37,8 @@ void	raycasting(t_data *data, t_player *player, t_minimap *minimap) // TODO chec
 			+ MINIMAP_OFFSET, ray.player_center.y * minimap->scale + MINIMAP_OFFSET},
 			(t_vector2){(ray.player_center.x + cos(ray.ray_angle) * ray_length)
 			* minimap->scale + MINIMAP_OFFSET, (ray.player_center.y - sin(ray.ray_angle)
-			* ray_length) * minimap->scale + MINIMAP_OFFSET}, C_ORANGERED, 1);
-		// 3d!
+			* ray_length) * minimap->scale + MINIMAP_OFFSET}, C_DARKOLIVEGREEN3, 1);
+		// 3d! (good luck)
 
 	}
 }
@@ -49,12 +49,12 @@ float	raycasting_up(t_data *data, t_ray ray, float scale)
 
 	i = 0;
 	ray.ray_pos = ray.player_center;
-	ray.side.y = ray.ray_pos.y % data->game2d.size_block.y;
-	ray.side.x = 1 - (int)(tan(ray.ray_angle - M_PI / 2) * ray.side.y);
+	ray.side.y = fmod(ray.ray_pos.y, data->game2d.size_block.y);
+	ray.side.x = -(tan(ray.ray_angle - M_PI / 2) * ray.side.y);
 	ray.ray_pos.x += ray.side.x;
 	ray.ray_pos.y -= ray.side.y;
 	ray.delta.y = data->game2d.size_block.y;
-	ray.delta.x = 1 - tan(ray.ray_angle - M_PI / 2) * ray.delta.y;
+	ray.delta.x = -tan(ray.ray_angle - M_PI / 2) * ray.delta.y;
 	while (true)
 	{
 		if (get_tile_type_from_pos(data->map, data->game2d.size_block,
@@ -63,8 +63,8 @@ float	raycasting_up(t_data *data, t_ray ray, float scale)
 			break ;
 		i++;
 	}
-		ray.ray_pos.x += i * ray.delta.x;
-		ray.ray_pos.y -= i * ray.delta.y;
+	ray.ray_pos.x += i * ray.delta.x;
+	ray.ray_pos.y -= i * ray.delta.y;
 	return (sqrt(pow(ray.ray_pos.x - ray.player_center.x, 2)
 			+ pow(ray.ray_pos.y - ray.player_center.y, 2)));
 }
@@ -75,9 +75,9 @@ float	raycasting_down(t_data *data, t_ray ray, float scale)
 
 	i = 0;
 	ray.ray_pos = ray.player_center;
-	ray.side.y = data->game2d.size_block.y - (ray.ray_pos.y
-			% data->game2d.size_block.y);
-	ray.side.x = (int)(tan(ray.ray_angle - M_PI / 2) * ray.side.y);
+	ray.side.y = data->game2d.size_block.y - fmod(ray.ray_pos.y
+			,data->game2d.size_block.y);
+	ray.side.x = (tan(ray.ray_angle - M_PI / 2) * ray.side.y);
 	ray.ray_pos.x += ray.side.x;
 	ray.ray_pos.y += ray.side.y;
 	ray.delta.y = data->game2d.size_block.y;
@@ -102,9 +102,9 @@ float	raycasting_right(t_data *data, t_ray ray, float scale)
 
 	i = 0;
 	ray.ray_pos = ray.player_center;
-	ray.side.x = data->game2d.size_block.x - (ray.ray_pos.x
-			% data->game2d.size_block.x);
-	ray.side.y = -(int)(tan(ray.ray_angle) * ray.side.x);
+	ray.side.x = data->game2d.size_block.x - fmod(ray.ray_pos.x,
+			data->game2d.size_block.x);
+	ray.side.y = -(tan(ray.ray_angle) * ray.side.x);
 	ray.ray_pos.x += ray.side.x;
 	ray.ray_pos.y += ray.side.y;
 	ray.delta.x = data->game2d.size_block.x;
@@ -129,8 +129,8 @@ float	raycasting_left(t_data *data, t_ray ray, float scale)
 
 	i = 0;
 	ray.ray_pos = ray.player_center;
-	ray.side.x = ray.ray_pos.x % data->game2d.size_block.x;
-	ray.side.y = -(int)(tan(ray.ray_angle) * ray.side.x);
+	ray.side.x = fmod(ray.ray_pos.x, data->game2d.size_block.x);
+	ray.side.y = -(tan(ray.ray_angle) * ray.side.x);
 	ray.ray_pos.x -= ray.side.x;
 	ray.ray_pos.y -= ray.side.y;
 	ray.delta.x = data->game2d.size_block.x;

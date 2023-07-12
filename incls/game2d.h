@@ -15,10 +15,10 @@ typedef struct s_ray //UNFINISHED
 {
 	float		ray_angle;
 	float		angle_increment;
-	t_vector2	side;
+	t_fvector2	side;
 	t_fvector2	delta;
-	t_vector2	player_center;
-	t_vector2	ray_pos;
+	t_fvector2	player_center;
+	t_fvector2	ray_pos;
 } t_ray;
 
 typedef struct s_wall
