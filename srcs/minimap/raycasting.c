@@ -1,5 +1,6 @@
 #include "data.h"
 #include "game2d.h"
+#include "color.h"
 
 float	raycasting_up(t_data *data, t_ray ray, float scale);
 float	raycasting_down(t_data *data, t_ray ray, float scale);
@@ -22,8 +23,7 @@ void	raycasting(t_data *data, t_player *player, t_minimap *minimap) // TODO chec
 	while (++i < NB_RAYS)
 	{
 		ray.ray_angle = player->angle - FOV_RAD / 2 + (i * ray.angle_increment);
-		ray.ray_angle = fmod(ray.ray_angle, 2 * M_PI); // We don't want to have an angle > 2 * PI or < 0
-		// (quand l'angle est < 0deg ou > 360deg, on le remet dans l'intervalle [0, 360])
+		ray.ray_angle = fmod(ray.ray_angle, 2 * M_PI);
 		if (ray.ray_angle < M_PI && ray.ray_angle >= 0 && ray.ray_angle != M_PI)
 			vertical_ray = raycasting_up(data, ray, minimap->scale);
 		else
@@ -41,10 +41,10 @@ void	raycasting(t_data *data, t_player *player, t_minimap *minimap) // TODO chec
 			* ray_length) * minimap->scale + MINIMAP_OFFSET}, C_DARKOLIVEGREEN3, 1);
 		// 3d! (good luck)
 		if (vertical_ray < horizontal_ray && ray.ray_angle < M_PI && ray.ray_angle >= 0 && ray.ray_angle != M_PI)
-			color = C_GREEN;
+			color = C_BISQUE;
 		else if (vertical_ray < horizontal_ray)
 			color = C_PURPLE;
-		else if (vertical_ray > horizontal_ray && ray.ray_angle < M_PI / 2 || ray.ray_angle >= 3 * M_PI / 2)
+		else if (vertical_ray > horizontal_ray && (ray.ray_angle < M_PI / 2 || ray.ray_angle >= 3 * M_PI / 2))
 			color = C_YELLOW;
 		else if (vertical_ray > horizontal_ray)
 			color = C_ORANGE;

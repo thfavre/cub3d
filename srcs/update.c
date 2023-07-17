@@ -45,7 +45,7 @@ int on_update(t_data *data)
 	{
 		if (data->mouse_pos.x != SCREEN_WIDTH / 2)
 		{
-			data->game2d.player.angle -= (data->mouse_pos.x - SCREEN_WIDTH / 2) * 0.8 * data->dt;
+			data->game2d.player.angle -= (data->mouse_pos.x - SCREEN_WIDTH / 2) * 0.2 * data->dt;
 			if (data->game2d.player.angle < 0)
 				data->game2d.player.angle += M_PI * 2;
 			else if (data->game2d.player.angle > M_PI * 2)
