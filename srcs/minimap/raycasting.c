@@ -13,6 +13,7 @@ void	raycasting(t_data *data, t_player *player, t_minimap *minimap) // TODO chec
 	float	vertical_ray;
 	float	horizontal_ray;
 	int		i;
+	int		color;
 
 	ray.player_center = (t_fvector2){player->pos.x + player->size.x / 2,
 		player->pos.y + player->size.x / 2};
@@ -39,7 +40,17 @@ void	raycasting(t_data *data, t_player *player, t_minimap *minimap) // TODO chec
 			* minimap->scale + MINIMAP_OFFSET, (ray.player_center.y - sin(ray.ray_angle)
 			* ray_length) * minimap->scale + MINIMAP_OFFSET}, C_DARKOLIVEGREEN3, 1);
 		// 3d! (good luck)
-
+		if (vertical_ray < horizontal_ray && ray.ray_angle < M_PI && ray.ray_angle >= 0 && ray.ray_angle != M_PI)
+			color = C_GREEN;
+		else if (vertical_ray < horizontal_ray)
+			color = C_PURPLE;
+		else if (vertical_ray > horizontal_ray && ray.ray_angle < M_PI / 2 || ray.ray_angle >= 3 * M_PI / 2)
+			color = C_YELLOW;
+		else if (vertical_ray > horizontal_ray)
+			color = C_ORANGE;
+		float ray_length_correct = ray_length * cos(fabs(player->angle - ray.ray_angle));
+		int wall_height = (int)(SCREEN_HEIGHT / (ray_length_correct / 40));
+		draw_textureless_walls(data, wall_height, color);
 	}
 }
 
@@ -75,8 +86,8 @@ float	raycasting_down(t_data *data, t_ray ray, float scale)
 
 	i = 0;
 	ray.ray_pos = ray.player_center;
-	ray.side.y = data->game2d.size_block.y - fmod(ray.ray_pos.y
-			,data->game2d.size_block.y);
+	ray.side.y = data->game2d.size_block.y - fmod(ray.ray_pos.y,
+			data->game2d.size_block.y);
 	ray.side.x = (tan(ray.ray_angle - M_PI / 2) * ray.side.y);
 	ray.ray_pos.x += ray.side.x;
 	ray.ray_pos.y += ray.side.y;

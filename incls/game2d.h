@@ -7,7 +7,7 @@
 #include <math.h>
 
 # define MINIMAP_OFFSET 30
-# define NB_RAYS SCREEN_WIDTH / 4
+# define NB_RAYS SCREEN_WIDTH
 # define FOV_DEG 60
 # define FOV_RAD FOV_DEG * M_PI / 180
 
