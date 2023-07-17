@@ -26,7 +26,7 @@ void	draw_minimap(t_data *data, char **map, t_minimap minimap)
 				draw_rect(&data->img, current_rect, 0x27374D);
 			else if (map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'S'
 			|| map[y][x] == 'E' || map[y][x] == 'W')
-				draw_rect(&data->img, current_rect, 0xDDE6ED + (y+x) % 2 * 222); // TODO remove the chess pattern
+				draw_rect(&data->img, current_rect, 0xDDE6ED + (y + x) % 2 * 222); // TODO remove the chess pattern
 		}
 	}
 	draw_player(data, &data->game2d.player, &data->game2d.minimap);

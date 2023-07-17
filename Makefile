@@ -42,6 +42,9 @@ SRCS	+=			srcs/minimap/minimap.c \
 SRCS	+=			srcs/player/player.c \
 					srcs/player/collisions.c \
 
+# Game3d folder
+SRCS	+=			srcs/game3d/textureless_walls.c \
+
 # ---------------  --------------- #
 
 NAME	=			cub3d
