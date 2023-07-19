@@ -18,7 +18,9 @@ void	raycasting(t_data *data, t_player *player, t_minimap *minimap);
 int on_update(t_data *data)
 {
 	static bool in_menu;
-	draw_background(&data->img, data->textures.F);
+	// draw_background(&data->img, data->textures.F);
+	draw_rect(&data->img, (t_rect){0, 0, SCREEN_WIDTH, SCREEN_HEIGHT / 2}, data->textures.C);
+	draw_rect(&data->img, (t_rect){0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT / 2}, data->textures.F);
 
 	// To make drop the frame rate
 	if (data->key_pressed[K_T])
@@ -31,7 +33,6 @@ int on_update(t_data *data)
 			}
 	}
 
-	draw_background(&data->img, data->textures.F);
 
 	// hide mouse when on window
 	// if (data->mouse_pos.x >= 0 && data->mouse_pos.x < SCREEN_WIDTH && \
@@ -41,18 +42,18 @@ int on_update(t_data *data)
 	// 	mlx_mouse_show(data->mlx, data->win);
 
 	// mouse center screen
-	if (!in_menu)
-	{
-		if (data->mouse_pos.x != SCREEN_WIDTH / 2)
-		{
-			data->game2d.player.angle -= (data->mouse_pos.x - SCREEN_WIDTH / 2) * 0.2 * data->dt;
-			if (data->game2d.player.angle < 0)
-				data->game2d.player.angle += M_PI * 2;
-			else if (data->game2d.player.angle > M_PI * 2)
-				data->game2d.player.angle -= M_PI * 2;
-		}
-		mlx_mouse_move(data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-	}
+	// if (!in_menu)
+	// {
+	// 	if (data->mouse_pos.x != SCREEN_WIDTH / 2)
+	// 	{
+	// 		data->game2d.player.angle -= (data->mouse_pos.x - SCREEN_WIDTH / 2) * 0.2 * data->dt;
+	// 		if (data->game2d.player.angle < 0)
+	// 			data->game2d.player.angle += M_PI * 2;
+	// 		else if (data->game2d.player.angle > M_PI * 2)
+	// 			data->game2d.player.angle -= M_PI * 2;
+	// 	}
+	// 	mlx_mouse_move(data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	// }
 
 	if (data->key_just_pressed[K_SPACE])
 		data->game2d.minimap.scale += 0.1;

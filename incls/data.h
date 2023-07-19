@@ -14,10 +14,10 @@
 # define SCREEN_HEIGHT 1080
 typedef struct s_textures // TODO put in textures.h ?
 {
-	t_sprite	NO;
-	t_sprite	SO;
-	t_sprite	WE;
-	t_sprite	EA;
+	t_img	NO;
+	t_img	SO;
+	t_img	WE;
+	t_img	EA;
 	int			F;
 	int			C;
 }				t_textures;

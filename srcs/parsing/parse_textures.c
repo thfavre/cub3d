@@ -3,13 +3,13 @@
 
 #include "mlx.h"
 #include "libft.h"
-#include "sprite.h"
+// #include "sprite.h"
 #include "data.h"
 #include "parsing.h"
 
 void	free_split(char **split);
-bool	parse_texture(void *mlx, char *line, t_sprite *sprite, char *name);
-bool	set_texture(void *mlx, t_sprite *sprite, char *path, char *name);
+bool	parse_texture(void *mlx, char *line, t_img *sprite, char *name);
+bool	set_texture(void *mlx, t_img *sprite, char *path, char *name);
 
 bool	parse_textures(void *mlx, int fd, t_textures *textures)
 {
@@ -26,7 +26,7 @@ bool	parse_textures(void *mlx, int fd, t_textures *textures)
 	return (true);
 }
 
-bool	parse_texture(void *mlx, char *line, t_sprite *sprite, char *name)
+bool	parse_texture(void *mlx, char *line, t_img *sprite, char *name)
 {
 	char	**splited_line;
 
@@ -51,7 +51,7 @@ bool	parse_texture(void *mlx, char *line, t_sprite *sprite, char *name)
 	return (true);
 }
 
-bool	set_texture(void *mlx, t_sprite *sprite, char *path, char *name)
+bool	set_texture(void *mlx, t_img *sprite, char *path, char *name)
 {
 	if (path == NULL)
 	{
@@ -60,6 +60,7 @@ bool	set_texture(void *mlx, t_sprite *sprite, char *path, char *name)
 	}
 	if (path[ft_strlen(path) - 1] == '\n')
 		path[ft_strlen(path) - 1] = '\0';
+	// img = malloc(sizeof(t_img));
 	sprite->img = mlx_xpm_file_to_image(mlx, path, &sprite->size.x,
 			&sprite->size.y);
 	if (sprite->img == NULL)
@@ -67,6 +68,8 @@ bool	set_texture(void *mlx, t_sprite *sprite, char *path, char *name)
 		printf("Error, invalid path '%s'\n", path);
 		return (false);
 	}
+	sprite->addr = mlx_get_data_addr(sprite->img, &sprite->bpp,
+			&sprite->line_len, &sprite->endian);
 	return (true);
 }
 
