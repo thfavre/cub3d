@@ -42,21 +42,28 @@ int on_update(t_data *data)
 	// 	mlx_mouse_show(data->mlx, data->win);
 
 	// mouse center screen
-	// if (!in_menu)
-	// {
-	// 	if (data->mouse_pos.x != SCREEN_WIDTH / 2)
-	// 	{
-	// 		data->game2d.player.angle -= (data->mouse_pos.x - SCREEN_WIDTH / 2) * 0.2 * data->dt;
-	// 		if (data->game2d.player.angle < 0)
-	// 			data->game2d.player.angle += M_PI * 2;
-	// 		else if (data->game2d.player.angle > M_PI * 2)
-	// 			data->game2d.player.angle -= M_PI * 2;
-	// 	}
-	// 	mlx_mouse_move(data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-	// }
+	if (!in_menu)
+	{
+		if (data->mouse_pos.x != SCREEN_WIDTH / 2)
+		{
+			data->game2d.player.angle -= (data->mouse_pos.x - SCREEN_WIDTH / 2) * 0.2 * data->dt;
+			if (data->game2d.player.angle < 0)
+				data->game2d.player.angle += M_PI * 2;
+			else if (data->game2d.player.angle > M_PI * 2)
+				data->game2d.player.angle -= M_PI * 2;
+		}
+		mlx_mouse_move(data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	}
 
 	if (data->key_just_pressed[K_SPACE])
 		data->game2d.minimap.scale += 0.1;
+	if (data->key_just_pressed[K_E])
+	{
+		if (data->map[3][5] == 'D')
+			data->map[3][5] = '1';
+		else
+			data->map[3][5] = 'D';
+	}
 
 
 
