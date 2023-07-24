@@ -123,7 +123,7 @@ int on_update(t_data *data)
 	update_player(data, &data->game2d.player);
 	raycasting(data, &data->game2d.player, &data->game2d.minimap);
 	draw_minimap(data, data->map, data->game2d.minimap);
-
+	//
 	// static t_slider slid = (t_slider){(t_vector2){500, 500}, 40, 100, 1};
 	// update_slider(&data->img, data->mouse_pos, data->mouse_just_pressed, &slid);
 

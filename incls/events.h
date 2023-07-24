@@ -1,6 +1,8 @@
 #ifndef EVENTS_H
 # define EVENTS_H
 
+// TODO Thomas
+
 // # include "X11/X.h" // TODO check if it works on MAC, if yes the defines below are useless
 
 /* Input Event Masks. Used as event-mask window attribute and as arguments
