@@ -37,6 +37,7 @@ SRCS	+=			srcs/parsing/parser.c \
 SRCS	+=			srcs/minimap/minimap.c \
 					srcs/minimap/init_settings.c \
 					srcs/minimap/raycasting.c \
+					srcs/minimap/raycasting_utils.c \
 
 # player folder
 SRCS	+=			srcs/player/player.c \

@@ -41,15 +41,15 @@ void	move_player(t_data *data, t_player *player)
 
 void	rotate_player(t_data *data, t_player *player)
 {
-	if (data->key_pressed[K_LEFT])
+	if (data->key_pressed[K_RIGHT])
 	{
-		player->angle -= 1 * data->dt;
+		player->angle -= PLAYER_ROTATE_SPEED * data->dt;
 		if (player->angle < 0)
 			player->angle += 2 * M_PI;
 	}
-	if (data->key_pressed[K_RIGHT])
+	if (data->key_pressed[K_LEFT])
 	{
-		player->angle += 1 * data->dt;
+		player->angle += PLAYER_ROTATE_SPEED * data->dt;
 		if (player->angle > 2 * M_PI)
 			player->angle -= 2 * M_PI;
 	}
