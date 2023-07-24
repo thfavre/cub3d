@@ -20,12 +20,11 @@ int	get_avrage_fps(float dt)
 
 	frames++;
 	elapsed_time += dt;
-	if (elapsed_time >= 1)
+	if (elapsed_time >= 0.2)
 	{
-		avrage_fps = frames;
+		avrage_fps = frames / elapsed_time;
 		frames = 0;
 		elapsed_time = 0;
-		printf("FPS: %d\n", avrage_fps); // TODO remove
 	}
 	return (avrage_fps);
 }

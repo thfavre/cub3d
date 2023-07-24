@@ -15,6 +15,42 @@ int	get_avrage_fps(float dt);
 
 void	raycasting(t_data *data, t_player *player, t_minimap *minimap);
 
+
+typedef struct s_slider
+{
+	t_vector2	pos;
+	int			width;
+	int			length;
+	int			value;
+}				t_slider;
+
+bool	colide_point(t_vector2 point, t_rect rect)
+{
+	if (point.x >= rect.pos.x && point.x <= rect.pos.x + rect.size.x && \
+		point.y >= rect.pos.y && point.y <= rect.pos.y + rect.size.y)
+		return (true);
+	return (false);
+}
+
+void	update_slider(t_img *img, t_vector2 mouse_pos, bool mouse_just_pressed, t_slider *slider)
+{
+	// slider->value goes from 0 to 1
+	t_rect rect = (t_rect){slider->pos.x + slider->value * slider->length - slider->width/2, slider->pos.y - slider->width/2, slider->width, slider->width};
+	if (mouse_just_pressed)
+	{
+		if (colide_point(mouse_pos, rect))
+		{
+			printf("colide\n");
+		}
+	}
+
+	// draw slider
+	draw_rect(img, rect, C_RED);
+	// draw bar
+	draw_rect(img, (t_rect){slider->pos.x, slider->pos.y-4, slider->length, 8}, C_BLACK);
+
+}
+
 int on_update(t_data *data)
 {
 	static bool in_menu;
@@ -87,7 +123,15 @@ int on_update(t_data *data)
 	update_player(data, &data->game2d.player);
 	raycasting(data, &data->game2d.player, &data->game2d.minimap);
 	draw_minimap(data, data->map, data->game2d.minimap);
-	get_avrage_fps(data->dt);
+
+	// static t_slider slid = (t_slider){(t_vector2){500, 500}, 40, 100, 1};
+	// update_slider(&data->img, data->mouse_pos, data->mouse_just_pressed, &slid);
+
 	on_update_utils(data);
+	// draw text
+	mlx_string_put(data->mlx, data->win, 5, 15, C_WHITE, "FPS: ");
+
+	mlx_string_put(data->mlx, data->win, 35, 15, C_WHITE, ft_itoa(get_avrage_fps(data->dt)));
+
 }
 

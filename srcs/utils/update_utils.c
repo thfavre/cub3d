@@ -13,4 +13,5 @@ void on_update_utils(t_data *data) // TODO rename this function and put in updat
 	mlx_put_image_to_window(data->mlx, data->win, \
 		data->img.img, 0, 0);
 	ft_bzero(data->key_just_pressed, MAX_KEYS);
+	// data->mouse_just_pressed = false;
 }
