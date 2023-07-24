@@ -11,7 +11,8 @@ void		draw_block(unsigned int *pixel_ptr, int chunk_size, int color);
  * a t_vector2 struct, with the provided size and color
  *
  * @param img: pointer to the image structure containing data about the image
- * @param pos: t_vector2 struct containing the (x, y) coordinates of the top-left corner
+ * @param pos: t_vector2 struct containing the (x, y) coordinates of the
+ * 				top-left corner
  * @param size: t_vector2 struct containing the width and height of the rectangle
  * @param color: color value of the rectangle to be drawn
 */
@@ -25,7 +26,8 @@ void	draw_rect(t_img *img, t_rect rect, int color)
 	adjust_rect_in_image(&rect, img);
 	chunk_size = rect.size.x - rect.size.x % 12;
 	y = 0;
-	pixel_ptr = (unsigned int *)(img->addr + ((y + rect.pos.y) * img->line_len + rect.pos.x * (img->bpp / 8)));
+	pixel_ptr = (unsigned int *)(img->addr + \
+			((y + rect.pos.y) * img->line_len + rect.pos.x * (img->bpp / 8)));
 	while (y < rect.size.y)
 	{
 		draw_block(pixel_ptr, chunk_size, color);
@@ -58,15 +60,10 @@ static void	adjust_rect_in_image(t_rect *rect, t_img *img)
 void	draw_block(unsigned int *pixel_ptr, int chunk_size, int color)
 {
 	int	x;
-	// int	offset;
 
 	x = 0;
 	while (x < chunk_size)
 	{
-		// offset = 0;
-		// while (offset < PIXELS_PER_BLOCK)
-		// 	*(pixel_ptr + x + offset++) = color;
-		// x += 12;
 		*(pixel_ptr + x) = color;
 		*(pixel_ptr + x + 1) = color;
 		*(pixel_ptr + x + 2) = color;

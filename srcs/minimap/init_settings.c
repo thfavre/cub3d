@@ -18,9 +18,9 @@ void	init_settings(t_data *data)
 	else
 		data->game2d.minimap.scale = (data->game2d.minimap.size.x
 				/ data->map_size.x) / (float)data->game2d.size_block.x;
-	data->game2d.player.speed = 200;
-	data->game2d.player.size = (t_vector2){data->game2d.size_block.x * 0.2,
-		data->game2d.size_block.y * 0.2};
+	data->game2d.player.speed = 600;
+	data->game2d.player.size = (t_vector2){data->game2d.size_block.x * 0.8,
+		data->game2d.size_block.y * 0.8};
 	register_player(data, &data->game2d);
 	register_walls(data);
 }

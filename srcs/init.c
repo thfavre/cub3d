@@ -17,7 +17,7 @@ bool	init(t_data *data)
 		return (false);
 	data->img.size = (t_vector2){SCREEN_WIDTH, SCREEN_HEIGHT};
 	data->win = mlx_new_window(data->mlx, data->img.size.x, data->img.size.y,
-			"A fucking beautiful cub3D!");
+			"Cub3d    | esc: quit  |  m: map zoom  |  wasd: move  |  arrows right/left, mouse: rotate  |  e: menu  | space: dash");
 	if (data->win == NULL)
 		return (false);
 	data->img.img = mlx_new_image(data->mlx, data->img.size.x,

@@ -33,7 +33,7 @@ void	raycasting(t_data *data, t_player *player, t_minimap *minimap) // TODO chec
 			+ MINIMAP_OFFSET, ray.player_center.y * minimap->scale + MINIMAP_OFFSET},
 			(t_vector2){(ray.player_center.x + cos(ray.ray_angle) * ray_length)
 			* minimap->scale + MINIMAP_OFFSET, (ray.player_center.y - sin(ray.ray_angle)
-			* ray_length) * minimap->scale + MINIMAP_OFFSET}, C_DARKOLIVEGREEN3, 1);
+			* ray_length) * minimap->scale + MINIMAP_OFFSET}, C_DARKOLIVEGREEN3);
 		// 3d! (good luck)
 		float ray_length_correct = ray_length * cos(fabs(player->angle - ray.ray_angle));
 		int wall_height = (int)(SCREEN_HEIGHT / (ray_length_correct / 50));
