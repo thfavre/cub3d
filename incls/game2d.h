@@ -29,12 +29,12 @@ typedef struct s_ray // NEW
 	t_fvector2	delta;
 	t_fvector2	player_center;
 	t_fvector2	ray_pos;
-} t_ray;
+}	t_ray;
 
 typedef struct s_wall
 {
 	t_rect	rect;
-} t_wall;
+}	t_wall;
 
 typedef struct s_player
 {
@@ -43,14 +43,14 @@ typedef struct s_player
 	t_vector2	size;
 	float		speed;
 	float		angle;
-} t_player;
+}	t_player;
 
 typedef struct s_minimap
 {
 	t_vector2	offset;
 	t_vector2	size;
 	float		scale;
-} t_minimap;
+}	t_minimap;
 
 typedef struct s_game2d
 {
@@ -59,9 +59,9 @@ typedef struct s_game2d
 	t_minimap	minimap;
 	t_player	player;
 	t_wall		*walls;
-} t_game2d;
+}	t_game2d;
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
 void	init_settings(t_data *data);
 void	draw_minimap(t_data *data, char **map, t_minimap minimap);
