@@ -9,18 +9,17 @@ void	draw_textures(t_data *data, t_ray *ray, int i);
 
 void	raycasting(t_data *data, t_player *player, t_minimap *minimap)
 {
-	t_ray	*ray;
 	int		i;
 
-	ray = malloc(sizeof(t_ray) * NB_RAYS);
-	if (!ray)
+	data->ray = malloc(sizeof(t_ray) * NB_RAYS);
+	if (!data->ray)
 		return ;
 	i = -1;
 	while (++i < NB_RAYS)
 	{
-		register_rays(data, &ray[i], &data->game2d, i);
-		register_textures(data, &ray[i]);
-		draw_textures(data, &ray[i], i);
+		register_rays(data, &data->ray[i], &data->game2d, i);
+		register_textures(data, &data->ray[i]);
+		draw_textures(data, &data->ray[i], i);
 	}
 }
 

@@ -8,7 +8,7 @@ typedef struct s_rect
 {
 	t_vector2	pos;
 	t_vector2	size;
-} t_rect;
+}	t_rect;
 
 void	draw_rect(t_img *img, t_rect rect, int color);
 
