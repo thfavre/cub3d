@@ -38,6 +38,7 @@ typedef struct s_data
 	t_textures	textures;
 	// t_game		game;
 	t_game2d	game2d;
+	t_ray		*ray; // NEW
 
 
 } t_data;
