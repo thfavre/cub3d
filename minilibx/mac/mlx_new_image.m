@@ -147,50 +147,6 @@ int mlx_string_put(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, int x, int y, in
   return (0);
 }
 
-int mlx_int_put(mlx_ptr_t *mlx_ptr, mlx_win_list_t *win_ptr, int x, int y, int color, int number)
-{
-  mlx_img_ctx_t	*imgctx;
-  int		gX;
-  int		gY;
-  char		string[20];
-
-  sprintf(string, "%d", number);
-  if (string == NULL)
-    return (0);
-
-  if (!win_ptr->pixmgt)
-    return(0);
-
-#ifdef STRINGPUTX11
-  y -= (FONT_HEIGHT * 2)/3;
-#endif
-
-  [(id)(win_ptr->winid) selectGLContext];
-
-  imgctx = add_img_to_ctx(mlx_ptr->font, win_ptr);
-
-  while (*string)
-    {
-      if (*string >= 32 && *string <= 127)
-	{
-	  gX = (FONT_WIDTH+2)*(*string-32);
-	  gY = 0;
-	  //      printf("put char %c pos %d %d\n", *string, gX, gY);
-	  [(id)(win_ptr->winid) mlx_gl_draw_font:mlx_ptr->font andCtx:imgctx andX:x andY:y andColor:color glyphX:gX glyphY:gY];
-#ifdef STRINGPUTX11
-	  x += FONT_WIDTH/1.4;
-#else
-	  x += FONT_WIDTH;
-#endif
-	}
-      string ++;
-    }
-
-  win_ptr->nb_flush ++;
-
-  return (0);
-}
-
 
 int     mlx_destroy_image(mlx_ptr_t *mlx_ptr, mlx_img_list_t *img_todel)
 {

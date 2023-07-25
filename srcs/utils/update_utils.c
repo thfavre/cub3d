@@ -18,6 +18,6 @@ void on_update_utils(t_data *data) // TODO rename this function and put in updat
 	ft_bzero(data->key_just_pressed, MAX_KEYS);
 
 	mlx_string_put(data->mlx, data->win, 5, 15, C_WHITE, "FPS: ");
-	mlx_int_put(data->mlx, data->win, 35, 15, C_WHITE, get_avrage_fps(data->dt));
+	// mlx_int_put(data->mlx, data->win, 35, 15, C_WHITE, get_avrage_fps(data->dt));
 	data->mouse_just_pressed = false;
 }
