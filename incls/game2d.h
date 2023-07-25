@@ -10,10 +10,9 @@
 # define MINIMAP_SIZE_RATIO 5 // the minimap will be 1/X of the screen
 # define DEFAULT_FOV_DEG 60 // now default FOV DEG
 # define DEFAULT_NB_RAYS SCREEN_WIDTH
-// # define FOV_RAD FOV_DEG * M_PI / 180, it will be calculated once every frame, not a big deal
-# define PLAYER_ROTATE_SPEED 3
-# define PLAYER_MOVE_SPEED 5 // in block per second
-// # define ANGLE_INCREMENT FOV_RAD / (NB_RAYS - 1) // new
+# define DEFAULT_WALLS_HEIGHT 50
+# define DEFAULT_PLAYER_ROTATE_SPEED 2
+# define DEFAULT_PLAYER_MOVE_SPEED 5 // in block per second
 
 typedef struct s_ray // NEW
 {
@@ -44,6 +43,7 @@ typedef struct s_player
 	t_vector2	pos; // TODO put in rect with size?
 	t_vector2	size;
 	float		speed;
+	float		rotate_speed;
 	float		angle;
 }	t_player;
 

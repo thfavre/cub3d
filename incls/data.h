@@ -44,6 +44,8 @@ typedef struct s_data
 	int 		walls_height;
 	float 		walls_y_offset;
 	float		map_mult;
+	bool		textured;
+	int			untextured_color;
 }	t_data;
 
 #endif

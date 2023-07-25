@@ -84,22 +84,23 @@ void	draw_textures(t_data *data, t_ray *ray, int i)
 	double	tex_pos;
 	int		tex_y;
 
-	draw_start = -ray->wall_height / 2 + SCREEN_HEIGHT / 2 + data->walls_y_offset;
+	draw_start = (-ray->wall_height + SCREEN_HEIGHT) / 2 + data->walls_y_offset;
 	if (draw_start < 0)
 		draw_start = 0;
-	draw_end = ray->wall_height / 2 + SCREEN_HEIGHT / 2 + data->walls_y_offset;
+	draw_end = (ray->wall_height + SCREEN_HEIGHT) / 2 + data->walls_y_offset;
 	if (draw_end >= SCREEN_HEIGHT)
 		draw_end = SCREEN_HEIGHT - 1;
-	tex_pos = (draw_start - SCREEN_HEIGHT / 2 + ray->wall_height / 2 - data->walls_y_offset)
-		* ray->step;
+	tex_pos = (draw_start - SCREEN_HEIGHT / 2 + ray->wall_height / 2
+		- data->walls_y_offset) * ray->step;
 	while (draw_start < draw_end)
 	{
 		tex_y = (int)tex_pos & (ray->texture.size.y - 1);
 		tex_pos += ray->step;
-		color = get_color(&ray->texture, ray->tex_x, tex_y);
-		float x = SCREEN_WIDTH - i * ((float)SCREEN_WIDTH / (float)data->nb_rays);
-		draw_pixel(&data->img, (t_vector2){x , draw_start},
-			color);
+		color = data->untextured_color;
+		if (data->textured)
+			color = get_color(&ray->texture, ray->tex_x, tex_y);
+		draw_pixel(&data->img, (t_vector2){SCREEN_WIDTH - i *
+			((float)SCREEN_WIDTH / (float)data->nb_rays) , draw_start}, color);
 		draw_start++;
 	}
 }
@@ -109,10 +110,7 @@ int	get_color(t_img *img, int x, int y)
 	char	*dst;
 
 	if (!img)
-	{
-		printf("img is NULL\n");
 		return (0);
-	}
 	dst = img->addr;
 	if (!dst)
 		return (0);

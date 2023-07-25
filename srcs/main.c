@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 	{
 		mlx_destroy_image(data.mlx, data.img.img);
 		mlx_destroy_window(data.mlx, data.win);
-		// free(data.mlx) // why does this cause a segfault?;
+		free(data.mlx);
 		return (1);
 	}
 
@@ -33,11 +33,10 @@ int	main(int argc, char **argv)
 	{
 		mlx_destroy_image(data.mlx, data.img.img);
 		mlx_destroy_window(data.mlx, data.win);
-		// free(data.mlx);
+		free(data.mlx); // TODO to Bastien (on Mac): try to have two player, does it segfault?? If not delete this comment
 		return (1);
 	}
 	init_settings(&data);
-	// // START!!!
 	mlx_loop(data.mlx);
 	return (0);
 }

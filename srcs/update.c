@@ -46,10 +46,11 @@ float	update_slider(t_data *data, t_slider *slider)
 	// slider->value goes from 0 to 1
 	// t_rect rect = (t_rect){slider->pos.x + slider->value * slider->length - slider->width/2, slider->pos.y - slider->width/2, slider->width, slider->width};
 	t_rect hitbox_rect = (t_rect){slider->pos.x, slider->pos.y, slider->length, slider->width};
-	int	slider_color = C_DARKOLIVEGREEN3;
-	if (data->mouse_pressed)
+	int	slider_color = 0x27ae60;
+	if (colide_point(data->mouse_pos, hitbox_rect))
 	{
-		if (colide_point(data->mouse_pos, hitbox_rect))
+		slider_color = 0x2ecc71;
+		if (data->mouse_pressed)
 		{
 			float fraction = (data->mouse_pos.x - slider->pos.x) / (float)slider->length;
 
@@ -58,7 +59,6 @@ float	update_slider(t_data *data, t_slider *slider)
 
             // Calculate the value within the specified range
             slider->value = slider->min_value + fraction * (slider->max_value - slider->min_value);
-			slider_color = C_DARKOLIVEGREEN1;
 			printf("slider value: %f \t (min: %f, max: %f)\n", slider->value, slider->min_value, slider->max_value);
 		}
 	}
@@ -69,9 +69,9 @@ float	update_slider(t_data *data, t_slider *slider)
 	draw_rect(&data->img, (t_rect){slider->pos.x, slider->pos.y + slider->width/2 - bar_height/2, slider->length, bar_height}, C_BLACK);
 	// draw slider
 		// shadow
-	draw_rect(&data->img, (t_rect){slider->pos.x + (slider->value - slider->min_value) * slider->length /  (slider->max_value - slider->min_value) - slider->width/2 -3, slider->pos.y - 3, slider->width+6, slider->width+6}, C_BLACK);
+	draw_rect(&data->img, (t_rect){slider->pos.x + (slider->value - slider->min_value) * slider->length /  (slider->max_value - slider->min_value) - slider->width/2, slider->pos.y, slider->width, slider->width}, C_BLACK);
 		// slider
-	draw_rect(&data->img, (t_rect){slider->pos.x + (slider->value - slider->min_value) * slider->length /  (slider->max_value - slider->min_value) - slider->width/2, slider->pos.y, slider->width, slider->width}, slider_color);
+	draw_rect(&data->img, (t_rect){slider->pos.x + (slider->value - slider->min_value) * slider->length /  (slider->max_value - slider->min_value) - slider->width/2+3, slider->pos.y+3, slider->width-6, slider->width-6}, slider_color);
 	// text
 	return (slider->value);
 }
@@ -79,7 +79,12 @@ float	update_slider(t_data *data, t_slider *slider)
 void	update_slider_text(t_data *data, t_slider *slider)
 {
 	char *text_value = ft_itoa((int)slider->value);
+	if (!text_value)
+		return ;
 	char *text = ft_strjoin(slider->text, text_value);
+	free(text_value);
+	if (!text)
+		return ;
 	int	text_width = ft_strlen(text) * 5.85;
 	int x_pos = slider->pos.x + slider->length * (slider->value - slider->min_value)/ (slider->max_value - slider->min_value) - text_width/2;
 	int rect_width = text_width + 10;
@@ -87,6 +92,64 @@ void	update_slider_text(t_data *data, t_slider *slider)
 
 	draw_rect(&data->img, (t_rect){x_pos + text_width / 2 - rect_width/2, slider->pos.y - 20, rect_width, 15}, C_WHITE);
 	mlx_string_put(data->mlx, data->win, x_pos, slider->pos.y - 9, C_BLACK, text);
+	free(text);
+}
+
+typedef struct s_check_box
+{
+	t_vector2	pos;
+	int			width;
+	bool		checked;
+	char		*text;
+}				t_check_box;
+
+bool	update_check_box(t_data *data, t_check_box *check_box)
+{
+	t_rect hitbox_rect = (t_rect){check_box->pos.x, check_box->pos.y, check_box->width, check_box->width};
+
+	int check_box_color;
+	if (check_box->checked)
+		check_box_color = 0x27ae60;
+	else
+		check_box_color = 0xc0392b;
+
+	if (colide_point(data->mouse_pos, hitbox_rect))
+	{
+		if (check_box->checked)
+			check_box_color = 0x2ecc71;
+		else
+			check_box_color = 0xe74c3c;
+		if (data->mouse_just_pressed)
+		{
+
+			check_box->checked = !check_box->checked;
+			printf("check_box checked: %d\n", check_box->checked);
+		}
+	}
+	// rect
+	draw_rect(&data->img, hitbox_rect, C_BLACK);
+	// check_box
+	draw_rect(&data->img, (t_rect){check_box->pos.x + 3, check_box->pos.y + 3, check_box->width - 6, check_box->width - 6}, check_box_color);
+	return (check_box->checked);
+}
+
+void	update_check_box_text(t_data *data, t_check_box *check_box)
+{
+	char *text;
+	if (check_box->checked)
+		text = ft_strjoin(check_box->text, "ON");
+	else
+		text = ft_strjoin(check_box->text, "OFF");
+	if (!text)
+		return ;
+	int text_width = ft_strlen(text) * 5.85;
+	int rect_width = text_width + 10;
+	int x_pos = check_box->pos.x + check_box->width / 2 - text_width / 2;
+
+
+	draw_rect(&data->img, (t_rect){x_pos + text_width / 2 - rect_width/2, check_box->pos.y - 20, rect_width, 15}, C_WHITE);
+	mlx_string_put(data->mlx, data->win, x_pos, check_box->pos.y - 9, C_BLACK, text);
+	free(text);
 }
 
 int on_update(t_data *data)
@@ -145,17 +208,17 @@ int on_update(t_data *data)
 
 
 	// Menu
-	if (data->key_just_pressed[K_E])
-	{
-		in_menu = !in_menu;
-		mlx_mouse_hide(data->mlx, data->win);
+	// if (data->key_just_pressed[K_E])
+	// {
+	// 	in_menu = !in_menu;
+	// 	mlx_mouse_hide(data->mlx, data->win);
 
-		if (in_menu)
-		{
-			mlx_mouse_show(data->mlx, data->win);
-			printf("In menu\n");
-		}
-	}
+	// 	if (in_menu)
+	// 	{
+	// 		mlx_mouse_show(data->mlx, data->win);
+	// 		printf("In menu\n");
+	// 	}
+	// }
 
 
 
@@ -164,54 +227,92 @@ int on_update(t_data *data)
 	if (data->game2d.size_block.x * data->game2d.minimap.scale * data->map_mult > 3)
 		draw_minimap(data, data->map, data->game2d.minimap);
 	free(data->ray);
-	//
-	// Initialize the position variable
-
-    // Initialize the slider with the position variable
-    // static t_slider slid;
-    // slid.pos = (t_vector2){555, 555};
-    // slid.width = 40;
-    // slid.length = 100;
-    // slid.value = 0.54;
-
-	static t_slider map_mult_slider = {(t_vector2){40, 300}, 40, 250, 0, MINIMAP_SIZE_RATIO, 1, "Minimap scale: "}; // map mult
-	data->map_mult = update_slider(data, &map_mult_slider);
-
-	// add rotate speed ?
-
-	// add move speed ?
-
-	static t_slider fov_slider = {(t_vector2){40, 400}, 40, 250, 1, 720, DEFAULT_FOV_DEG, "FOV: "}; // fov
-	data->fov_deg = update_slider(data, &fov_slider);
-
-	static t_slider nb_ray_slider = {(t_vector2){40, 500}, 40, 250, 2, SCREEN_WIDTH, DEFAULT_NB_RAYS, "Rays nb: "}; // nb rays
-	data->nb_rays = update_slider(data, &nb_ray_slider);
-
-	static t_slider walls_height_slider = {(t_vector2){40, 600}, 40, 250, 1, SCREEN_HEIGHT/2, 50, "Walls height: "}; // wall height
-	data->walls_height = update_slider(data, &walls_height_slider);
-
-	static t_slider walls_y_offset_slider = {(t_vector2){40, 700}, 40, 250, -SCREEN_HEIGHT/1.4, SCREEN_HEIGHT/1.4, 0, "Walls y offset: "}; // wall start pos
-	data->walls_y_offset = update_slider(data, &walls_y_offset_slider);
 
 
+	static t_check_box settings_box = {(t_vector2){40, 250}, 40, true, "Settings: "};
+	static t_slider map_mult_slider = {(t_vector2){40, 325}, 40, 225, 0, MINIMAP_SIZE_RATIO, 1, "Minimap scale: "}; // map mult
+	static t_slider fov_slider = {(t_vector2){40, 400}, 40, 225, -180, 720, DEFAULT_FOV_DEG, "FOV: "}; // fov
+	static t_slider nb_ray_slider = {(t_vector2){40, 475}, 40, 225, 2, SCREEN_WIDTH, DEFAULT_NB_RAYS, "Rays nb: "}; // nb rays
+	static t_slider walls_height_slider = {(t_vector2){40, 550}, 40, 225, 1, SCREEN_HEIGHT/2, DEFAULT_WALLS_HEIGHT, "Walls height: "}; // wall height
+	static t_slider walls_y_offset_slider = {(t_vector2){40, 625}, 40, 225, -SCREEN_HEIGHT/1.4, SCREEN_HEIGHT/1.4, 0, "Walls y offset: "}; // wall start pos
+	static t_check_box textured_box = {(t_vector2){40, 700}, 40, true, "Textures: "}; // is textured
+	static t_slider untextured_color_r = {(t_vector2){100, 715}, 25, 45, 0, 255, 155, "r: "}; // untextured color
+	static t_slider untextured_color_g = {(t_vector2){185, 715}, 25, 45, 0, 255, 89, "g: "}; // untextured color
+	static t_slider untextured_color_b = {(t_vector2){270, 715}, 25, 45, 0, 255, 182, "b: "}; // untextured color
 
-	// colors, but not allowed to init the slider to the default color
-	// static t_slider red_celling_color_slider = {(t_vector2){40, 700}, 20, 50, 0, 255, 50}; // red color
-	// data->textures.C = set_color_red_value(data->textures.C, update_slider(data, &red_celling_color_slider));
-	// static t_slider green_celling_color_slider = {(t_vector2){40+50+30, 700}, 20, 50, 0, 255, 50}; // red color
-	// data->textures.C = set_color_green_value(data->textures.C, update_slider(data, &green_celling_color_slider));
-	// static t_slider blue_celling_color_slider = {(t_vector2){40+50*2+30*2, 700}, 20, 50, 0, 255, 50}; // red color
-	// data->textures.C = set_color_blue_value(data->textures.C, update_slider(data, &blue_celling_color_slider));
+	static t_slider player_move_speed_slider = {(t_vector2){40, 775}, 40, 79, 0, 15, DEFAULT_PLAYER_MOVE_SPEED, "Speed: "}; // player speed
+	static t_slider rotate_speed_slider = {(t_vector2){40+82+20+6 +40, 775}, 40, 77, 0, 10, DEFAULT_PLAYER_ROTATE_SPEED, "Rotation: "}; // rotate speed
 
+	static t_check_box reset_box = {(t_vector2){40, SCREEN_HEIGHT - 60}, 40, false, "Reset: "}; // reset
+
+	update_check_box(data, &settings_box);
+	if (settings_box.checked)
+	{
+		data->map_mult = update_slider(data, &map_mult_slider);
+
+		data->fov_deg = update_slider(data, &fov_slider);
+
+		data->nb_rays = update_slider(data, &nb_ray_slider);
+
+		data->walls_height = update_slider(data, &walls_height_slider);
+
+		data->walls_y_offset = update_slider(data, &walls_y_offset_slider);
+
+		data->textured = update_check_box(data, &textured_box);
+
+		data->game2d.player.speed =  data->game2d.size_block.x * update_slider(data, &player_move_speed_slider);
+
+		data->game2d.player.rotate_speed = update_slider(data, &rotate_speed_slider);
+
+		if (!data->textured)
+		{
+			data->untextured_color = set_color_red_value(data->untextured_color, update_slider(data, &untextured_color_r));
+			data->untextured_color = set_color_green_value(data->untextured_color, update_slider(data, &untextured_color_g));
+			data->untextured_color = set_color_blue_value(data->untextured_color, update_slider(data, &untextured_color_b));
+		}
+
+		if (update_check_box(data, &reset_box))
+		{
+			fov_slider.value = DEFAULT_FOV_DEG;
+			nb_ray_slider.value = DEFAULT_NB_RAYS;
+			walls_height_slider.value = DEFAULT_WALLS_HEIGHT;
+			walls_y_offset_slider.value = 0;
+			map_mult_slider.value = 1;
+			textured_box.checked = true;
+			untextured_color_r.value = 155;
+			untextured_color_g.value = 89;
+			untextured_color_b.value = 182;
+			reset_box.checked = false;
+			player_move_speed_slider.value = DEFAULT_PLAYER_MOVE_SPEED;
+			rotate_speed_slider.value = DEFAULT_PLAYER_ROTATE_SPEED;
+		}
+	}
 
 
 	on_update_utils(data);
-	update_slider_text(data, &map_mult_slider);
-	update_slider_text(data, &fov_slider);
-	update_slider_text(data, &nb_ray_slider);
-	update_slider_text(data, &walls_height_slider);
-	update_slider_text(data, &walls_y_offset_slider);
 
+	if (settings_box.checked)
+	{
+		update_slider_text(data, &map_mult_slider);
+		update_slider_text(data, &fov_slider);
+		update_slider_text(data, &nb_ray_slider);
+		update_slider_text(data, &walls_height_slider);
+		update_slider_text(data, &walls_y_offset_slider);
+
+		update_check_box_text(data, &textured_box);
+
+		if (!data->textured)
+		{
+			update_slider_text(data, &untextured_color_r);
+			update_slider_text(data, &untextured_color_g);
+			update_slider_text(data, &untextured_color_b);
+		}
+		update_slider_text(data, &player_move_speed_slider);
+		update_slider_text(data, &rotate_speed_slider);
+
+		update_check_box_text(data, &reset_box);
+	}
+	update_check_box_text(data, &settings_box);
 
 
 }
