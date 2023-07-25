@@ -7,11 +7,13 @@
 # include <math.h>
 
 # define MINIMAP_OFFSET 30
-# define NB_RAYS SCREEN_WIDTH
-# define FOV_DEG 60
-# define FOV_RAD FOV_DEG * M_PI / 180
-# define PLAYER_ROTATE_SPEED 5
-# define ANGLE_INCREMENT FOV_RAD / (NB_RAYS - 1) // new
+# define MINIMAP_SIZE_RATIO 5 // the minimap will be 1/X of the screen
+# define DEFAULT_FOV_DEG 60 // now default FOV DEG
+# define DEFAULT_NB_RAYS SCREEN_WIDTH
+// # define FOV_RAD FOV_DEG * M_PI / 180, it will be calculated once every frame, not a big deal
+# define PLAYER_ROTATE_SPEED 3
+# define PLAYER_MOVE_SPEED 5 // in block per second
+// # define ANGLE_INCREMENT FOV_RAD / (NB_RAYS - 1) // new
 
 typedef struct s_ray // NEW
 {

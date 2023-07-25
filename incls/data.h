@@ -31,13 +31,19 @@ typedef struct s_data
 	bool		key_pressed[MAX_KEYS];
 	bool		key_just_pressed[MAX_KEYS];
 	bool		mouse_just_pressed;
+	bool		mouse_pressed;
 	t_vector2	mouse_pos;
 	float		dt;
 	char		**map;
 	t_vector2	map_size;
 	t_textures	textures;
 	t_game2d	game2d;
-	t_ray		*ray;
+	t_ray		*ray; // TODO rename to rays
+	float		fov_deg; // put all this in a struct?
+	int			nb_rays;
+	int 		walls_height;
+	float 		walls_y_offset;
+	float		map_mult;
 }	t_data;
 
 #endif

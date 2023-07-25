@@ -7,10 +7,11 @@ void	register_angle(t_game2d *game2d, char c);
 
 void	init_settings(t_data *data)
 {
+	data->fov_deg = DEFAULT_FOV_DEG; // TODO put in a function?
 	data->game2d.size_block = (t_vector2){50, 50};
 	data->game2d.minimap.offset = (t_vector2){MINIMAP_OFFSET, MINIMAP_OFFSET};
-	data->game2d.minimap.size = (t_vector2){SCREEN_WIDTH / 4,
-		SCREEN_HEIGHT / 4};
+	data->game2d.minimap.size = (t_vector2){SCREEN_WIDTH / MINIMAP_SIZE_RATIO,
+		SCREEN_HEIGHT / MINIMAP_SIZE_RATIO};
 	if (data->game2d.minimap.size.x / data->map_size.x
 		> data->game2d.minimap.size.y / data->map_size.y)
 		data->game2d.minimap.scale = (data->game2d.minimap.size.y
@@ -18,7 +19,7 @@ void	init_settings(t_data *data)
 	else
 		data->game2d.minimap.scale = (data->game2d.minimap.size.x
 				/ data->map_size.x) / (float)data->game2d.size_block.x;
-	data->game2d.player.speed = 600;
+	data->game2d.player.speed = data->game2d.size_block.x * PLAYER_MOVE_SPEED;
 	data->game2d.player.size = (t_vector2){data->game2d.size_block.x * 0.8,
 		data->game2d.size_block.y * 0.8};
 	register_player(data, &data->game2d);

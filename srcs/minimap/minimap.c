@@ -18,11 +18,11 @@ void	draw_minimap(t_data *data, char **map, t_minimap minimap)
 		while (map[y][++x])
 		{
 			current_rect = (t_rect){x * (data->game2d.size_block.x
-					* minimap.scale) + minimap.offset.x - 1, y
-				* (data->game2d.size_block.y * minimap.scale)
+					* minimap.scale * data->map_mult) + minimap.offset.x - 1, y
+				* (data->game2d.size_block.y * minimap.scale * data->map_mult)
 				+ minimap.offset.y - 1, data->game2d.size_block.x
-				* minimap.scale - 2, data->game2d.size_block.x
-				* minimap.scale - 2};
+				* minimap.scale * data->map_mult - 2, data->game2d.size_block.x
+				* minimap.scale * data->map_mult - 2};
 			if (map[y][x] == '1')
 				draw_rect(&data->img, current_rect, 0x27374D);
 			else if (map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'S'
@@ -38,10 +38,10 @@ void	draw_player(t_data *data, t_player *player, t_minimap *minimap)
 {
 	t_rect	current_rect;
 
-	current_rect = (t_rect){player->pos.x * minimap->scale
-		+ minimap->offset.x, player->pos.y * minimap->scale
-		+ minimap->offset.y, player->size.x * minimap->scale,
-		player->size.y * minimap->scale};
+	current_rect = (t_rect){player->pos.x * minimap->scale * data->map_mult
+		+ minimap->offset.x, player->pos.y * minimap->scale * data->map_mult
+		+ minimap->offset.y, player->size.x * minimap->scale * data->map_mult,
+		player->size.y * minimap->scale * data->map_mult};
 	draw_rect(&data->img, current_rect, 0x526D82);
 }
 
@@ -50,16 +50,15 @@ void	draw_rays(t_data *data, t_ray *ray, t_minimap *minimap)
 	int	i;
 
 	i = -1;
-	while (++i < NB_RAYS)
+	while (++i < data->nb_rays)
 	{
 		draw_line(&data->img, (t_vector2){ray[i].player_center.x
-			* minimap->scale + MINIMAP_OFFSET, ray[i].player_center.y
-			* minimap->scale + MINIMAP_OFFSET},
+			* minimap->scale * data->map_mult + MINIMAP_OFFSET, ray[i].player_center.y
+			* minimap->scale * data->map_mult + MINIMAP_OFFSET},
 			(t_vector2){(ray[i].player_center.x + cos(ray[i].ray_angle)
-				* ray[i].ray_length) * minimap->scale + MINIMAP_OFFSET,
+				* ray[i].ray_length) * minimap->scale * data->map_mult+ MINIMAP_OFFSET,
 			(ray[i].player_center.y - sin(ray[i].ray_angle)
-				* ray[i].ray_length) * minimap->scale + MINIMAP_OFFSET},
+				* ray[i].ray_length) * minimap->scale * data->map_mult+ MINIMAP_OFFSET},
 			C_DARKOLIVEGREEN3);
 	}
-	free(ray);
 }

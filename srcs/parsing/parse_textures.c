@@ -60,7 +60,6 @@ bool	set_texture(void *mlx, t_img *sprite, char *path, char *name)
 	}
 	if (path[ft_strlen(path) - 1] == '\n')
 		path[ft_strlen(path) - 1] = '\0';
-	// img = malloc(sizeof(t_img));
 	sprite->img = mlx_xpm_file_to_image(mlx, path, &sprite->size.x,
 			&sprite->size.y);
 	if (sprite->img == NULL)
@@ -68,6 +67,7 @@ bool	set_texture(void *mlx, t_img *sprite, char *path, char *name)
 		printf("Error, invalid path '%s'\n", path);
 		return (false);
 	}
+	// try loading as a png?
 	sprite->addr = mlx_get_data_addr(sprite->img, &sprite->bpp,
 			&sprite->line_len, &sprite->endian);
 	return (true);

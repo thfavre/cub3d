@@ -11,11 +11,11 @@ void	raycasting(t_data *data, t_player *player, t_minimap *minimap)
 {
 	int		i;
 
-	data->ray = malloc(sizeof(t_ray) * NB_RAYS);
+	data->ray = malloc(sizeof(t_ray) * data->nb_rays);
 	if (!data->ray)
 		return ;
 	i = -1;
-	while (++i < NB_RAYS)
+	while (++i < data->nb_rays)
 	{
 		register_rays(data, &data->ray[i], &data->game2d, i);
 		register_textures(data, &data->ray[i]);
@@ -28,7 +28,7 @@ void	register_rays(t_data *data, t_ray *ray, t_game2d *game2d, int i)
 	ray->player_center = (t_fvector2){game2d->player.pos.x
 		+ game2d->player.size.x / 2, game2d->player.pos.y
 		+ game2d->player.size.x / 2};
-	ray->ray_angle = game2d->player.angle - FOV_RAD / 2 + (i * ANGLE_INCREMENT);
+	ray->ray_angle = game2d->player.angle - data->fov_deg * M_PI / 180 / 2 + (i * data->fov_deg * M_PI / 180 / (data->nb_rays - 1)); // if enought line, create variables line_increment and angle_increment
 	ray->ray_angle = fmod(ray->ray_angle, 2 * M_PI);
 	if (ray->ray_angle < M_PI && ray->ray_angle >= 0 && ray->ray_angle != M_PI)
 		ray->vertical_ray = raycasting_up(data, ray, game2d->minimap.scale);
@@ -45,7 +45,7 @@ void	register_rays(t_data *data, t_ray *ray, t_game2d *game2d, int i)
 		ray->ray_length = ray->horizontal_ray;
 	ray->ray_length_correct = ray->ray_length * cos(fabs(game2d->player.angle
 				- ray->ray_angle));
-	ray->wall_height = (int)(SCREEN_HEIGHT / (ray->ray_length_correct / 50));
+	ray->wall_height = (int)(SCREEN_HEIGHT / (ray->ray_length_correct / data->walls_height));
 }
 
 void	register_textures(t_data *data, t_ray *ray)
@@ -84,20 +84,21 @@ void	draw_textures(t_data *data, t_ray *ray, int i)
 	double	tex_pos;
 	int		tex_y;
 
-	draw_start = -ray->wall_height / 2 + SCREEN_HEIGHT / 2;
+	draw_start = -ray->wall_height / 2 + SCREEN_HEIGHT / 2 + data->walls_y_offset;
 	if (draw_start < 0)
 		draw_start = 0;
-	draw_end = ray->wall_height / 2 + SCREEN_HEIGHT / 2;
+	draw_end = ray->wall_height / 2 + SCREEN_HEIGHT / 2 + data->walls_y_offset;
 	if (draw_end >= SCREEN_HEIGHT)
 		draw_end = SCREEN_HEIGHT - 1;
-	tex_pos = (draw_start - SCREEN_HEIGHT / 2 + ray->wall_height / 2)
+	tex_pos = (draw_start - SCREEN_HEIGHT / 2 + ray->wall_height / 2 - data->walls_y_offset)
 		* ray->step;
 	while (draw_start < draw_end)
 	{
 		tex_y = (int)tex_pos & (ray->texture.size.y - 1);
 		tex_pos += ray->step;
 		color = get_color(&ray->texture, ray->tex_x, tex_y);
-		draw_pixel(&data->img, (t_vector2){SCREEN_WIDTH - i, draw_start},
+		float x = SCREEN_WIDTH - i * ((float)SCREEN_WIDTH / (float)data->nb_rays);
+		draw_pixel(&data->img, (t_vector2){x , draw_start},
 			color);
 		draw_start++;
 	}

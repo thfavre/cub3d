@@ -12,7 +12,9 @@ SRCS	+=			srcs/close/close.c \
 SRCS	+=			srcs/key/keys_init.c \
 					srcs/key/on_keypressed.c \
 					srcs/key/on_keyreleased.c \
-					srcs/key/on_mousepressed.c
+					srcs/key/on_mousepressed.c \
+					srcs/key/on_mouserelease.c
+
 
 # draw folder
 SRCS	+=			srcs/draw/color.c \
