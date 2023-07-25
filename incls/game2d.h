@@ -7,7 +7,7 @@
 # include <math.h>
 
 # define MINIMAP_OFFSET 30
-# define MINIMAP_SIZE_RATIO 5 // the minimap will be 1/X of the screen
+# define MINIMAP_SIZE_RATIO 6 // the minimap will be 1/X of the screen
 # define DEFAULT_FOV_DEG 60 // now default FOV DEG
 # define DEFAULT_NB_RAYS SCREEN_WIDTH
 # define DEFAULT_WALLS_HEIGHT 50

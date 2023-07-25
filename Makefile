@@ -6,7 +6,7 @@ SRCS	+=			srcs/main.c \
 
 # close folder
 SRCS	+=			srcs/close/close.c \
-					srcs/close/free_split.c # where to put that ?
+					srcs/close/free_split.c \ # where to put that ?
 
 # key folder
 SRCS	+=			srcs/key/keys_init.c \

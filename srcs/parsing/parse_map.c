@@ -66,27 +66,11 @@ int	get_file_line_number(char *filename)
 	return (line_number);
 }
 
-void	*free_map(char **map)
-{
-	int	i;
-
-	if (map == NULL)
-		return (NULL);
-	i = 0;
-	while (map[i] != NULL)
-	{
-		free(map[i]);
-		i++;
-	}
-	free(map);
-	return (NULL);
-}
-
 bool	check_map_validity(char **map)
 {
-	t_vector2			pos;
-	char				cell;
-	static int			player_count = 0;
+	t_vector2	pos;
+	char		cell;
+	static int	player_count = 0;
 
 	pos.y = -1;
 	while (map[++pos.y] != NULL)
@@ -97,10 +81,8 @@ bool	check_map_validity(char **map)
 			cell = map[pos.y][pos.x];
 			if (cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W')
 			{
-				if (++player_count == 1)
-					continue ;
-				printf("Error, there must be exactly one player in the map\n");
-				return (false);
+				player_count++;
+				continue ;
 			}
 			if (cell == '0' || cell == '1' || cell == ' ')
 				continue ;
@@ -109,7 +91,9 @@ at (%d, %d)\n", cell, pos.x + 1, pos.y + 1);
 			return (false);
 		}
 	}
-	return (player_count == 1 && is_map_closed(map)); // TODO message when no player
+	if (player_count != 1)
+		printf("Error, there must be exactly one player in the map\n");
+	return (is_map_closed(map) && player_count == 1);
 }
 
 bool	is_map_closed(char **map)
@@ -140,4 +124,20 @@ bool	is_map_closed(char **map)
 		}
 	}
 	return (true);
+}
+
+void	*free_map(char **map)
+{
+	int	i;
+
+	if (map == NULL)
+		return (NULL);
+	i = 0;
+	while (map[i] != NULL)
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map);
+	return (NULL);
 }
