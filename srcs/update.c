@@ -174,7 +174,7 @@ int on_update(t_data *data)
     // slid.length = 100;
     // slid.value = 0.54;
 
-	static t_slider map_mult_slider = {(t_vector2){40, 300}, 40, 250, 0, MINIMAP_SIZE_RATIO, 1, "Minimap size: "}; // map mult
+	static t_slider map_mult_slider = {(t_vector2){40, 300}, 40, 250, 0, MINIMAP_SIZE_RATIO, 1, "Minimap scale: "}; // map mult
 	data->map_mult = update_slider(data, &map_mult_slider);
 
 	// add rotate speed ?
