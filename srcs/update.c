@@ -24,6 +24,7 @@ typedef struct s_slider
 	float		min_value;
 	float		max_value;
 	float		value;
+	char		*text;
 }				t_slider;
 
 bool	colide_point(t_vector2 point, t_rect rect)
@@ -73,6 +74,19 @@ float	update_slider(t_data *data, t_slider *slider)
 	draw_rect(&data->img, (t_rect){slider->pos.x + (slider->value - slider->min_value) * slider->length /  (slider->max_value - slider->min_value) - slider->width/2, slider->pos.y, slider->width, slider->width}, slider_color);
 	// text
 	return (slider->value);
+}
+
+void	update_slider_text(t_data *data, t_slider *slider)
+{
+	char *text_value = ft_itoa((int)slider->value);
+	char *text = ft_strjoin(slider->text, text_value);
+	int	text_width = ft_strlen(text) * 5.85;
+	int x_pos = slider->pos.x + slider->length * (slider->value - slider->min_value)/ (slider->max_value - slider->min_value) - text_width/2;
+	int rect_width = text_width + 10;
+
+
+	draw_rect(&data->img, (t_rect){x_pos + text_width / 2 - rect_width/2, slider->pos.y - 20, rect_width, 15}, C_WHITE);
+	mlx_string_put(data->mlx, data->win, x_pos, slider->pos.y - 9, C_BLACK, text);
 }
 
 int on_update(t_data *data)
@@ -160,23 +174,23 @@ int on_update(t_data *data)
     // slid.length = 100;
     // slid.value = 0.54;
 
-	static t_slider map_mult_slider = {(t_vector2){40, 300}, 40, 250, 0, MINIMAP_SIZE_RATIO, 1}; // map mult
+	static t_slider map_mult_slider = {(t_vector2){40, 300}, 40, 250, 0, MINIMAP_SIZE_RATIO, 1, "Minimap size: "}; // map mult
 	data->map_mult = update_slider(data, &map_mult_slider);
 
 	// add rotate speed ?
 
 	// add move speed ?
 
-	static t_slider fov_slider = {(t_vector2){40, 400}, 40, 250, 1, 720, DEFAULT_FOV_DEG}; // fov
+	static t_slider fov_slider = {(t_vector2){40, 400}, 40, 250, 1, 720, DEFAULT_FOV_DEG, "FOV: "}; // fov
 	data->fov_deg = update_slider(data, &fov_slider);
 
-	static t_slider nb_ray_slider = {(t_vector2){40, 500}, 40, 250, 2, SCREEN_WIDTH, DEFAULT_NB_RAYS}; // nb rays
+	static t_slider nb_ray_slider = {(t_vector2){40, 500}, 40, 250, 2, SCREEN_WIDTH, DEFAULT_NB_RAYS, "Rays nb: "}; // nb rays
 	data->nb_rays = update_slider(data, &nb_ray_slider);
 
-	static t_slider walls_height_slider = {(t_vector2){40, 600}, 40, 250, 1, SCREEN_HEIGHT/2, 50}; // wall height
+	static t_slider walls_height_slider = {(t_vector2){40, 600}, 40, 250, 1, SCREEN_HEIGHT/2, 50, "Walls height: "}; // wall height
 	data->walls_height = update_slider(data, &walls_height_slider);
 
-	static t_slider walls_y_offset_slider = {(t_vector2){40, 700}, 40, 250, -SCREEN_HEIGHT/1.4, SCREEN_HEIGHT/1.4, 0}; // wall start pos
+	static t_slider walls_y_offset_slider = {(t_vector2){40, 700}, 40, 250, -SCREEN_HEIGHT/1.4, SCREEN_HEIGHT/1.4, 0, "Walls y offset: "}; // wall start pos
 	data->walls_y_offset = update_slider(data, &walls_y_offset_slider);
 
 
@@ -192,6 +206,12 @@ int on_update(t_data *data)
 
 
 	on_update_utils(data);
+	update_slider_text(data, &map_mult_slider);
+	update_slider_text(data, &fov_slider);
+	update_slider_text(data, &nb_ray_slider);
+	update_slider_text(data, &walls_height_slider);
+	update_slider_text(data, &walls_y_offset_slider);
+
 
 
 }
