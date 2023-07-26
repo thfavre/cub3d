@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_textures.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/26 15:23:20 by thomas            #+#    #+#             */
+/*   Updated: 2023/07/26 15:25:36 by thomas           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -67,7 +79,6 @@ bool	set_texture(void *mlx, t_img *sprite, char *path, char *name)
 		printf("Error, invalid path '%s'\n", path);
 		return (false);
 	}
-	// try loading as a png?
 	sprite->addr = mlx_get_data_addr(sprite->img, &sprite->bpp,
 			&sprite->line_len, &sprite->endian);
 	return (true);

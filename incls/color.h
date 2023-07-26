@@ -4,14 +4,13 @@
 # include <stdint.h>
 
 int	rgb(uint8_t red, uint8_t green, uint8_t blue);
-// int	add_color(int color, int to_add_color);
-// int	sub_color(int color, int to_sub_color);
-int	set_color_red_value(int color, int redValue);
-int	set_color_green_value(int color, int redValue);
-int	set_color_blue_value(int color, int redValue);
+int	set_color_red_value(int color, int red_value);
+int	set_color_green_value(int color, int red_value);
+int	set_color_blue_value(int color, int red_value);
 
 // Colors ref: https://github.com/pygame/pygame/blob/main/src_py/colordict.py
 // Colors preview: https://www.pygame.org/docs/ref/color_list.html
+// Used color palette: https://flatuicolors.com/palette/defo
 
 # define C_ALICEBLUE 0xf0f8ff
 # define C_ANTIQUEWHITE 0xfaebd7

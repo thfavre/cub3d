@@ -20,12 +20,13 @@ SRCS	+=			srcs/key/keys_init.c \
 SRCS	+=			srcs/draw/color.c \
 					srcs/draw/draw_pixel.c \
 					srcs/draw/draw_rect.c \
-					srcs/draw/draw_background.c \
 					srcs/draw/line/draw_line.c \
+					srcs/draw/gui/collide_point.c \
+					srcs/draw/gui/slider.c \
+					srcs/draw/gui/check_box.c
 
-# utils folder
-SRCS	+=			srcs/utils/time_utils.c \
-					srcs/utils/update_utils.c
+# time folder
+SRCS	+=			srcs/time/_time.c \
 
 # parser folder
 SRCS	+=			srcs/parsing/parser.c \

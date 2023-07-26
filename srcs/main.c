@@ -8,9 +8,6 @@
 bool	init(t_data *data);
 bool	parser(char *filename, t_data *data);
 
-int	on_close(t_data *data);
-
-
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -28,7 +25,6 @@ int	main(int argc, char **argv)
 		free(data.mlx);
 		return (1);
 	}
-
 	else if (!parser(argv[1], &data))
 	{
 		mlx_destroy_image(data.mlx, data.img.img);

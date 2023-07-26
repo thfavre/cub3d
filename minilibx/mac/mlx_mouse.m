@@ -20,7 +20,7 @@ int	mlx_mouse_show()
   return (0);
 }
 
-int	mlx_mouse_move(mlx_win_list_t *win, int x, int y)
+int	mlx_mouse_move(t_xvar *xvar, mlx_win_list_t *win, int x, int y)
 {
   CGPoint	point;
   NSRect	pos;

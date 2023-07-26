@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close.c                                            :+:      :+:    :+:   */
+/*   collide_point.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/26 14:56:56 by thomas            #+#    #+#             */
-/*   Updated: 2023/07/27 00:45:59 by thomas           ###   ########.fr       */
+/*   Created: 2023/07/26 14:55:18 by thomas            #+#    #+#             */
+/*   Updated: 2023/07/26 15:22:33 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "data.h"
+#include "rect.h"
+#include "vector2.h"
+#include <stdbool.h>
 
-void	*free_map(char **map);
-void	free_textures(void *mlx, t_textures *textures);
-
-int	on_close(t_data *data)
+bool	collide_point(t_vector2 point, t_rect rect)
 {
-	free(data->game2d.walls);
-	free_map(data->map);
-	free_textures(data->mlx, &data->textures);
-	free(data->mlx);
-	exit(0);
-	return (0);
+	if (point.x >= rect.pos.x && point.x <= rect.pos.x + rect.size.x && \
+		point.y >= rect.pos.y && point.y <= rect.pos.y + rect.size.y)
+		return (true);
+	return (false);
 }

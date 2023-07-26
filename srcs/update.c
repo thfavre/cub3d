@@ -2,160 +2,54 @@
 
 #include "data.h"
 #include "keycodes.h"
-#include "draw.h"
 #include "game2d.h"
 #include "mlx.h"
 
-void on_update_utils(t_data *data); // Put the function in update.c?
-int	get_avrage_fps(float dt);
 
 # include <math.h>
 # include "libft.h"
 # include "draw.h"
+#include "_time.h"
+
+int		on_close(t_data *data);
+void	on_update_utils(t_data *data);
 
 void	raycasting(t_data *data, t_player *player, t_minimap *minimap);
 
 
-typedef struct s_slider
-{
-	t_vector2	pos;
-	int			width;
-	int			length;
-	float		min_value;
-	float		max_value;
-	float		value;
-	char		*text;
-}				t_slider;
 
-bool	colide_point(t_vector2 point, t_rect rect)
-{
-	if (point.x >= rect.pos.x && point.x <= rect.pos.x + rect.size.x && \
-		point.y >= rect.pos.y && point.y <= rect.pos.y + rect.size.y)
-		return (true);
-	return (false);
-}
 
-// Easing function to smooth the slider movement
-float smoothInOutQuad(float t)
-{
-    return t * t * (3 - 2 * t);
-}
 
-float	update_slider(t_data *data, t_slider *slider)
+void	mouse_control(t_data *data, bool *is_mouse_controled)
 {
-	// slider->value goes from 0 to 1
-	// t_rect rect = (t_rect){slider->pos.x + slider->value * slider->length - slider->width/2, slider->pos.y - slider->width/2, slider->width, slider->width};
-	t_rect hitbox_rect = (t_rect){slider->pos.x, slider->pos.y, slider->length, slider->width};
-	int	slider_color = 0x27ae60;
-	if (colide_point(data->mouse_pos, hitbox_rect))
+	if (data->key_just_pressed[K_E])
 	{
-		slider_color = 0x2ecc71;
-		if (data->mouse_pressed)
-		{
-			float fraction = (data->mouse_pos.x - slider->pos.x) / (float)slider->length;
-
-            // Apply easing function to the fraction
-            fraction = smoothInOutQuad(fraction);
-
-            // Calculate the value within the specified range
-            slider->value = slider->min_value + fraction * (slider->max_value - slider->min_value);
-			printf("slider value: %f \t (min: %f, max: %f)\n", slider->value, slider->min_value, slider->max_value);
-		}
-	}
-	// hitbox rect
-	// draw_rect(img, hitbox_rect, C_LIGHTGRAY);
-	// draw bar
-	int bar_height = 6;
-	draw_rect(&data->img, (t_rect){slider->pos.x, slider->pos.y + slider->width/2 - bar_height/2, slider->length, bar_height}, C_BLACK);
-	// draw slider
-		// shadow
-	draw_rect(&data->img, (t_rect){slider->pos.x + (slider->value - slider->min_value) * slider->length /  (slider->max_value - slider->min_value) - slider->width/2, slider->pos.y, slider->width, slider->width}, C_BLACK);
-		// slider
-	draw_rect(&data->img, (t_rect){slider->pos.x + (slider->value - slider->min_value) * slider->length /  (slider->max_value - slider->min_value) - slider->width/2+3, slider->pos.y+3, slider->width-6, slider->width-6}, slider_color);
-	// text
-	return (slider->value);
-}
-
-void	update_slider_text(t_data *data, t_slider *slider)
-{
-	char *text_value = ft_itoa((int)slider->value);
-	if (!text_value)
-		return ;
-	char *text = ft_strjoin(slider->text, text_value);
-	free(text_value);
-	if (!text)
-		return ;
-	int	text_width = ft_strlen(text) * 5.85;
-	int x_pos = slider->pos.x + slider->length * (slider->value - slider->min_value)/ (slider->max_value - slider->min_value) - text_width/2;
-	int rect_width = text_width + 10;
-
-
-	draw_rect(&data->img, (t_rect){x_pos + text_width / 2 - rect_width/2, slider->pos.y - 20, rect_width, 15}, C_WHITE);
-	mlx_string_put(data->mlx, data->win, x_pos, slider->pos.y - 9, C_BLACK, text);
-	free(text);
-}
-
-typedef struct s_check_box
-{
-	t_vector2	pos;
-	int			width;
-	bool		checked;
-	char		*text;
-}				t_check_box;
-
-bool	update_check_box(t_data *data, t_check_box *check_box)
-{
-	t_rect hitbox_rect = (t_rect){check_box->pos.x, check_box->pos.y, check_box->width, check_box->width};
-
-	int check_box_color;
-	if (check_box->checked)
-		check_box_color = 0x27ae60;
-	else
-		check_box_color = 0xc0392b;
-
-	if (colide_point(data->mouse_pos, hitbox_rect))
-	{
-		if (check_box->checked)
-			check_box_color = 0x2ecc71;
+		*is_mouse_controled = !*is_mouse_controled;
+		if (*is_mouse_controled)
+			mlx_mouse_hide(data->mlx, data->win);
 		else
-			check_box_color = 0xe74c3c;
-		if (data->mouse_just_pressed)
-		{
-
-			check_box->checked = !check_box->checked;
-			printf("check_box checked: %d\n", check_box->checked);
-		}
+			mlx_mouse_show(data->mlx, data->win);
 	}
-	// rect
-	draw_rect(&data->img, hitbox_rect, C_BLACK);
-	// check_box
-	draw_rect(&data->img, (t_rect){check_box->pos.x + 3, check_box->pos.y + 3, check_box->width - 6, check_box->width - 6}, check_box_color);
-	return (check_box->checked);
+	if (*is_mouse_controled)
+	{
+		if (data->mouse_pos.x != SCREEN_WIDTH / 2)
+		{
+			data->game2d.player.angle -= (data->mouse_pos.x - SCREEN_WIDTH / 2) * 0.3 * data->dt;
+			if (data->game2d.player.angle < 0)
+				data->game2d.player.angle += M_PI * 2;
+			else if (data->game2d.player.angle > M_PI * 2)
+				data->game2d.player.angle -= M_PI * 2;
+		}
+		mlx_mouse_move(data->mlx, data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	}
 }
 
-void	update_check_box_text(t_data *data, t_check_box *check_box)
-{
-	char *text;
-	if (check_box->checked)
-		text = ft_strjoin(check_box->text, "ON");
-	else
-		text = ft_strjoin(check_box->text, "OFF");
-	if (!text)
-		return ;
-	int text_width = ft_strlen(text) * 5.85;
-	int rect_width = text_width + 10;
-	int x_pos = check_box->pos.x + check_box->width / 2 - text_width / 2;
 
-
-	draw_rect(&data->img, (t_rect){x_pos + text_width / 2 - rect_width/2, check_box->pos.y - 20, rect_width, 15}, C_WHITE);
-	mlx_string_put(data->mlx, data->win, x_pos, check_box->pos.y - 9, C_BLACK, text);
-	free(text);
-}
 
 int on_update(t_data *data)
 {
-	static bool mouse_control;
-	// draw_background(&data->img, data->textures.F);
+	static bool is_mouse_controled = false;
+
 	draw_rect(&data->img, (t_rect){0, 0, SCREEN_WIDTH, SCREEN_HEIGHT / 2 + data->walls_y_offset}, data->textures.C);
 	draw_rect(&data->img, (t_rect){0, SCREEN_HEIGHT / 2 + data->walls_y_offset, SCREEN_WIDTH, SCREEN_HEIGHT / 2 - data->walls_y_offset}, data->textures.F);
 
@@ -170,62 +64,8 @@ int on_update(t_data *data)
 			}
 	}
 
-
-	// hide mouse when on window
-	// if (data->mouse_pos.x >= 0 && data->mouse_pos.x < SCREEN_WIDTH && \
-	// 	data->mouse_pos.y >= 0 && data->mouse_pos.y < SCREEN_HEIGHT)
-	// 	mlx_mouse_hide(data->mlx, data->win);
-	// else
-	// 	mlx_mouse_show(data->mlx, data->win);
-
-	// mouse center screen
-
-
-	// Map zoom
-	if (data->key_just_pressed[K_M])
-		data->game2d.minimap.scale += 0.1;
-
-	// Door
-	// if (data->key_just_pressed[K_E])
-	// {
-	// 	if (data->map[3][5] == 'D')
-	// 		data->map[3][5] = '1';
-	// 	else
-	// 		data->map[3][5] = 'D';
-	// }
-
-
 	// mouse_control
-	if (data->key_just_pressed[K_E])
-	{
-		mouse_control = !mouse_control;
-
-		if (mouse_control)
-		{
-			mlx_mouse_hide(data->mlx, data->win);
-			printf("mouse_control start\n");
-		}
-		else
-		{
-			mlx_mouse_show(data->mlx, data->win);
-			printf("mouse_control stop\n");
-		}
-	}
-
-	if (mouse_control)
-	{
-		if (data->mouse_pos.x != SCREEN_WIDTH / 2)
-		{
-			data->game2d.player.angle -= (data->mouse_pos.x - SCREEN_WIDTH / 2) * 0.3 * data->dt;
-			if (data->game2d.player.angle < 0)
-				data->game2d.player.angle += M_PI * 2;
-			else if (data->game2d.player.angle > M_PI * 2)
-				data->game2d.player.angle -= M_PI * 2;
-		}
-		mlx_mouse_move(data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2); // For MAC
-		// mlx_mouse_move(data->mlx, data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2); // For LINUX, but dont works
-	}
-
+	mouse_control(data, &is_mouse_controled);
 
 	update_player(data, &data->game2d.player);
 	raycasting(data, &data->game2d.player, &data->game2d.minimap);
@@ -233,7 +73,7 @@ int on_update(t_data *data)
 		draw_minimap(data, data->map, data->game2d.minimap);
 	free(data->ray);
 
-	if (mouse_control)
+	if (is_mouse_controled)
 	{
 		int cursor_width = 20;
 		int cursor_height = 4;
@@ -243,7 +83,6 @@ int on_update(t_data *data)
 		draw_rect(&data->img, (t_rect){SCREEN_WIDTH / 2 - cursor_height/2-1, SCREEN_HEIGHT / 2 - cursor_width / 2-1, cursor_height, cursor_width}, shadow_color);
 		draw_rect(&data->img, (t_rect){SCREEN_WIDTH / 2 - cursor_width/2, SCREEN_HEIGHT / 2 - cursor_height / 2, cursor_width, cursor_height}, color);
 		draw_rect(&data->img, (t_rect){SCREEN_WIDTH / 2 - cursor_height/2, SCREEN_HEIGHT / 2 - cursor_width / 2, cursor_height, cursor_width}, color);
-
 	}
 
 
@@ -337,3 +176,18 @@ int on_update(t_data *data)
 
 }
 
+void on_update_utils(t_data *data)
+{
+	char *str;
+
+	if (data->key_pressed[K_ESC])
+		on_close(data);
+	data->dt = get_delta_time();
+	mlx_mouse_get_pos(data->mlx, data->win, &data->mouse_pos.x, &data->mouse_pos.y);
+	mlx_put_image_to_window(data->mlx, data->win, \
+		data->img.img, 0, 0);
+	ft_bzero(data->key_just_pressed, MAX_KEYS);
+
+	data->mouse_just_pressed = false;
+	draw_fps(data);
+}
