@@ -6,7 +6,7 @@ SRCS	+=			srcs/main.c \
 
 # close folder
 SRCS	+=			srcs/close/close.c \
-					srcs/close/free_split.c #\ # where to put that ?
+					srcs/close/free_split.c
 
 # key folder
 SRCS	+=			srcs/key/keys_init.c \
@@ -25,33 +25,25 @@ SRCS	+=			srcs/draw/color.c \
 					srcs/draw/gui/slider.c \
 					srcs/draw/gui/check_box.c
 
-<<<<<<< HEAD
 # time folder
 SRCS	+=			srcs/time/_time.c \
-=======
-# utils folder
-SRCS	+=			srcs/utils/time_utils.c \
-					srcs/utils/update_utils.c \
->>>>>>> 125e649784b153e15a5888143f37c758b60bacec
 
 # parser folder
 SRCS	+=			srcs/parsing/parser.c \
 					srcs/parsing/parse_map.c \
 					srcs/parsing/parse_color.c \
 					srcs/parsing/parse_textures.c \
-					srcs/parsing/get_next_unempty_line.c \
-					# srcs/parsing/get_map_size.c \
-					# srcs/parsing/parse_textures_and_colors.c \
+					srcs/parsing/get_next_unempty_line.c
 
 # minimap folder
 SRCS	+=			srcs/minimap/minimap.c \
 					srcs/minimap/init_settings.c \
 					srcs/minimap/raycasting.c \
-					srcs/minimap/raycasting_utils.c \
+					srcs/minimap/raycasting_utils.c
 
 # player folder
 SRCS	+=			srcs/player/player.c \
-					srcs/player/collisions.c \
+					srcs/player/collisions.c
 
 # ---------------  --------------- #
 
@@ -97,7 +89,6 @@ name:
 fclean:				clean
 					${RM} $(NAME)
 					@make -C libft fclean
-#					@make -C minilibx fclean # currently don't on linux
 
 re: 				fclean all
 

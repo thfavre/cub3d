@@ -6,7 +6,7 @@
 /*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:27:57 by thomas            #+#    #+#             */
-/*   Updated: 2023/07/27 00:47:51 by thomas           ###   ########.fr       */
+/*   Updated: 2023/07/27 00:56:30 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	init(t_data *data)
 		return (false);
 	data->img.size = (t_vector2){SCREEN_WIDTH, SCREEN_HEIGHT};
 	data->win = mlx_new_window(data->mlx, data->img.size.x, data->img.size.y, "\
-Cub3d");
+Cub3D");
 	if (data->win == NULL)
 		return (false);
 	data->img.img = mlx_new_image(data->mlx, data->img.size.x,
