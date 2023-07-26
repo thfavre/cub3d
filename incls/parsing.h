@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tastybao <tastybao@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/26 21:21:04 by tastybao          #+#    #+#             */
+/*   Updated: 2023/07/26 21:21:05 by tastybao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSING_H
 # define PARSING_H
 
 # include <stdbool.h>
 # include "sprite.h"
 # include "vector2.h"
-# include "data.h" // only for t_textures
+# include "data.h"
 
 bool	parse_color(char *line, int *color, char *expected_name);
 bool	parse_texture(void *mlx, char *line, t_img *sprite, char *name);

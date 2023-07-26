@@ -6,14 +6,14 @@ SRCS	+=			srcs/main.c \
 
 # close folder
 SRCS	+=			srcs/close/close.c \
-					srcs/close/free_split.c \ # where to put that ?
+					srcs/close/free_split.c #\ # where to put that ?
 
 # key folder
 SRCS	+=			srcs/key/keys_init.c \
 					srcs/key/on_keypressed.c \
 					srcs/key/on_keyreleased.c \
 					srcs/key/on_mousepressed.c \
-					srcs/key/on_mouserelease.c
+					srcs/key/on_mouserelease.c \
 
 
 # draw folder
@@ -25,8 +25,14 @@ SRCS	+=			srcs/draw/color.c \
 					srcs/draw/gui/slider.c \
 					srcs/draw/gui/check_box.c
 
+<<<<<<< HEAD
 # time folder
 SRCS	+=			srcs/time/_time.c \
+=======
+# utils folder
+SRCS	+=			srcs/utils/time_utils.c \
+					srcs/utils/update_utils.c \
+>>>>>>> 125e649784b153e15a5888143f37c758b60bacec
 
 # parser folder
 SRCS	+=			srcs/parsing/parser.c \
@@ -35,7 +41,7 @@ SRCS	+=			srcs/parsing/parser.c \
 					srcs/parsing/parse_textures.c \
 					srcs/parsing/get_next_unempty_line.c \
 					# srcs/parsing/get_map_size.c \
-					# srcs/parsing/parse_textures_and_colors.c
+					# srcs/parsing/parse_textures_and_colors.c \
 
 # minimap folder
 SRCS	+=			srcs/minimap/minimap.c \
@@ -49,7 +55,7 @@ SRCS	+=			srcs/player/player.c \
 
 # ---------------  --------------- #
 
-NAME	=			cub3d
+NAME	=			cub3D
 
 OBJS	=			$(SRCS:%.c=%.o)
 

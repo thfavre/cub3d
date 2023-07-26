@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tastybao <tastybao@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/26 21:15:19 by tastybao          #+#    #+#             */
+/*   Updated: 2023/07/26 21:17:49 by tastybao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "draw.h"
 #include "color.h"
 #include "game2d.h"
@@ -10,13 +22,12 @@ void	update_player(t_data *data, t_player *player)
 {
 	move_player(data, player);
 	rotate_player(data, player);
-
 }
 
 void	move_player(t_data *data, t_player *player)
 {
 	double	distance;
-	// TODO fix : Diagonal movement is faster than straight movement, not a big deal if not patched -> feature!
+
 	distance = player->speed * data->dt;
 	if (data->key_pressed[K_W])
 		player->fpos.y -= sin(player->angle) * distance;
