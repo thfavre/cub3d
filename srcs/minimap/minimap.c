@@ -24,10 +24,10 @@ void	draw_minimap(t_data *data, char **map, t_minimap minimap)
 				* minimap.scale * data->map_mult - 2, data->game2d.size_block.x
 				* minimap.scale * data->map_mult - 2};
 			if (map[y][x] == '1')
-				draw_rect(&data->img, current_rect, 0x27374D);
+				draw_rect(&data->img, current_rect, 0x34495e);
 			else if (map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'S'
 			|| map[y][x] == 'E' || map[y][x] == 'W')
-				draw_rect(&data->img, current_rect, 0xDDE6ED);
+				draw_rect(&data->img, current_rect, 0xecf0f1);
 		}
 	}
 	draw_player(data, &data->game2d.player, &data->game2d.minimap);
@@ -42,7 +42,7 @@ void	draw_player(t_data *data, t_player *player, t_minimap *minimap)
 		+ minimap->offset.x, player->pos.y * minimap->scale * data->map_mult
 		+ minimap->offset.y, player->size.x * minimap->scale * data->map_mult,
 		player->size.y * minimap->scale * data->map_mult};
-	draw_rect(&data->img, current_rect, 0x526D82);
+	draw_rect(&data->img, current_rect, 0xf39c12);
 }
 
 void	draw_rays(t_data *data, t_ray *ray, t_minimap *minimap)
@@ -59,6 +59,6 @@ void	draw_rays(t_data *data, t_ray *ray, t_minimap *minimap)
 				* ray[i].ray_length) * minimap->scale * data->map_mult+ MINIMAP_OFFSET,
 			(ray[i].player_center.y - sin(ray[i].ray_angle)
 				* ray[i].ray_length) * minimap->scale * data->map_mult+ MINIMAP_OFFSET},
-			C_DARKOLIVEGREEN3);
+			0xf1c40f);
 	}
 }

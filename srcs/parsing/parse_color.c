@@ -16,7 +16,10 @@ bool	parse_color(char *line, int *color, char *expected_name)
 	int		colors[3];
 
 	if (!validate_line(line, expected_name))
+	{
+		free(line);
 		return (false);
+	}
 	splited_line = ft_split(line, ' ');
 	free(line);
 	if (!parse_rgb(splited_line[1], colors))
