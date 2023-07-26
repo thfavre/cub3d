@@ -75,5 +75,4 @@ are reserved in the protocol for errors and replies. */
 # define GenericEvent		35
 # define LASTEvent			36	/* must be bigger than any event # */
 
-
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game2d.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tastybao <tastybao@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/26 21:20:11 by tastybao          #+#    #+#             */
+/*   Updated: 2023/07/26 21:20:41 by tastybao         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef  GAME2D_H
 # define GAME2D_H
 
@@ -7,14 +19,14 @@
 # include <math.h>
 
 # define MINIMAP_OFFSET 30
-# define MINIMAP_SIZE_RATIO 6 // the minimap will be 1/X of the screen
-# define DEFAULT_FOV_DEG 60 // now default FOV DEG
+# define MINIMAP_SIZE_RATIO 6
+# define DEFAULT_FOV_DEG 60
 # define DEFAULT_NB_RAYS SCREEN_WIDTH
 # define DEFAULT_WALLS_HEIGHT 50
 # define DEFAULT_PLAYER_ROTATE_SPEED 2
-# define DEFAULT_PLAYER_MOVE_SPEED 5 // in block per second
+# define DEFAULT_PLAYER_MOVE_SPEED 5
 
-typedef struct s_ray // NEW
+typedef struct s_ray
 {
 	float		ray_angle;
 	float		vertical_ray;
@@ -40,7 +52,7 @@ typedef struct s_wall
 typedef struct s_player
 {
 	t_fvector2	fpos;
-	t_vector2	pos; // TODO put in rect with size?
+	t_vector2	pos;
 	t_vector2	size;
 	float		speed;
 	float		rotate_speed;
@@ -57,7 +69,7 @@ typedef struct s_minimap
 typedef struct s_game2d
 {
 	int			walls_count;
-	t_vector2	size_block; // should it be just an int?
+	t_vector2	size_block;
 	t_minimap	minimap;
 	t_player	player;
 	t_wall		*walls;

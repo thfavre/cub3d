@@ -41,8 +41,8 @@ typedef struct s_data
 	t_ray		*ray; // TODO rename to rays
 	float		fov_deg; // put all this in a struct?
 	int			nb_rays;
-	int 		walls_height;
-	float 		walls_y_offset;
+	int			walls_height;
+	float		walls_y_offset;
 	float		map_mult;
 	bool		textured;
 	int			untextured_color;
