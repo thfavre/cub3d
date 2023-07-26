@@ -154,7 +154,7 @@ void	update_check_box_text(t_data *data, t_check_box *check_box)
 
 int on_update(t_data *data)
 {
-	static bool in_menu;
+	static bool mouse_control;
 	// draw_background(&data->img, data->textures.F);
 	draw_rect(&data->img, (t_rect){0, 0, SCREEN_WIDTH, SCREEN_HEIGHT / 2 + data->walls_y_offset}, data->textures.C);
 	draw_rect(&data->img, (t_rect){0, SCREEN_HEIGHT / 2 + data->walls_y_offset, SCREEN_WIDTH, SCREEN_HEIGHT / 2 - data->walls_y_offset}, data->textures.F);
@@ -179,19 +179,7 @@ int on_update(t_data *data)
 	// 	mlx_mouse_show(data->mlx, data->win);
 
 	// mouse center screen
-	// if (!in_menu)
-	// {
-	// 	if (data->mouse_pos.x != SCREEN_WIDTH / 2)
-	// 	{
-	// 		data->game2d.player.angle -= (data->mouse_pos.x - SCREEN_WIDTH / 2) * 0.3 * data->dt;
-	// 		if (data->game2d.player.angle < 0)
-	// 			data->game2d.player.angle += M_PI * 2;
-	// 		else if (data->game2d.player.angle > M_PI * 2)
-	// 			data->game2d.player.angle -= M_PI * 2;
-	// 	}
-	// 	// mlx_mouse_move(data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2); // For MAC
-	// 	mlx_mouse_move(data->mlx, data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 20); // For LINUX, but dont works
-	// }
+
 
 	// Map zoom
 	if (data->key_just_pressed[K_M])
@@ -207,18 +195,23 @@ int on_update(t_data *data)
 	// }
 
 
-	// Menu
-	// if (data->key_just_pressed[K_E])
-	// {
-	// 	in_menu = !in_menu;
-	// 	mlx_mouse_hide(data->mlx, data->win);
+	// mouse_control
+	if (data->key_just_pressed[K_E])
+	{
+		mouse_control = !mouse_control;
 
-	// 	if (in_menu)
-	// 	{
-	// 		mlx_mouse_show(data->mlx, data->win);
-	// 		printf("In menu\n");
-	// 	}
-	// }
+		if (mouse_control)
+		{
+			mlx_mouse_hide(data->mlx, data->win);
+			printf("mouse_control start\n");
+		}
+		else
+		{
+			mlx_mouse_show(data->mlx, data->win);
+			printf("mouse_control stop\n");
+		}
+	}
+
 
 
 
@@ -227,6 +220,30 @@ int on_update(t_data *data)
 	if (data->game2d.size_block.x * data->game2d.minimap.scale * data->map_mult > 3)
 		draw_minimap(data, data->map, data->game2d.minimap);
 	free(data->ray);
+
+	if (mouse_control)
+	{
+		if (data->mouse_pos.x != SCREEN_WIDTH / 2)
+		{
+			data->game2d.player.angle -= (data->mouse_pos.x - SCREEN_WIDTH / 2) * 0.3 * data->dt;
+			if (data->game2d.player.angle < 0)
+				data->game2d.player.angle += M_PI * 2;
+			else if (data->game2d.player.angle > M_PI * 2)
+				data->game2d.player.angle -= M_PI * 2;
+		}
+		mlx_mouse_move(data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2); // For MAC
+		// mlx_mouse_move(data->mlx, data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 20); // For LINUX, but dont works
+		int cursor_width = 20;
+		int cursor_height = 4;
+		int color = C_BLACK;
+		int shadow_color = C_WHITE;
+		draw_rect(&data->img, (t_rect){SCREEN_WIDTH / 2 - cursor_width/2, SCREEN_HEIGHT / 2 - cursor_height / 2 - 1, cursor_width, cursor_height}, shadow_color);
+		draw_rect(&data->img, (t_rect){SCREEN_WIDTH / 2 - cursor_height/2-1, SCREEN_HEIGHT / 2 - cursor_width / 2-1, cursor_height, cursor_width}, shadow_color);
+		draw_rect(&data->img, (t_rect){SCREEN_WIDTH / 2 - cursor_width/2, SCREEN_HEIGHT / 2 - cursor_height / 2, cursor_width, cursor_height}, color);
+		draw_rect(&data->img, (t_rect){SCREEN_WIDTH / 2 - cursor_height/2, SCREEN_HEIGHT / 2 - cursor_width / 2, cursor_height, cursor_width}, color);
+
+	}
+
 
 
 	static t_check_box settings_box = {(t_vector2){40, 250}, 40, true, "Settings: "};
