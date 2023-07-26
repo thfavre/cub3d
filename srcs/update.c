@@ -212,15 +212,6 @@ int on_update(t_data *data)
 		}
 	}
 
-
-
-
-	update_player(data, &data->game2d.player);
-	raycasting(data, &data->game2d.player, &data->game2d.minimap);
-	if (data->game2d.size_block.x * data->game2d.minimap.scale * data->map_mult > 3)
-		draw_minimap(data, data->map, data->game2d.minimap);
-	free(data->ray);
-
 	if (mouse_control)
 	{
 		if (data->mouse_pos.x != SCREEN_WIDTH / 2)
@@ -232,7 +223,7 @@ int on_update(t_data *data)
 				data->game2d.player.angle -= M_PI * 2;
 		}
 		mlx_mouse_move(data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2); // For MAC
-		// mlx_mouse_move(data->mlx, data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 20); // For LINUX, but dont works
+		// mlx_mouse_move(data->mlx, data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2); // For LINUX, but dont works
 		int cursor_width = 20;
 		int cursor_height = 4;
 		int color = C_BLACK;
@@ -243,6 +234,15 @@ int on_update(t_data *data)
 		draw_rect(&data->img, (t_rect){SCREEN_WIDTH / 2 - cursor_height/2, SCREEN_HEIGHT / 2 - cursor_width / 2, cursor_height, cursor_width}, color);
 
 	}
+
+
+	update_player(data, &data->game2d.player);
+	raycasting(data, &data->game2d.player, &data->game2d.minimap);
+	if (data->game2d.size_block.x * data->game2d.minimap.scale * data->map_mult > 3)
+		draw_minimap(data, data->map, data->game2d.minimap);
+	free(data->ray);
+
+
 
 
 

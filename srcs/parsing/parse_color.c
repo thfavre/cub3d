@@ -42,9 +42,9 @@ bool	validate_line(char *line, char *expected_name)
 		return (false);
 	if (ft_strcmp(splited_line[0], expected_name) != 0)
 	{
-		free_split(splited_line);
 		printf("Error, expected '%s' \but got '%s'\n", expected_name,
 			splited_line[0]);
+		free_split(splited_line);
 		return (false);
 	}
 	if (splited_line[1] == NULL || splited_line[2] != NULL)
