@@ -48,7 +48,7 @@ SRCS	+=			srcs/player/player.c \
 
 # ---------------  --------------- #
 
-NAME	=			cub3d
+NAME	=			cub3D
 
 OBJS	=			$(SRCS:%.c=%.o)
 
