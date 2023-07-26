@@ -222,7 +222,7 @@ int on_update(t_data *data)
 			else if (data->game2d.player.angle > M_PI * 2)
 				data->game2d.player.angle -= M_PI * 2;
 		}
-		mlx_mouse_move(data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2); // For MAC
+		// mlx_mouse_move(data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2); // For MAC
 		// mlx_mouse_move(data->mlx, data->win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2); // For LINUX, but dont works
 		int cursor_width = 20;
 		int cursor_height = 4;
