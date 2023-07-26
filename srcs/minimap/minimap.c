@@ -53,12 +53,14 @@ void	draw_rays(t_data *data, t_ray *ray, t_minimap *minimap)
 	while (++i < data->nb_rays)
 	{
 		draw_line(&data->img, (t_vector2){ray[i].player_center.x
-			* minimap->scale * data->map_mult + MINIMAP_OFFSET, ray[i].player_center.y
-			* minimap->scale * data->map_mult + MINIMAP_OFFSET},
+			* minimap->scale * data->map_mult + MINIMAP_OFFSET,
+			ray[i].player_center.y * minimap->scale
+			* data->map_mult + MINIMAP_OFFSET},
 			(t_vector2){(ray[i].player_center.x + cos(ray[i].ray_angle)
-				* ray[i].ray_length) * minimap->scale * data->map_mult+ MINIMAP_OFFSET,
-			(ray[i].player_center.y - sin(ray[i].ray_angle)
-				* ray[i].ray_length) * minimap->scale * data->map_mult+ MINIMAP_OFFSET},
+				* ray[i].ray_length) * minimap->scale * data->map_mult
+			+ MINIMAP_OFFSET, (ray[i].player_center.y
+				- sin(ray[i].ray_angle) * ray[i].ray_length)
+			* minimap->scale * data->map_mult + MINIMAP_OFFSET},
 			0xf1c40f);
 	}
 }

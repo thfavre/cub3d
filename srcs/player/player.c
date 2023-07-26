@@ -10,13 +10,12 @@ void	update_player(t_data *data, t_player *player)
 {
 	move_player(data, player);
 	rotate_player(data, player);
-
 }
 
 void	move_player(t_data *data, t_player *player)
 {
 	double	distance;
-	// TODO fix : Diagonal movement is faster than straight movement, not a big deal if not patched -> feature!
+
 	distance = player->speed * data->dt;
 	if (data->key_pressed[K_W])
 		player->fpos.y -= sin(player->angle) * distance;
