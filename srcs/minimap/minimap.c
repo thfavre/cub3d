@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tastybao <tastybao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 21:14:52 by tastybao          #+#    #+#             */
-/*   Updated: 2023/07/26 21:14:52 by tastybao         ###   ########.fr       */
+/*   Updated: 2023/07/27 01:52:24 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	draw_minimap(t_data *data, char **map, t_minimap minimap)
 		}
 	}
 	draw_player(data, &data->game2d.player, &data->game2d.minimap);
-	draw_rays(data, data->ray, &minimap);
+	draw_rays(data, data->rays, &minimap);
 }
 
 void	draw_player(t_data *data, t_player *player, t_minimap *minimap)

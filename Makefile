@@ -2,7 +2,8 @@
 # srcs folder
 SRCS	+=			srcs/main.c \
 					srcs/init.c \
-					srcs/update.c \
+					srcs/settings.c \
+					srcs/update.c
 
 # close folder
 SRCS	+=			srcs/close/close.c \

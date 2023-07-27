@@ -41,7 +41,8 @@
 		"mlx_int.h": "c",
 		"gui.h": "c",
 		"time.h": "c",
-		"_time.h": "c"
+		"_time.h": "c",
+		"textures.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }

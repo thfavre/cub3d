@@ -6,7 +6,7 @@
 /*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:23:20 by thomas            #+#    #+#             */
-/*   Updated: 2023/07/26 15:25:36 by thomas           ###   ########.fr       */
+/*   Updated: 2023/07/27 01:22:10 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 #include "mlx.h"
 #include "libft.h"
-// #include "sprite.h"
-#include "data.h"
+#include "textures.h"
 #include "parsing.h"
 
 void	free_split(char **split);
@@ -25,12 +24,13 @@ bool	set_texture(void *mlx, t_img *sprite, char *path, char *name);
 
 bool	parse_textures(void *mlx, int fd, t_textures *textures)
 {
-	if (!parse_texture(mlx, get_next_unempty_line(fd), &textures->NO, "NO")
-		|| !parse_texture(mlx, get_next_unempty_line(fd), &textures->SO, "SO")
-		|| !parse_texture(mlx, get_next_unempty_line(fd), &textures->WE, "WE")
-		|| !parse_texture(mlx, get_next_unempty_line(fd), &textures->EA, "EA")
-		|| !parse_color(get_next_unempty_line(fd), &textures->F, "F")
-		|| !parse_color(get_next_unempty_line(fd), &textures->C, "C"))
+	if (!parse_texture(mlx, get_next_unempty_line(fd), &textures->north, "NO")
+		|| !parse_texture(mlx, get_next_unempty_line(fd),
+			&textures->south, "SO")
+		|| !parse_texture(mlx, get_next_unempty_line(fd), &textures->west, "WE")
+		|| !parse_texture(mlx, get_next_unempty_line(fd), &textures->east, "EA")
+		|| !parse_color(get_next_unempty_line(fd), &textures->floor, "F")
+		|| !parse_color(get_next_unempty_line(fd), &textures->celling, "C"))
 	{
 		free_textures(mlx, textures);
 		return (false);
@@ -86,12 +86,12 @@ bool	set_texture(void *mlx, t_img *sprite, char *path, char *name)
 
 void	free_textures(void *mlx, t_textures *textures)
 {
-	if (textures->NO.img != NULL)
-		mlx_destroy_image(mlx, textures->NO.img);
-	if (textures->SO.img != NULL)
-		mlx_destroy_image(mlx, textures->SO.img);
-	if (textures->WE.img != NULL)
-		mlx_destroy_image(mlx, textures->WE.img);
-	if (textures->EA.img != NULL)
-		mlx_destroy_image(mlx, textures->EA.img);
+	if (textures->north.img != NULL)
+		mlx_destroy_image(mlx, textures->north.img);
+	if (textures->south.img != NULL)
+		mlx_destroy_image(mlx, textures->south.img);
+	if (textures->west.img != NULL)
+		mlx_destroy_image(mlx, textures->west.img);
+	if (textures->east.img != NULL)
+		mlx_destroy_image(mlx, textures->east.img);
 }

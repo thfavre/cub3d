@@ -1,5 +1,16 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/27 01:22:31 by thomas            #+#    #+#             */
+/*   Updated: 2023/07/27 01:22:36 by thomas           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include <stdio.h>
 #include "mlx.h"
 #include "libft.h"
 #include "data.h"
@@ -29,7 +40,7 @@ int	main(int argc, char **argv)
 	{
 		mlx_destroy_image(data.mlx, data.img.img);
 		mlx_destroy_window(data.mlx, data.win);
-		free(data.mlx); // TODO to Bastien (on Mac): try to have two player, does it segfault?? If not delete this comment
+		free(data.mlx);
 		return (1);
 	}
 	init_settings(&data);

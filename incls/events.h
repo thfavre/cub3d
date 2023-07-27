@@ -73,6 +73,6 @@ are reserved in the protocol for errors and replies. */
 # define ClientMessage		33
 # define MappingNotify		34
 # define GenericEvent		35
-# define LASTEvent			36	/* must be bigger than any event # */
+# define LASTEvent			36
 
 #endif

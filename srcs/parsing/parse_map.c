@@ -6,7 +6,7 @@
 /*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:23:19 by thomas            #+#    #+#             */
-/*   Updated: 2023/07/26 15:23:23 by thomas           ###   ########.fr       */
+/*   Updated: 2023/07/27 01:11:24 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include "vector2.h"
 #include "libft.h"
-#include "data.h" // only for t_textures
+#include "textures.h"
 #include "parsing.h"
 
 void	*free_map(char **map);

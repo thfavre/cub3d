@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tastybao <tastybao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 21:14:58 by tastybao          #+#    #+#             */
-/*   Updated: 2023/07/26 21:14:58 by tastybao         ###   ########.fr       */
+/*   Updated: 2023/07/27 01:52:19 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ void	raycasting(t_data *data, t_player *player, t_minimap *minimap)
 {
 	int		i;
 
-	data->ray = malloc(sizeof(t_ray) * data->nb_rays);
-	if (!data->ray)
+	data->rays = malloc(sizeof(t_ray) * data->nb_rays);
+	if (!data->rays)
 		return ;
 	i = -1;
 	while (++i < data->nb_rays)
 	{
-		register_rays(data, &data->ray[i], &data->game2d, i);
-		register_textures(data, &data->ray[i]);
-		draw_textures(data, &data->ray[i], i);
+		register_rays(data, &data->rays[i], &data->game2d, i);
+		register_textures(data, &data->rays[i]);
+		draw_textures(data, &data->rays[i], i);
 	}
 }
 
@@ -67,14 +67,14 @@ void	register_textures(t_data *data, t_ray *ray)
 {
 	if (ray->vertical_ray < ray->horizontal_ray && ray->ray_angle < M_PI
 		&& ray->ray_angle >= 0 && ray->ray_angle != M_PI)
-		ray->texture = data->textures.SO;
+		ray->texture = data->textures.south;
 	else if (ray->vertical_ray < ray->horizontal_ray)
-		ray->texture = data->textures.NO;
+		ray->texture = data->textures.north;
 	else if (ray->vertical_ray > ray->horizontal_ray && (ray->ray_angle < M_PI
 			/ 2 || ray->ray_angle >= 3 * M_PI / 2))
-		ray->texture = data->textures.EA;
+		ray->texture = data->textures.east;
 	else if (ray->vertical_ray > ray->horizontal_ray)
-		ray->texture = data->textures.WE;
+		ray->texture = data->textures.west;
 	if (ray->vertical_ray < ray->horizontal_ray)
 		ray->wall_x = (ray->player_center.x + ray->ray_length
 				* cos(ray->ray_angle)) / 50;

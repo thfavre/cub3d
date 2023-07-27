@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_settings.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tastybao <tastybao@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 21:14:48 by tastybao          #+#    #+#             */
-/*   Updated: 2023/07/26 21:14:50 by tastybao         ###   ########.fr       */
+/*   Updated: 2023/07/27 03:18:02 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	register_angle(t_game2d *game2d, char c);
 void	init_settings(t_data *data)
 {
 	data->fov_deg = DEFAULT_FOV_DEG;
+	data->show_settings = true;
 	data->game2d.size_block = (t_vector2){50, 50};
 	data->game2d.minimap.offset = (t_vector2){MINIMAP_OFFSET, MINIMAP_OFFSET};
 	data->game2d.minimap.size = (t_vector2){SCREEN_WIDTH / MINIMAP_SIZE_RATIO,
