@@ -30,8 +30,8 @@ bool	mouse_control(t_data *data) // TODO where to put that?
 	{
 		if (data->mouse_pos.x != SCREEN_WIDTH / 2)
 		{
-			data->game2d.player.angle -= (data->mouse_pos.x - SCREEN_WIDTH / 2)
-				* 0.3 * data->dt; // TODO use data->rotate_speed instead of 0.3 (test on mac)
+			data->game2d.player.angle += (data->mouse_pos.x - SCREEN_WIDTH / 2)
+				* data->game2d.player.rotate_speed / 8 * data->dt;
 			if (data->game2d.player.angle < 0)
 				data->game2d.player.angle += M_PI * 2;
 			else if (data->game2d.player.angle > M_PI * 2)
