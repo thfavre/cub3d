@@ -6,7 +6,7 @@
 /*   By: thfavre <thfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 03:34:44 by thomas            #+#    #+#             */
-/*   Updated: 2023/07/27 12:28:02 by thfavre          ###   ########.fr       */
+/*   Updated: 2023/07/27 12:52:32 by thfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	update_settings_text(t_data *data, t_settings_gui *settings_gui)
 		update_slider_text(data, &sliders->untextured_color_b);
 	}
 	update_slider_text(data, &sliders->player_move_speed);
+	update_slider_text(data, &sliders->map_mult);
 	update_slider_text(data, &sliders->rotate_speed);
 	update_check_box_text(data, &settings_gui->check_boxes->textured_box);
 	update_check_box_text(data, &settings_gui->check_boxes->reset_box);

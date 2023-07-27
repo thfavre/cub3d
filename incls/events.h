@@ -3,86 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   events.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: berard <berard@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thfavre <thfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:00:03 by berard            #+#    #+#             */
-/*   Updated: 2023/07/27 12:00:03 by berard           ###   ########.fr       */
+/*   Updated: 2023/07/27 12:49:33 by thfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EVENTS_H
 # define EVENTS_H
 
-// TODO Thomas
-
 /* Input Event Masks. Used as event-mask window attribute and as arguments
    to Grab requests.  Not to be confused with event names.  */
 
-# define NOEVENTMASK				   	0L
-# define KEYPRESSMASK					1
-# define KEYRELEASEMASK					2
-# define BUTTONPRESSMASK				4
-# define BUTTONRELEASEMASK				8
-# define ENTERWINDOWMASK				16
-# define LEAVEWINDOWMASK				32
-# define POINTERMOTIONMASK				64
-# define POINTERMOTIONHINTMASK		128
-# define BUTTON1MOTIONMASK				256
-# define BUTTON2MOTIONMASK				512
-# define BUTTON3MOTIONMASK				1024
-# define BUTTON4MOTIONMASK				2048
-# define BUTTON5MOTIONMASK				4096
-# define BUTTONMOTIONMASK				8192
-# define KEYMAPSTATEMASK				16384
-# define EXPOSUREMASK					32768
-# define VISIBILITYCHANGEMASK			65536
-# define STRUCTURENOTIFYMASK			131072
-# define RESIZEREDIRECTMASK			262144
-# define SUBSTRUCTURENOTIFYMASK		524288
-# define SUBSTRUCTUREREDIRECTMASK	1048576
-# define FOCUSCHANGEMASK				2097152
-# define PROPERTYCHANGEMASK			4194304
-# define COLORMAPCHANGEMASK			8388608
-# define OWNERGRABBUTTONMASK			16777216
+# define NO_EVENT_MASK				0L
+# define KEY_PRESS_MASK				1L
+# define KEY_RELEASE_MASK			2L
+# define BUTTON_PRESS_MASK			4L
+# define BUTTON_RELEASE_MASK		8L
+# define ENTER_WINDOW_MASK			16L
+# define LEAVE_WINDOW_MASK			32L
+# define POINTER_MOTION_MASK		64L
+# define POINTER_MOTION_HINT_MASK	128L
+# define BUTTON1_MOTION_MASK		256L
+# define BUTTON2_MOTION_MASK		512L
+# define BUTTON3_MOTION_MASK		1024L
+# define BUTTON4_MOTION_MASK		2048L
+# define BUTTON5_MOTION_MASK		4096L
+# define BUTTON_MOTION_MASK			8192L
+# define KEYMAP_STATE_MASK			16384L
+# define EXPOSURE_MASK				32768L
+# define VISIBILITY_CHANGE_MASK		65536L
+# define STRUCTURE_NOTIFY_MASK		131072L
+# define RESIZE_REDIRECT_MASK		262144L
+# define SUBSTRUCTURE_NOTIFY_MASK	524288L
+# define SUBSTRUCTURE_REDIRECT_MASK	1048576L
+# define FOCUS_CHANGE_MASK			2097152L
+# define PROPERTY_CHANGE_MASK		4194304L
+# define COLORMAP_CHANGE_MASK		8388608L
+# define OWNER_GRAB_BUTTON_MASK		16777216L
 
 /* Event names.  Used in "type" field in XEvent structures.  Not to be
 confused with event masks above.  They start from 2 because 0 and 1
 are reserved in the protocol for errors and replies. */
 
-# define KEYPRESS							2
-# define KEYRELEASE						3
-# define BUTTONPRESS						4
-# define BUTTONRELEASE					5
-# define MOTIONNOTIFY					6
-# define ENTERNOTIFY						7
-# define LEAVENOTIFY						8
-# define FOCUSIN							9
-# define FOCUSOUT							10
-# define KEYMAPNOTIFY					11
+# define KEY_RELEASE					3
+# define KEY_PRESS						2
+# define BUTTON_PRESS					4
+# define BUTTON_RELEASE					5
+# define MOTION_NOTIFY					6
+# define ENTER_NOTIFY					7
+# define LEAVE_NOTIFY					8
+# define FOCUS_IN						9
+# define FOCUS_OUT						10
+# define KEYMAP_NOTIFY					11
 # define EXPOSE							12
-# define GRAPHICSEXPOSE					13
-# define NOEXPOSE							14
-# define VISIBILITYNOTIFY				15
-# define CREATENOTIFY					16
-# define DESTROYNOTIFY					17
-# define UNMAPNOTIFY						18
-# define MAPNOTIFY						19
-# define MAPREQUEST						20
-# define REPARENTNOTIFY					21
-# define CONFIGURENOTIFY				22
-# define CONFIGUREREQUEST				23
-# define GRAVITYNOTIFY					24
-# define RESIZEREQUEST					25
-# define CIRCULATENOTIFY				26
-# define CIRCULATEREQUEST				27
-# define PROPERTYNOTIFY					28
-# define SELECTIONCLEAR					29
-# define SELECTIONREQUEST				30
-# define SELECTIONNOTIFY				31
-# define COLORMAPNOTIFY					32
-# define CLIENTMESSAGE					33
-# define MAPPINGNOTIFY					34
-# define GENERICEVENT					35
-# define LASTEVENT						36
+# define GRAPHICS_EXPOSE				13
+# define NO_EXPOSE						14
+# define VISIBILITY_NOTIFY				15
+# define CREATE_NOTIFY					16
+# define DESTROY_NOTIFY					17
+# define UNMAP_NOTIFY					18
+# define MAP_NOTIFY						19
+# define MAP_REQUEST					20
+# define REPARENT_NOTIFY				21
+# define CONFIGURE_NOTIFY				22
+# define CONFIGURE_REQUEST				23
+# define GRAVITY_NOTIFY					24
+# define RESIZE_REQUEST					25
+# define CIRCULATE_NOTIFY				26
+# define CIRCULATE_REQUEST				27
+# define PROPERTY_NOTIFY				28
+# define SELECTION_CLEAR				29
+# define SELECTION_REQUEST				30
+# define SELECTION_NOTIFY				31
+# define COLORMAP_NOTIFY				32
+# define CLIENT_MESSAGE					33
+# define MAPPING_NOTIFY					34
+# define GENERIC_EVENT					35
+# define LAST_EVENT						36
 
 #endif

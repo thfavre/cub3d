@@ -42,7 +42,8 @@
 		"gui.h": "c",
 		"time.h": "c",
 		"_time.h": "c",
-		"textures.h": "c"
+		"textures.h": "c",
+		"settings.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }

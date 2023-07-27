@@ -6,7 +6,7 @@
 /*   By: thfavre <thfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:54:55 by thomas            #+#    #+#             */
-/*   Updated: 2023/07/27 12:16:48 by thfavre          ###   ########.fr       */
+/*   Updated: 2023/07/27 12:47:20 by thfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	update_slider_text(t_data *data, t_slider *slider)
 	int		text_width;
 	int		x_pos;
 	int		rect_width;
+
 	text_value = ft_itoa((int)slider->value);
 	if (!text_value)
 		return ;

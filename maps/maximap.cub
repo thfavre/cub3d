@@ -1,7 +1,7 @@
-NO ./assets/NORD.xpm
-SO ./assets/SUD.xpm
-WE ./assets/WEST.xpm
-EA ./assets/EST.xpm
+NO ./assets/NORD-METAL.xpm
+SO ./assets/SUD-METAL.xpm
+WE ./assets/WEST-METAL.xpm
+EA ./assets/EST-METAL.xpm
 
 F 139,140,198
 C 101,210,93

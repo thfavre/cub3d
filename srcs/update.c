@@ -1,5 +1,16 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   update.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: thfavre <thfavre@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/27 12:47:37 by thfavre           #+#    #+#             */
+/*   Updated: 2023/07/27 12:51:57 by thfavre          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include <stdio.h>
 #include "data.h"
 #include "keycodes.h"
 #include "game2d.h"
@@ -14,7 +25,7 @@ int		on_close(t_data *data);
 void	on_update_utils(t_data *data, t_settings_gui *settings_gui);
 void	raycasting(t_data *data, t_player *player, t_minimap *minimap);
 
-bool	mouse_control(t_data *data) // TODO where to put that?
+bool	mouse_control(t_data *data)
 {
 	static bool	is_mouse_controled = false;
 
@@ -43,7 +54,7 @@ bool	mouse_control(t_data *data) // TODO where to put that?
 	return (is_mouse_controled);
 }
 
-void	draw_cursor(t_data *data, bool is_mouse_controled) // TODO where to put that?
+void	draw_cursor(t_data *data, bool is_mouse_controled)
 {
 	int	length;
 	int	width;
@@ -90,7 +101,7 @@ int	on_update(t_data *data)
 	return (0);
 }
 
-void	on_update_utils(t_data *data, t_settings_gui *settings_gui) // put in on_update function?
+void	on_update_utils(t_data *data, t_settings_gui *settings_gui)
 {
 	if (data->key_pressed[K_ESC])
 	{

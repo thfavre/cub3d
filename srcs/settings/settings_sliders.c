@@ -6,7 +6,7 @@
 /*   By: thfavre <thfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:28:06 by thfavre           #+#    #+#             */
-/*   Updated: 2023/07/27 12:28:08 by thfavre          ###   ########.fr       */
+/*   Updated: 2023/07/27 13:04:05 by thfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ t_settings_sliders	*update_sliders(t_data *data)
 		data->untextured_color = set_color_blue_value(data->untextured_color,
 				update_slider(data, &sliders->untextured_color_b));
 	}
-	data->game2d.player.speed = data->game2d.size_block.x
-		* update_slider(data, &sliders->player_move_speed);
+	data->game2d.player.speed = 50 * update_slider(data,
+			&sliders->player_move_speed);
 	data->game2d.player.rotate_speed = update_slider(data,
 			&sliders->rotate_speed);
 	return (sliders);
@@ -61,9 +61,9 @@ t_settings_sliders	*init_sliders(void)
 	{(t_vector2){185, 715}, 25, 45, 0, 255, 89, "g: "},
 	{(t_vector2){270, 715}, 25, 45, 0, 255, 182, "b: "},
 	{(t_vector2){40, 775}, 40, 79, 0,
-		15, DEFAULT_PLAYER_MOVE_SPEED, "Speed: "},
+		10, DEFAULT_PLAYER_MOVE_SPEED, "Speed: "},
 	{(t_vector2){188, 775}, 40, 77, 0,
-		10, DEFAULT_PLAYER_ROTATE_SPEED, "Rotation: "}
+		15, DEFAULT_PLAYER_ROTATE_SPEED, "Rotation: "}
 	};
 
 	return (&sliders);
