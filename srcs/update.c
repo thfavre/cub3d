@@ -8,11 +8,11 @@
 #include "libft.h"
 #include "draw.h"
 #include "_time.h"
+#include "settings.h"
 
 int		on_close(t_data *data);
-void	on_update_utils(t_data *data);
+void	on_update_utils(t_data *data, t_settings_gui *settings_gui);
 void	raycasting(t_data *data, t_player *player, t_minimap *minimap);
-void	update_settings(t_data *data);
 
 bool	mouse_control(t_data *data) // TODO where to put that?
 {
@@ -68,7 +68,8 @@ void	draw_cursor(t_data *data, bool is_mouse_controled) // TODO where to put tha
 
 int	on_update(t_data *data)
 {
-	bool	is_mouse_controled;
+	bool			is_mouse_controled;
+	t_settings_gui	*settings_gui;
 
 	draw_rect(&data->img, (t_rect){0, 0, SCREEN_WIDTH, SCREEN_HEIGHT / 2
 		+ data->walls_y_offset}, data->textures.celling);
@@ -83,21 +84,25 @@ int	on_update(t_data *data)
 		draw_minimap(data, data->map, data->game2d.minimap);
 	free(data->rays);
 	draw_cursor(data, is_mouse_controled);
-	on_update_utils(data);
-	update_settings(data);
-	data->mouse_just_pressed = false;
+	settings_gui = update_settings(data);
+	on_update_utils(data, settings_gui);
+	update_settings_text(data, settings_gui);
 	return (0);
 }
 
-void	on_update_utils(t_data *data) // put in on_update function?
+void	on_update_utils(t_data *data, t_settings_gui *settings_gui) // put in on_update function?
 {
 	if (data->key_pressed[K_ESC])
+	{
 		on_close(data);
+		free(settings_gui);
+	}
 	data->dt = get_delta_time();
 	mlx_mouse_get_pos(data->mlx, data->win, &data->mouse_pos.x,
 		&data->mouse_pos.y);
 	mlx_put_image_to_window(data->mlx, data->win, \
 		data->img.img, 0, 0);
 	ft_bzero(data->key_just_pressed, MAX_KEYS);
+	data->mouse_just_pressed = false;
 	draw_fps(data);
 }

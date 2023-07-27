@@ -2,8 +2,12 @@
 # srcs folder
 SRCS	+=			srcs/main.c \
 					srcs/init.c \
-					srcs/settings.c \
 					srcs/update.c
+
+# settings folder
+SRCS	+=			srcs/settings/settings.c \
+					srcs/settings/settings_check_boxes.c \
+					srcs/settings/settings_sliders.c \
 
 # close folder
 SRCS	+=			srcs/close/close.c \
