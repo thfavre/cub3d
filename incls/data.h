@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
+/*   By: berard <berard@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 01:16:06 by thomas            #+#    #+#             */
-/*   Updated: 2023/07/27 03:48:48 by thomas           ###   ########.fr       */
+/*   Updated: 2023/07/27 12:01:07 by berard           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_data
 	t_game2d	game2d;
 	t_ray		*rays;
 	bool		show_settings;
-	float		fov_deg; // put all this in a struct?
+	float		fov_deg;
 	int			nb_rays;
 	int			walls_height;
 	float		walls_y_offset;

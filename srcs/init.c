@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
+/*   By: berard <berard@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:27:57 by thomas            #+#    #+#             */
-/*   Updated: 2023/07/27 00:56:30 by thomas           ###   ########.fr       */
+/*   Updated: 2023/07/27 11:59:16 by berard           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ Cub3D");
 	mlx_do_key_autorepeatoff(data->mlx);
 	keys_init(data->key_pressed, data->key_just_pressed,
 		&data->mouse_just_pressed);
-	mlx_hook(data->win, KeyPress, KeyPressMask, on_keypressed, data);
-	mlx_hook(data->win, KeyRelease, KeyReleaseMask, on_keyreleased, data);
-	mlx_hook(data->win, ButtonPress, ButtonPressMask, on_mousepressed, data);
-	mlx_hook(data->win, ButtonRelease, ButtonReleaseMask, on_mouserelease,
+	mlx_hook(data->win, KEYPRESS, KEYPRESSMASK, on_keypressed, data);
+	mlx_hook(data->win, KEYRELEASE, KEYRELEASEMASK, on_keyreleased, data);
+	mlx_hook(data->win, BUTTONRELEASE, BUTTONPRESSMASK, on_mousepressed, data);
+	mlx_hook(data->win, BUTTONRELEASE, BUTTONRELEASEMASK, on_mouserelease,
 		data);
 	data->mouse_pos = (t_vector2){0, 0};
-	mlx_hook(data->win, DestroyNotify, NoEventMask, on_close, data);
+	mlx_hook(data->win, DESTROYNOTIFY, NOEVENTMASK, on_close, data);
 	mlx_loop_hook(data->mlx, on_update, data);
 	return (true);
 }
