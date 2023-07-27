@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
+/*   By: berard <berard@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 01:22:31 by thomas            #+#    #+#             */
-/*   Updated: 2023/07/27 01:22:36 by thomas           ###   ########.fr       */
+/*   Updated: 2023/07/27 11:12:11 by berard           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,12 @@ int	main(int argc, char **argv)
 	{
 		mlx_destroy_image(data.mlx, data.img.img);
 		mlx_destroy_window(data.mlx, data.win);
-		free(data.mlx);
 		return (1);
 	}
 	else if (!parser(argv[1], &data))
 	{
 		mlx_destroy_image(data.mlx, data.img.img);
 		mlx_destroy_window(data.mlx, data.win);
-		free(data.mlx);
 		return (1);
 	}
 	init_settings(&data);
