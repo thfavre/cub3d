@@ -6,7 +6,7 @@
 /*   By: thfavre <thfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 21:15:19 by tastybao          #+#    #+#             */
-/*   Updated: 2023/07/27 13:00:15 by thfavre          ###   ########.fr       */
+/*   Updated: 2023/07/27 15:42:14 by thfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,18 @@ void	move_player(t_data *data, t_player *player)
 	double	distance;
 
 	distance = player->speed * data->dt;
-	if (data->key_pressed[K_W])
+	if (data->key_pressed[K_W] || data->key_pressed[K_UP])
 		player->fpos.y -= sin(player->angle) * distance;
-	if (data->key_pressed[K_S])
+	if (data->key_pressed[K_S] || data->key_pressed[K_DOWN])
 		player->fpos.y += sin(player->angle) * distance;
 	if (data->key_pressed[K_A])
 		player->fpos.y -= sin(player->angle + M_PI_2) * distance;
 	if (data->key_pressed[K_D])
 		player->fpos.y += sin(player->angle + M_PI_2) * distance;
 	check_collisions_y(&data->game2d, player);
-	if (data->key_pressed[K_W])
+	if (data->key_pressed[K_W] || data->key_pressed[K_UP])
 		player->fpos.x += cos(player->angle) * distance;
-	if (data->key_pressed[K_S])
+	if (data->key_pressed[K_S] || data->key_pressed[K_DOWN])
 		player->fpos.x -= cos(player->angle) * distance;
 	if (data->key_pressed[K_A])
 		player->fpos.x += cos(player->angle + M_PI_2) * distance;

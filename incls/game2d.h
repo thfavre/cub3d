@@ -6,7 +6,7 @@
 /*   By: thfavre <thfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 21:20:11 by tastybao          #+#    #+#             */
-/*   Updated: 2023/07/27 13:05:19 by thfavre          ###   ########.fr       */
+/*   Updated: 2023/07/27 15:43:37 by thfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define DEFAULT_NB_RAYS SCREEN_WIDTH
 # define DEFAULT_WALLS_HEIGHT 50
 # define DEFAULT_PLAYER_ROTATE_SPEED 3
-# define DEFAULT_PLAYER_MOVE_SPEED 5
+# define DEFAULT_PLAYER_MOVE_SPEED 8
 
 typedef struct s_ray
 {

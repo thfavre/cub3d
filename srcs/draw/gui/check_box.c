@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_box.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
+/*   By: thfavre <thfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:55:11 by thomas            #+#    #+#             */
-/*   Updated: 2023/07/27 03:08:23 by thomas           ###   ########.fr       */
+/*   Updated: 2023/07/27 15:32:45 by thfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "libft.h"
 #include "mlx.h"
 #include "draw.h"
+
+void	update_check_box_text_box(t_data *data, t_check_box *check_box);
 
 bool	update_check_box(t_data *data, t_check_box *check_box)
 {
@@ -40,6 +42,7 @@ bool	update_check_box(t_data *data, t_check_box *check_box)
 	draw_rect(&data->img, hitbox_rect, C_BLACK);
 	draw_rect(&data->img, (t_rect){check_box->pos.x + 3, check_box->pos.y + 3,
 		check_box->width - 6, check_box->width - 6}, check_box_color);
+	update_check_box_text_box(data, check_box);
 	return (check_box->checked);
 }
 
@@ -56,7 +59,30 @@ void	update_check_box_text(t_data *data, t_check_box *check_box)
 		text = ft_strjoin(check_box->text, "OFF");
 	if (!text)
 		return ;
-	text_width = ft_strlen(text) * 5.85;
+	text_width = ft_strlen(text) * 7;
+	rect_width = text_width + 10;
+	x_pos = check_box->pos.x + check_box->width / 2 - text_width / 2;
+	draw_rect(&data->img, (t_rect){x_pos + text_width / 2 - rect_width / 2,
+		check_box->pos.y - 20, rect_width, 15}, C_WHITE);
+	mlx_string_put(data->mlx, data->win, x_pos,
+		check_box->pos.y - 9, C_BLACK, text);
+	free(text);
+}
+
+void	update_check_box_text_box(t_data *data, t_check_box *check_box)
+{
+	char	*text;
+	int		text_width;
+	int		rect_width;
+	int		x_pos;
+
+	if (check_box->checked)
+		text = ft_strjoin(check_box->text, "ON");
+	else
+		text = ft_strjoin(check_box->text, "OFF");
+	if (!text)
+		return ;
+	text_width = ft_strlen(text) * 7;
 	rect_width = text_width + 10;
 	x_pos = check_box->pos.x + check_box->width / 2 - text_width / 2;
 	draw_rect(&data->img, (t_rect){x_pos + text_width / 2 - rect_width / 2,
