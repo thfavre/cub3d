@@ -1,3 +1,4 @@
 *.o
 *.a
+.vscode/*
 .vscode/settings.json
