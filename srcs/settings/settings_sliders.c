@@ -6,7 +6,7 @@
 /*   By: thfavre <thfavre@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:28:06 by thfavre           #+#    #+#             */
-/*   Updated: 2023/07/27 13:04:05 by thfavre          ###   ########.fr       */
+/*   Updated: 2023/07/27 16:08:15 by thfavre          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_settings_sliders	*init_sliders(void)
 	{(t_vector2){40, 325}, 40, 225, 0,
 		MINIMAP_SIZE_RATIO, 1, "Minimap scale: "},
 	{(t_vector2){40, 400}, 40, 225, -180,
-		720, DEFAULT_FOV_DEG, "FOV: "},
+		360, DEFAULT_FOV_DEG, "FOV: "},
 	{(t_vector2){40, 475}, 40, 225, 2,
 		SCREEN_WIDTH, DEFAULT_NB_RAYS, "Rays nb: "},
 	{(t_vector2){40, 550}, 40, 225, 1,
