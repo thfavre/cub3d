@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   settings_sliders.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thfavre <thfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:28:06 by thfavre           #+#    #+#             */
-/*   Updated: 2023/07/27 16:08:15 by thfavre          ###   ########.fr       */
+/*   Updated: 2023/07/28 13:16:30 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_settings_sliders	*init_sliders(void)
 	{(t_vector2){185, 715}, 25, 45, 0, 255, 89, "g: "},
 	{(t_vector2){270, 715}, 25, 45, 0, 255, 182, "b: "},
 	{(t_vector2){40, 775}, 40, 79, 0,
-		10, DEFAULT_PLAYER_MOVE_SPEED, "Speed: "},
+		15, DEFAULT_PLAYER_MOVE_SPEED, "Speed: "},
 	{(t_vector2){188, 775}, 40, 77, 0,
 		15, DEFAULT_PLAYER_ROTATE_SPEED, "Rotation: "}
 	};

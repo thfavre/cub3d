@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   slider.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thfavre <thfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:54:55 by thomas            #+#    #+#             */
-/*   Updated: 2023/07/27 15:35:51 by thfavre          ###   ########.fr       */
+/*   Updated: 2023/07/28 13:11:37 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ float	update_slider(t_data *data, t_slider *s)
 	return (s->value);
 }
 
+// platfrom dependant letter width
+#if defined(__APPLE__) && defined(__MACH__)
+# define LETTER_WIDTH 7
+#else
+# define LETTER_WIDTH 5.85
+#endif
+
 void	update_slider_text(t_data *data, t_slider *slider)
 {
 	char	*text_value;
@@ -69,7 +76,7 @@ void	update_slider_text(t_data *data, t_slider *slider)
 	free(text_value);
 	if (!text)
 		return ;
-	text_width = ft_strlen(text) * 7;
+	text_width = ft_strlen(text) * LETTER_WIDTH;
 	x_pos = slider->pos.x + slider->length * (slider->value
 			- slider->min_value)
 		/ (slider->max_value - slider->min_value) - text_width / 2;
@@ -96,7 +103,7 @@ void	update_slider_text_box(t_data *data, t_slider *slider)
 	free(text_value);
 	if (!text)
 		return ;
-	text_width = ft_strlen(text) * 7;
+	text_width = ft_strlen(text) * LETTER_WIDTH;
 	x_pos = slider->pos.x + slider->length * (slider->value
 			- slider->min_value)
 		/ (slider->max_value - slider->min_value) - text_width / 2;

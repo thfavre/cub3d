@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_box.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thfavre <thfavre@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thomas <thfavre@student.42lausanne.ch>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:55:11 by thomas            #+#    #+#             */
-/*   Updated: 2023/07/27 15:32:45 by thfavre          ###   ########.fr       */
+/*   Updated: 2023/07/28 13:12:16 by thomas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,13 @@ bool	update_check_box(t_data *data, t_check_box *check_box)
 	return (check_box->checked);
 }
 
+// platfrom dependant letter width
+#if defined(__APPLE__) && defined(__MACH__)
+# define LETTER_WIDTH 7
+#else
+# define LETTER_WIDTH 5.85
+#endif
+
 void	update_check_box_text(t_data *data, t_check_box *check_box)
 {
 	char	*text;
@@ -59,7 +66,7 @@ void	update_check_box_text(t_data *data, t_check_box *check_box)
 		text = ft_strjoin(check_box->text, "OFF");
 	if (!text)
 		return ;
-	text_width = ft_strlen(text) * 7;
+	text_width = ft_strlen(text) * LETTER_WIDTH;
 	rect_width = text_width + 10;
 	x_pos = check_box->pos.x + check_box->width / 2 - text_width / 2;
 	draw_rect(&data->img, (t_rect){x_pos + text_width / 2 - rect_width / 2,
@@ -82,7 +89,7 @@ void	update_check_box_text_box(t_data *data, t_check_box *check_box)
 		text = ft_strjoin(check_box->text, "OFF");
 	if (!text)
 		return ;
-	text_width = ft_strlen(text) * 7;
+	text_width = ft_strlen(text) * LETTER_WIDTH;
 	rect_width = text_width + 10;
 	x_pos = check_box->pos.x + check_box->width / 2 - text_width / 2;
 	draw_rect(&data->img, (t_rect){x_pos + text_width / 2 - rect_width / 2,
